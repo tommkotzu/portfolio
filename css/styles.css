@@ -140,12 +140,8 @@ button { font: inherit; color: inherit; background: none; border: 0; }
 .hero-inner > .media-wrap { position: absolute; inset: 0; width: 100%; height: 100%; }
 .hero-play {
   position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-  cursor: pointer; background: transparent; transition: background 0.2s ease;
+  cursor: pointer; background: transparent;
 }
-/* dimming only on hover, as an interaction cue — the hero no longer
-   autoplays, so this sits paused (and dimmed) as the very first thing a
-   visitor sees otherwise, which read as a mismatched dark box on light pages */
-.hero-play:hover { background: rgba(0,0,0,0.15); }
 .hero-play-glyph {
   width: 64px; height: 64px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.75);
   display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px);
