@@ -242,6 +242,8 @@
     if (parts[0] === "work") return { page: "work" };
     if (parts[0] === "screens") return { page: "screens" };
     if (parts[0] === "about") return { page: "about" };
+    if (parts[0] === "impressum") return { page: "impressum" };
+    if (parts[0] === "datenschutz") return { page: "datenschutz" };
     return { page: "welcome" };
   }
 
@@ -262,7 +264,7 @@
       <div class="hero">
         <div class="hero-inner" id="hero-video-wrap">
           ${mediaHTML(HOME.reel, { cls: "media-fill-wrap", hero: true })}
-          <div class="hero-play" id="hero-play-toggle" style="display:none">
+          <div class="hero-play" id="hero-play-toggle">
             <div class="hero-play-glyph"></div>
           </div>
         </div>
@@ -304,7 +306,12 @@
     const video = wrap.querySelector("video, mux-video");
     const overlay = document.getElementById("hero-play-toggle");
     if (!video) return;
-    safePlay(video);
+    // starts paused with sound on (not autoplaying) — visitor has to press play.
+    // guarded the same way as safePlay: pre-upgrade property writes on a custom
+    // element like <mux-video> can get lost once its real setters take over
+    const setVolume = () => { video.muted = false; video.volume = 0.8; };
+    if (typeof video.play === "function") setVolume();
+    else customElements.whenDefined(video.tagName.toLowerCase()).then(setVolume);
     const toggle = () => {
       if (video.paused) { video.play(); overlay.style.display = "none"; }
       else { video.pause(); overlay.style.display = "flex"; }
@@ -635,6 +642,58 @@
     </div>`;
   }
 
+  // ---------- legal ----------
+  // NOTE: placeholders in [brackets] need real details filled in before this
+  // is legally valid — see the Impressumspflicht (§5 TMG) and DSGVO/GDPR.
+  // Get this reviewed once the real business details are in.
+  function renderImpressum() {
+    return `<div class="page legal-page" data-screen="impressum">
+      <h1>Impressum</h1>
+      <div class="legal-section">
+        <h2>Angaben gemäß § 5 TMG</h2>
+        <p>[Vollständiger Name]<br>[Straße und Hausnummer]<br>[PLZ und Ort]<br>[Land]</p>
+      </div>
+      <div class="legal-section">
+        <h2>Kontakt</h2>
+        <p>Telefon: [Telefonnummer]<br>E-Mail: <a href="mailto:hello@thomasmayer.com">hello@thomasmayer.com</a></p>
+      </div>
+      <div class="legal-section">
+        <h2>Umsatzsteuer-ID</h2>
+        <p>Umsatzsteuer-Identifikationsnummer gemäß §27a Umsatzsteuergesetz: [USt-IdNr., falls vorhanden]</p>
+      </div>
+      <div class="legal-section">
+        <h2>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h2>
+        <p>[Vollständiger Name]<br>[Anschrift wie oben]</p>
+      </div>
+      <div class="legal-section">
+        <h2>Haftungsausschluss</h2>
+        <p>Die Inhalte dieser Seite wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte kann jedoch keine Gewähr übernommen werden. Diese Website enthält Verlinkungen zu externen Videoplattformen (Vimeo, Mux) — für deren Inhalte sind ausschließlich die jeweiligen Betreiber verantwortlich.</p>
+      </div>
+    </div>`;
+  }
+
+  function renderDatenschutz() {
+    return `<div class="page legal-page" data-screen="datenschutz">
+      <h1>Datenschutzerklärung</h1>
+      <div class="legal-section">
+        <h2>Verantwortlicher</h2>
+        <p>[Vollständiger Name]<br>[Straße und Hausnummer]<br>[PLZ und Ort]<br>E-Mail: <a href="mailto:hello@thomasmayer.com">hello@thomasmayer.com</a></p>
+      </div>
+      <div class="legal-section">
+        <h2>Hosting</h2>
+        <p>Diese Website wird über GitHub Pages gehostet (GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA). Beim Aufruf der Seite verarbeitet GitHub automatisch technische Daten (u. a. IP-Adresse, Zeitpunkt des Zugriffs, aufgerufene Datei) in Server-Logfiles. Weitere Informationen: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">GitHub Privacy Statement</a>.</p>
+      </div>
+      <div class="legal-section">
+        <h2>Eingebettete Videos (Vimeo, Mux)</h2>
+        <p>Auf dieser Seite werden Videos über die Dienste Vimeo (Vimeo.com Inc., New York, USA) und Mux (Mux, Inc., San Francisco, USA) eingebunden. Beim Abspielen eines Videos wird eine Verbindung zu den Servern des jeweiligen Anbieters hergestellt, wobei technische Daten (u. a. IP-Adresse) übertragen werden können. Weitere Informationen: <a href="https://vimeo.com/privacy" target="_blank" rel="noopener">Vimeo Datenschutz</a>, <a href="https://www.mux.com/privacy" target="_blank" rel="noopener">Mux Datenschutz</a>.</p>
+      </div>
+      <div class="legal-section">
+        <h2>Ihre Rechte</h2>
+        <p>Sie haben jederzeit das Recht auf Auskunft, Berichtigung, Löschung oder Einschränkung der Verarbeitung Ihrer personenbezogenen Daten sowie ein Beschwerderecht bei einer Aufsichtsbehörde. Wenden Sie sich hierzu an die oben genannte Kontaktadresse.</p>
+      </div>
+    </div>`;
+  }
+
   // hides the fixed prev/next pills while the hero is in view, so they never
   // overlap it (they stay visible for the rest of the page by default)
   let heroNavObserver = null;
@@ -727,6 +786,10 @@
       app.innerHTML = renderScreens();
     } else if (route.page === "about") {
       app.innerHTML = renderAbout();
+    } else if (route.page === "impressum") {
+      app.innerHTML = renderImpressum();
+    } else if (route.page === "datenschutz") {
+      app.innerHTML = renderDatenschutz();
     }
     observeGalleryVideos();
     window.scrollTo(0, 0);
