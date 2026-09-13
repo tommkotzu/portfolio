@@ -24,7 +24,7 @@ const SOCIAL = {
 };
 
 const HOME = {
-  reel: media("video", "Assets/home/reel.mp4", { poster: a("posters/home-reel.jpg") }),
+  reel: media("mux", "zEin01eAJjNEYNt2XS7TEtWanGfaw7nbv02OUZoafvmLo", { poster: a("posters/home-reel.jpg") }),
 };
 
 const PROJECTS = [

@@ -89,6 +89,20 @@
   updateClock();
   setInterval(updateClock, 30000);
 
+  // <mux-video> is a custom element loaded from a deferred ES module, which
+  // can still be un-upgraded (no .play()/.pause() yet) the moment this classic
+  // script runs — wait for its definition first when that's the case
+  function safePlay(video) {
+    if (!video) return;
+    const attempt = () => video.play().catch(() => {
+      // first attempt can land before the stream has buffered anything yet —
+      // one retry once it actually has data covers that race
+      video.addEventListener("loadeddata", () => video.play().catch(() => {}), { once: true });
+    });
+    if (typeof video.play === "function") { attempt(); return; }
+    customElements.whenDefined(video.tagName.toLowerCase()).then(attempt);
+  }
+
   // ---------- media rendering ----------
   function mediaHTML(item, opts = {}) {
     const cls = opts.cls || "";
@@ -126,6 +140,16 @@
       // gallery videos get the scroll-driven observer, so the two never fight
       const observedAttr = opts.hero ? "" : " data-autoplay";
       return `<div class="media-wrap ${cls}"><video class="${innerCls}" ${poster} preload="metadata" ${controls} muted loop playsinline${observedAttr}><source src="${item.src}"${typeAttr}></video></div>`;
+    }
+    if (item.type === "mux") {
+      // <mux-video> is Mux's custom element — same attributes/API as a native
+      // <video> (autoplay, muted, loop, .play()/.pause(), play/pause events),
+      // so it drops into the exact same hero/gallery wiring as the "video"
+      // branch above, just streaming adaptive HLS instead of one fixed file
+      const poster = item.poster ? ` poster="${item.poster}"` : "";
+      const controls = opts.controls ? "controls" : "";
+      const observedAttr = opts.hero ? "" : " data-autoplay";
+      return `<div class="media-wrap ${cls}"><mux-video class="${innerCls}" playback-id="${item.src}"${poster} preload="metadata" ${controls} muted loop playsinline${observedAttr}></mux-video></div>`;
     }
     return `<div class="media-wrap ${cls} stripe"></div>`;
   }
@@ -277,10 +301,10 @@
 
   function mountWelcome() {
     const wrap = document.getElementById("hero-video-wrap");
-    const video = wrap.querySelector("video");
+    const video = wrap.querySelector("video, mux-video");
     const overlay = document.getElementById("hero-play-toggle");
     if (!video) return;
-    video.play().catch(() => {});
+    safePlay(video);
     const toggle = () => {
       if (video.paused) { video.play(); overlay.style.display = "none"; }
       else { video.pause(); overlay.style.display = "flex"; }
@@ -633,10 +657,10 @@
     const heroSection = document.querySelector(".hero-detail");
     observeHeroForNav(heroSection);
     if (!wrap) return;
-    const video = wrap.querySelector("video");
+    const video = wrap.querySelector("video, mux-video");
     const overlay = document.getElementById("hero-play-toggle");
     if (video && overlay) {
-      video.play().catch(() => {});
+      safePlay(video);
       const toggle = () => {
         if (video.paused) { video.play(); overlay.style.display = "none"; }
         else { video.pause(); overlay.style.display = "flex"; }
@@ -681,7 +705,7 @@
       );
     }
     galleryVideoObserver.disconnect();
-    app.querySelectorAll("video[data-autoplay]").forEach((v) => galleryVideoObserver.observe(v));
+    app.querySelectorAll("video[data-autoplay], mux-video[data-autoplay]").forEach((v) => galleryVideoObserver.observe(v));
   }
 
   function render() {
