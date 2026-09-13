@@ -418,6 +418,7 @@
   function spawnPreviewStamp(x, y, url) {
     const el = document.createElement("div");
     el.className = "list-preview-stamp";
+    el.dataset.url = url;
     el.style.left = `${x + 20}px`;
     el.style.top = `${y}px`;
     el.innerHTML = `<img alt="">`;
@@ -454,15 +455,12 @@
       if (dist < MIN_DIST && now - lastSpawn < MIN_GAP) return;
       lastX = e.clientX; lastY = e.clientY; lastSpawn = now;
       const urls = JSON.parse(decodeURIComponent(row.dataset.previews));
-      const rect = row.getBoundingClientRect();
-      // both axes drive which frame shows, combined (and wrapped) rather than
-      // averaged — averaging halved each axis's own range, so a full sweep
-      // across the row's width alone could only ever reach half the images;
-      // wrapping means either axis alone still cycles through all of them
-      const pctY = (e.clientY - rect.top) / rect.height;
-      const pctX = (e.clientX - rect.left) / rect.width;
-      const pct = (pctX + pctY) % 1;
-      const idx = Math.min(urls.length - 1, Math.max(0, Math.floor(pct * urls.length)));
+      // a random frame each time, not one mapped to cursor position — avoid
+      // repeating whatever the current stamp is already showing
+      let idx = Math.floor(Math.random() * urls.length);
+      if (urls.length > 1 && urls[idx] === currentStamp?.dataset.url) {
+        idx = (idx + 1) % urls.length;
+      }
       // spawning a new stamp is what starts the previous one's fade timer —
       // a stamp has none of its own, so it sits still for as long as it's
       // "current" and only begins fading once superseded or the cursor leaves
