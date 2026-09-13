@@ -404,9 +404,15 @@
   // along with the cursor) — a trace of images that appear and dissolve.
   function fadePreviewStamp(el) {
     if (!el) return;
-    el.classList.remove("in");
-    el.classList.add("out");
-    setTimeout(() => el.remove(), 500);
+    // a normal hold-then-fade, same as any trail stamp — NOT instant. Started
+    // only once this stamp is superseded by a newer one (see mountWork), so
+    // it sits fully visible for as long as the cursor stays put, and multiple
+    // stamps can still be mid-fade at once during fast movement (the trail)
+    setTimeout(() => {
+      el.classList.remove("in");
+      el.classList.add("out");
+      setTimeout(() => el.remove(), 500);
+    }, 550);
   }
 
   function spawnPreviewStamp(x, y, url) {
@@ -455,9 +461,9 @@
       const pctY = (e.clientY - rect.top) / rect.height;
       const pctX = (e.clientX - rect.left) / rect.width;
       const idx = Math.min(urls.length - 1, Math.max(0, Math.floor(((pctX + pctY) / 2) * urls.length)));
-      // only the newly-spawned stamp fades the previous one out — nothing
-      // times out on its own, so the last frame shown stays put once the
-      // cursor stops instead of dissolving away on a fixed delay
+      // spawning a new stamp is what starts the previous one's fade timer —
+      // a stamp has none of its own, so it sits still for as long as it's
+      // "current" and only begins fading once superseded or the cursor leaves
       fadePreviewStamp(currentStamp);
       currentStamp = spawnPreviewStamp(e.clientX, e.clientY, urls[idx]);
     });
