@@ -394,13 +394,21 @@
       </div>`;
     }
 
-    const wideCls = density === "1" || density === "2" ? " work-page-wide" : "";
+    // same width for every density so switching between them doesn't jump the layout
+    const wideCls = " work-page-wide";
     return `<div class="page work-page${wideCls}" data-screen="work">${head}${body}</div>`;
   }
 
   // list-view hover trail: as the cursor moves across a row, drop a fading
   // image stamp at each point along its path (instead of one panel dragged
   // along with the cursor) — a trace of images that appear and dissolve.
+  function fadePreviewStamp(el) {
+    if (!el) return;
+    el.classList.remove("in");
+    el.classList.add("out");
+    setTimeout(() => el.remove(), 500);
+  }
+
   function spawnPreviewStamp(x, y, url) {
     const el = document.createElement("div");
     el.className = "list-preview-stamp";
@@ -418,17 +426,19 @@
     };
     img.src = url;
     document.body.appendChild(el);
-    setTimeout(() => {
-      el.classList.remove("in");
-      el.classList.add("out");
-      setTimeout(() => el.remove(), 500);
-    }, 550);
+    return el;
   }
 
   function mountWork() {
+    // a stamp with no timeout of its own can only be cleared by its own
+    // mousemove/mouseleave handlers — if the density view changed while one
+    // was showing, those handlers are gone with the old row elements, so
+    // sweep up anything orphaned before wiring up a fresh set
+    document.querySelectorAll(".list-preview-stamp").forEach((el) => el.remove());
     const rows = document.getElementById("list-rows");
     if (!rows) return;
     let lastX = null, lastY = null, lastSpawn = 0;
+    let currentStamp = null;
     const MIN_DIST = 70, MIN_GAP = 90;
     rows.addEventListener("mousemove", (e) => {
       const row = e.target.closest(".list-row");
@@ -439,9 +449,21 @@
       lastX = e.clientX; lastY = e.clientY; lastSpawn = now;
       const urls = JSON.parse(decodeURIComponent(row.dataset.previews));
       const rect = row.getBoundingClientRect();
-      const pct = (e.clientY - rect.top) / rect.height;
-      const idx = Math.min(urls.length - 1, Math.max(0, Math.floor(pct * urls.length)));
-      spawnPreviewStamp(e.clientX, e.clientY, urls[idx]);
+      // both axes drive which frame shows — a row is wide and short, so
+      // cursor movement across it is mostly horizontal; using only vertical
+      // position meant that motion barely ever changed the frame
+      const pctY = (e.clientY - rect.top) / rect.height;
+      const pctX = (e.clientX - rect.left) / rect.width;
+      const idx = Math.min(urls.length - 1, Math.max(0, Math.floor(((pctX + pctY) / 2) * urls.length)));
+      // only the newly-spawned stamp fades the previous one out — nothing
+      // times out on its own, so the last frame shown stays put once the
+      // cursor stops instead of dissolving away on a fixed delay
+      fadePreviewStamp(currentStamp);
+      currentStamp = spawnPreviewStamp(e.clientX, e.clientY, urls[idx]);
+    });
+    rows.addEventListener("mouseleave", () => {
+      fadePreviewStamp(currentStamp);
+      currentStamp = null;
     });
   }
 
@@ -651,7 +673,7 @@
       <h1>Impressum</h1>
       <div class="legal-section">
         <h2>Angaben gemäß § 5 TMG</h2>
-        <p>[Vollständiger Name]<br>[Straße und Hausnummer]<br>[PLZ und Ort]<br>[Land]</p>
+        <p>Thomas Mayer<br>Boxhagener Straße 42<br>10245 Berlin<br>Deutschland</p>
       </div>
       <div class="legal-section">
         <h2>Kontakt</h2>
@@ -663,7 +685,7 @@
       </div>
       <div class="legal-section">
         <h2>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h2>
-        <p>[Vollständiger Name]<br>[Anschrift wie oben]</p>
+        <p>Thomas Mayer<br>Boxhagener Straße 42, 10245 Berlin</p>
       </div>
       <div class="legal-section">
         <h2>Haftungsausschluss</h2>
@@ -677,7 +699,7 @@
       <h1>Datenschutzerklärung</h1>
       <div class="legal-section">
         <h2>Verantwortlicher</h2>
-        <p>[Vollständiger Name]<br>[Straße und Hausnummer]<br>[PLZ und Ort]<br>E-Mail: <a href="mailto:hello@thomasmayer.com">hello@thomasmayer.com</a></p>
+        <p>Thomas Mayer<br>Boxhagener Straße 42<br>10245 Berlin<br>E-Mail: <a href="mailto:hello@thomasmayer.com">hello@thomasmayer.com</a></p>
       </div>
       <div class="legal-section">
         <h2>Hosting</h2>

@@ -228,7 +228,7 @@ button { font: inherit; color: inherit; background: none; border: 0; }
 .list-row .li-loc { font-size: 13px; color: var(--muted); margin-left: auto; flex: none; white-space: nowrap; }
 .list-preview-stamp {
   position: fixed; width: 221px; max-width: 36vw; z-index: 10; pointer-events: none;
-  box-shadow: 0 16px 40px rgba(0,0,0,0.45); overflow: hidden; background: var(--stripe1);
+  overflow: hidden; background: var(--stripe1);
   opacity: 0; transform: scale(0.94);
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
