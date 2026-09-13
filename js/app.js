@@ -455,12 +455,14 @@
       lastX = e.clientX; lastY = e.clientY; lastSpawn = now;
       const urls = JSON.parse(decodeURIComponent(row.dataset.previews));
       const rect = row.getBoundingClientRect();
-      // both axes drive which frame shows — a row is wide and short, so
-      // cursor movement across it is mostly horizontal; using only vertical
-      // position meant that motion barely ever changed the frame
+      // both axes drive which frame shows, combined (and wrapped) rather than
+      // averaged — averaging halved each axis's own range, so a full sweep
+      // across the row's width alone could only ever reach half the images;
+      // wrapping means either axis alone still cycles through all of them
       const pctY = (e.clientY - rect.top) / rect.height;
       const pctX = (e.clientX - rect.left) / rect.width;
-      const idx = Math.min(urls.length - 1, Math.max(0, Math.floor(((pctX + pctY) / 2) * urls.length)));
+      const pct = (pctX + pctY) % 1;
+      const idx = Math.min(urls.length - 1, Math.max(0, Math.floor(pct * urls.length)));
       // spawning a new stamp is what starts the previous one's fade timer —
       // a stamp has none of its own, so it sits still for as long as it's
       // "current" and only begins fading once superseded or the cursor leaves
