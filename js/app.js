@@ -85,6 +85,31 @@
     });
   }
 
+  // easter egg: hovering the logo shuffles through a roulette of alternate
+  // names — settles back on the real one the moment the cursor leaves
+  const NAME_ROULETTE = ["Thomas Mayer", "Thomas Ludwig", "Atomic Tomfritz", "Tommbommboo", "Pommfred"];
+  const navLogo = document.querySelector(".nav-logo");
+  if (navLogo) {
+    const original = navLogo.textContent;
+    let rouletteTimer = null;
+    let lastShown = original;
+    navLogo.addEventListener("mouseenter", () => {
+      if (rouletteTimer) return;
+      rouletteTimer = setInterval(() => {
+        let next = lastShown;
+        while (next === lastShown) next = NAME_ROULETTE[Math.floor(Math.random() * NAME_ROULETTE.length)];
+        lastShown = next;
+        navLogo.textContent = next.toUpperCase();
+      }, 90);
+    });
+    navLogo.addEventListener("mouseleave", () => {
+      clearInterval(rouletteTimer);
+      rouletteTimer = null;
+      lastShown = original;
+      navLogo.textContent = original;
+    });
+  }
+
   // ---------- clock ----------
   function updateClock() {
     const now = new Date();
