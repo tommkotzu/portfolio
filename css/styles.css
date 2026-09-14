@@ -245,15 +245,23 @@ button { font: inherit; color: inherit; background: none; border: 0; }
 .detail-wide { max-width: 80vw; margin: 0 auto; padding: 0 clamp(16px, 5vw, 72px); }
 .detail-scroll-area { position: relative; padding-bottom: 110px; }
 .detail-back { cursor: pointer; font-size: 13px; color: var(--muted); padding: 28px 0 20px; width: fit-content; }
-.detail-meta { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; padding: 36px 0; border-bottom: 1px solid var(--line); }
-.detail-title-group { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.detail-meta { display: flex; flex-direction: column; gap: 20px; padding: 36px 0; border-bottom: 1px solid var(--line); }
+/* title/tags/year on one line, same left-alone / right-grouped split as the
+   list view's row — tag-row's own auto margin pulls it (and the year right
+   after it) to the far right, leaving idx+title alone on the left */
+.detail-title-group { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; width: 100%; }
 .detail-idx { font: 13px ui-monospace, Menlo, monospace; color: var(--faint); }
 .detail-title { font-size: 30px; font-weight: 600; letter-spacing: -0.01em; }
-.detail-cols { display: flex; gap: 36px; flex-wrap: wrap; }
+.detail-title-group .tag-row { margin-left: auto; margin-top: 0; }
+.detail-year { font-size: 13px; color: var(--muted); white-space: nowrap; }
 .detail-col .label { font: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--faint); margin-bottom: 4px; }
 .detail-col .val { font-size: 14px; }
-.detail-blurb { max-width: 560px; padding: 32px 0; font-size: 16px; line-height: 1.8; color: var(--muted2); }
-.credits-list { display: flex; flex-direction: column; max-width: 560px; }
+
+.detail-split { display: flex; gap: 60px; flex-wrap: wrap; padding: 32px 0; }
+.detail-split-col { flex: 1; min-width: 240px; }
+.detail-split-col .label { font: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--faint); margin-bottom: 14px; }
+.detail-blurb { font-size: 16px; line-height: 1.8; color: var(--muted2); }
+.credits-list { display: flex; flex-direction: column; }
 .credits-row { display: flex; justify-content: space-between; gap: 20px; padding: 12px 0; border-bottom: 1px solid var(--lineSoft); font-size: 14px; }
 .credits-row .credits-role { color: var(--muted); }
 .credits-row .credits-name { color: var(--strong); }
@@ -407,7 +415,9 @@ button { font: inherit; color: inherit; background: none; border: 0; }
   padding: 10px 20px;
   font-size: 13px; letter-spacing: 0.02em; cursor: pointer;
   background: transparent; color: #fff; mix-blend-mode: difference; isolation: isolate;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
 }
+.view-toggle.visible { opacity: 1; pointer-events: auto; }
 
 .simple-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: clamp(16px, 2vw, 28px); padding-bottom: 40px; max-width: 1320px; margin: 0 auto; }
 .grid-cell { cursor: pointer; }

@@ -590,30 +590,32 @@
           <a data-open-project="${PROJECTS[nextIdx].slug}"><span class="proj-title">${PROJECTS[nextIdx].title}</span><span class="arrow">→</span></a>
         </div>
 
-        <div class="detail-narrow">
+        <div class="detail-narrow" id="detail-text-block">
           <div class="detail-meta">
             <div class="detail-title-group">
               <span class="detail-idx">${String(realIdx + 1).padStart(2, "0")}</span>
               <div class="detail-title">${active.title}</div>
               <div class="tag-row">${tagPills(active.tags)}</div>
+              <div class="detail-year">${active.year}</div>
             </div>
-            <div class="detail-cols">
-              <div class="detail-col"><div class="label">Client</div><div class="val">${active.client}</div></div>
-              <div class="detail-col"><div class="label">Role</div><div class="val">${active.role}</div></div>
-              <div class="detail-col"><div class="label">Year</div><div class="val">${active.year}</div></div>
-            </div>
+            <div class="detail-col"><div class="label">Client</div><div class="val">${active.client}</div></div>
           </div>
-          <div class="detail-blurb">${active.blurb}</div>
+          <div class="detail-split">
+            <div class="detail-split-col">
+              <div class="label">Description</div>
+              <div class="detail-blurb">${active.blurb}</div>
+            </div>
+            ${active.credits && active.credits.length ? `
+            <div class="detail-split-col">
+              <div class="label">Credits</div>
+              <div class="credits-list">${active.credits.map((c) => `<div class="credits-row"><span class="credits-role">${c.role}</span><span class="credits-name">${c.name}</span></div>`).join("")}</div>
+            </div>` : ""}
+          </div>
           ${isEditorial ? "" : `
           <div class="gallery-toggle">
             <div class="opt ${state.galleryView === "spacious" ? "active" : ""}" data-set-gallery="spacious">Spacious</div>
             <div class="opt ${state.galleryView === "grid" ? "active" : ""}" data-set-gallery="grid">Grid</div>
           </div>`}
-          ${active.credits && active.credits.length ? `
-          <div class="about-section credits-section">
-            <h2>Credits</h2>
-            <div class="credits-list">${active.credits.map((c) => `<div class="credits-row"><span class="credits-role">${c.role}</span><span class="credits-name">${c.name}</span></div>`).join("")}</div>
-          </div>` : ""}
         </div>
 
         ${isEditorial ? `<div class="detail-wide">${galleryBody}</div>` : `<div class="detail-narrow">${galleryBody}</div>`}
@@ -747,10 +749,27 @@
     heroNavObserver.observe(heroEl);
   }
 
+  // the grid/editorial view toggle fades in only once the title/description/
+  // credits block has scrolled past — kept out of the way while reading
+  let viewToggleObserver = null;
+  function observeViewToggle(textBlockEl) {
+    const toggle = document.querySelector(".view-toggle");
+    if (!toggle || !textBlockEl) return;
+    if (viewToggleObserver) viewToggleObserver.disconnect();
+    viewToggleObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => toggle.classList.toggle("visible", !entry.isIntersecting));
+      },
+      { threshold: 0 }
+    );
+    viewToggleObserver.observe(textBlockEl);
+  }
+
   function mountDetailHero() {
     const wrap = document.getElementById("hero-video-wrap");
     const heroSection = document.querySelector(".hero-detail");
     observeHeroForNav(heroSection);
+    observeViewToggle(document.getElementById("detail-text-block"));
     if (!wrap) return;
     const video = wrap.querySelector("video, mux-video");
     const overlay = document.getElementById("hero-play-toggle");
