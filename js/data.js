@@ -213,7 +213,7 @@ const PROJECTS = [
     // gallery/hero regenerated from the 010L/020M/030S-style filenames in
     // Assets/projects/adidas/ via scripts/gen_gallery.py — rerun that script
     // after renaming/adding files there instead of hand-editing this list
-    hero: media("video", ASSET_ROOT + "adidas/010L_Hero_OBJ-STUDIO-upscale.mp4"),
+    hero: media("mux", "QWAc6U7I800Cdov3H0201NEI9yGqwcMRwsh7InIeJlM6p4"),
     previews: previews(
       "adidas/preview/03.jpg",
       "adidas/preview/OBJ-bts-8-1.jpg",
@@ -423,7 +423,7 @@ const PROJECTS = [
     // gallery/hero regenerated from Assets/projects/zalando/ via
     // scripts/gen_gallery.py — rerun that script after renaming/adding files
     // there instead of hand-editing this list
-    hero: media("video", ASSET_ROOT + "zalando/010.mp4"),
+    hero: media("mux", "v4KSahh02VID4T01mZzm7BPBmhm5yY6bjKxWGCTyc7fh8"),
     previews: previews(
       "zalando/preview/Foto 05.12.23, 14 08 45.jpg",
       "zalando/preview/Foto 05.12.23, 16 33 12.jpg",
@@ -460,7 +460,7 @@ const PROJECTS = [
     role: "Director",
     tags: ["Artist", "Art Direction", "Lookdev", "AI"],
     blurb: "Character and stage-visual direction for Superpop's Seoul show, from storyboard through final lookdev.",
-    hero: media("video", ASSET_ROOT + "superpop/010.mov"),
+    hero: media("mux", "5kPcLdjeceiNMoey3Z8aRW2htQeVrxQOQSiSqF1yN7M"),
     previews: previews(
       "superpop/preview/cleaned-copy-1536x866.jpg",
       "superpop/preview/Pasted image (2).png",

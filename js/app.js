@@ -334,7 +334,7 @@
     const activeCls = active ? "active" : "";
     if (key === "list") return `<span class="density-icon list-icon"><span></span><span></span><span></span></span>`;
     if (key === "1") return `<span class="density-icon d1 ${activeCls}"></span>`;
-    return `<span class="density-icon d2 ${activeCls}"><span></span><span></span><span></span></span>`;
+    return `<span class="density-icon d2 ${activeCls}">${"<span></span>".repeat(9)}</span>`;
   }
 
   function renderWork() {
@@ -371,7 +371,7 @@
           ${scrubMediaHTML(p.previews, { cls: "card-thumb-full" })}
           <div class="card-meta">
             <span class="title">${p.client} — ${p.title}</span>
-            ${tagPills(p.tags.slice(0, 2))}
+            <div class="tag-row">${tagPills(p.tags.slice(0, 2))}</div>
             <span class="loc">${p.location}</span>
           </div>
         </div>`
@@ -388,7 +388,6 @@
             <span class="title">${p.client} — ${p.title}</span>
             <span class="loc">${p.location}</span>
           </div>
-          <div class="tag-row">${tagPills(p.tags.slice(0, 2))}</div>
         </div>`
         ).join("")}
       </div>`;

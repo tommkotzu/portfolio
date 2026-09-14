@@ -196,9 +196,9 @@ button { font: inherit; color: inherit; background: none; border: 0; }
 .density-icon.list-icon span { height: 2px; background: var(--muted); display: block; }
 .density-icon.d1 { border: 1px solid var(--muted); }
 .density-icon.d1.active { border-color: var(--text); }
-.density-icon.d2 { display: flex; gap: 2px; }
-.density-icon.d2 span { flex: 1; height: 100%; border: 1px solid var(--muted); }
-.density-icon.d2.active span { border-color: var(--text); }
+.density-icon.d2 { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 2px; }
+.density-icon.d2 span { background: var(--muted); }
+.density-icon.d2.active span { background: var(--text); }
 
 .project-grid { display: grid; gap: 32px; }
 .project-grid.density-1 { grid-template-columns: 1fr; gap: 56px; }
@@ -221,14 +221,15 @@ button { font: inherit; color: inherit; background: none; border: 0; }
 .card-full { display: flex; flex-direction: column; gap: 14px; cursor: pointer; }
 .card-full .card-meta { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
 .card-full .card-meta .title { font-size: 16px; font-weight: 500; }
-.card-full .card-meta .loc { font-size: 13px; color: var(--muted); margin-left: auto; }
+.card-full .card-meta .loc { font-size: 13px; color: var(--muted); }
+.card-full .card-meta .tag-row { margin-left: auto; margin-top: 0; }
 
 .list-rows { display: flex; flex-direction: column; }
 .list-row { cursor: pointer; position: relative; display: flex; align-items: center; gap: 20px; padding: 18px 0; border-bottom: 1px solid var(--lineSoft); }
 .list-row .li-idx { font: 11px ui-monospace, Menlo, monospace; color: var(--faint); flex: none; width: 24px; }
 .list-row .li-title { font-size: 16px; font-weight: 500; flex: none; position: relative; }
-.list-row .li-tags { display: flex; gap: 8px; flex-wrap: wrap; }
-.list-row .li-loc { font-size: 13px; color: var(--muted); margin-left: auto; flex: none; white-space: nowrap; }
+.list-row .li-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-left: auto; }
+.list-row .li-loc { font-size: 13px; color: var(--muted); flex: none; white-space: nowrap; }
 .list-preview-stamp {
   position: fixed; width: 254px; max-width: 41vw; z-index: 10; pointer-events: none;
   overflow: hidden; background: var(--stripe1);
