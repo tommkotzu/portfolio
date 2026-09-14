@@ -96,14 +96,18 @@
 
     // reserve enough width for the longest candidate up front, via canvas
     // text measurement (no visible flicker) — otherwise the logo's own box
-    // resizes with the text and pushes Work/Screens/About sideways
+    // resizes with the text and pushes Work/Screens/About sideways. A fixed
+    // width (not min-width) + overflow:hidden on the element, since random
+    // scramble noise can render wider than any of the actual target strings
+    // (e.g. a run of "W"s) — min-width alone let those transient frames grow
+    // the box and jiggle everything after it
     const measureCanvas = document.createElement("canvas").getContext("2d");
     measureCanvas.font = getComputedStyle(navLogo).font;
     const widest = Math.max(
       ...NAME_ROULETTE.map((n) => measureCanvas.measureText(n.toUpperCase()).width),
       measureCanvas.measureText(original).width
     );
-    navLogo.style.minWidth = `${Math.ceil(widest)}px`;
+    navLogo.style.width = `${Math.ceil(widest * 1.15)}px`;
 
     let scrambleActive = false;
     let holdTimer = null;
