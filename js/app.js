@@ -85,28 +85,72 @@
     });
   }
 
-  // easter egg: hovering the logo shuffles through a roulette of alternate
-  // names — settles back on the real one the moment the cursor leaves
+  // easter egg: hovering the logo scrambles through a roulette of alternate
+  // names, letter by letter, until the cursor leaves — where it lands is
+  // random too, not always back to the real name
   const NAME_ROULETTE = ["Thomas Mayer", "Thomas Ludwig", "Atomic Tomfritz", "Tommbommboo", "Pommfred"];
+  const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const navLogo = document.querySelector(".nav-logo");
   if (navLogo) {
     const original = navLogo.textContent;
-    let rouletteTimer = null;
+
+    // reserve enough width for the longest candidate up front, via canvas
+    // text measurement (no visible flicker) — otherwise the logo's own box
+    // resizes with the text and pushes Work/Screens/About sideways
+    const measureCanvas = document.createElement("canvas").getContext("2d");
+    measureCanvas.font = getComputedStyle(navLogo).font;
+    const widest = Math.max(
+      ...NAME_ROULETTE.map((n) => measureCanvas.measureText(n.toUpperCase()).width),
+      measureCanvas.measureText(original).width
+    );
+    navLogo.style.minWidth = `${Math.ceil(widest)}px`;
+
+    let scrambleActive = false;
+    let holdTimer = null;
     let lastShown = original;
+
+    let animToken = 0;
+    function scrambleTo(target, duration, onDone) {
+      const token = ++animToken;
+      const start = performance.now();
+      (function frame(now) {
+        if (token !== animToken) return; // a newer scramble started — stop writing
+        const progress = Math.min(1, (now - start) / duration);
+        const lockedCount = Math.floor(progress * target.length);
+        let out = "";
+        for (let i = 0; i < target.length; i++) {
+          out += i < lockedCount || target[i] === " " ? target[i] : SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+        }
+        navLogo.textContent = out;
+        if (progress < 1) requestAnimationFrame(frame);
+        else { navLogo.textContent = target; if (onDone) onDone(); }
+      })(start);
+    }
+
+    function pickNext() {
+      let next = lastShown;
+      while (next === lastShown) next = NAME_ROULETTE[Math.floor(Math.random() * NAME_ROULETTE.length)];
+      lastShown = next;
+      return next;
+    }
+
+    function cycle() {
+      if (!scrambleActive) return;
+      scrambleTo(pickNext().toUpperCase(), 350, () => {
+        if (!scrambleActive) return;
+        holdTimer = setTimeout(cycle, 300);
+      });
+    }
+
     navLogo.addEventListener("mouseenter", () => {
-      if (rouletteTimer) return;
-      rouletteTimer = setInterval(() => {
-        let next = lastShown;
-        while (next === lastShown) next = NAME_ROULETTE[Math.floor(Math.random() * NAME_ROULETTE.length)];
-        lastShown = next;
-        navLogo.textContent = next.toUpperCase();
-      }, 90);
+      if (scrambleActive) return;
+      scrambleActive = true;
+      cycle();
     });
     navLogo.addEventListener("mouseleave", () => {
-      clearInterval(rouletteTimer);
-      rouletteTimer = null;
-      lastShown = original;
-      navLogo.textContent = original;
+      scrambleActive = false;
+      clearTimeout(holdTimer);
+      scrambleTo(pickNext().toUpperCase(), 350);
     });
   }
 
