@@ -594,23 +594,12 @@
           <div class="detail-meta">
             <div class="detail-title-group">
               <span class="detail-idx">${String(realIdx + 1).padStart(2, "0")}</span>
-              <div class="detail-title">${active.title}</div>
+              <div class="detail-title">${active.client} — ${active.title}</div>
               <div class="tag-row">${tagPills(active.tags)}</div>
-              <div class="detail-year">${active.year}</div>
+              <div class="detail-loc">${active.location}</div>
             </div>
-            <div class="detail-col"><div class="label">Client</div><div class="val">${active.client}</div></div>
           </div>
-          <div class="detail-split">
-            <div class="detail-split-col">
-              <div class="label">Description</div>
-              <div class="detail-blurb">${active.blurb}</div>
-            </div>
-            ${active.credits && active.credits.length ? `
-            <div class="detail-split-col">
-              <div class="label">Credits</div>
-              <div class="credits-list">${active.credits.map((c) => `<div class="credits-row"><span class="credits-role">${c.role}</span><span class="credits-name">${c.name}</span></div>`).join("")}</div>
-            </div>` : ""}
-          </div>
+          <div class="detail-blurb">${active.blurb}</div>
           ${isEditorial ? "" : `
           <div class="gallery-toggle">
             <div class="opt ${state.galleryView === "spacious" ? "active" : ""}" data-set-gallery="spacious">Spacious</div>
