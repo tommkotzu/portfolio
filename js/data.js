@@ -513,14 +513,32 @@ const PROJECTS = [
     tags: [], // no tags yet
     blurb: "A personal, ongoing visual project started in 2016 in Schwäbisch Gmünd.",
     hero: media("mux", "dP01ov5G2vkGsojAKM02cPZXPDzlsgZjTqKfiK01u00tfl00"),
-    previews: previews(),
+    // gen_gallery.py loopinglovers — also skipped Comp.mp4 and the long
+    // Instagram-caption-named .mp4, both with no number prefix; rename them
+    // into the convention to bring them in
+    previews: previews(
+      "loopinglovers/preview/Screenshot From 2026-09-14 21-15-54.png",
+      "loopinglovers/preview/Screenshot From 2026-09-14 21-16-26.png",
+      "loopinglovers/preview/Screenshot From 2026-09-14 21-16-39.png"
+    ),
     galleryStyle: "editorial",
-    // playback ID ZXnj9502XqarDUPWA76gW2vu16oTH67QdGp113RwMW1o (meant to go
-    // here as an L-size item) now 404s — Mux itself returns "Invalid
-    // Playback ID", so the asset was likely deleted/never finished
-    // processing. Re-add once there's a working ID.
-    gallery: [],
-    editorialRows: [],
+    gallery: [
+      media("video", ASSET_ROOT + "loopinglovers/010M.mp4"), // 0 (M)
+      media("video", ASSET_ROOT + "loopinglovers/020S.mp4"), // 1 (S)
+      media("image", ASSET_ROOT + "loopinglovers/025m.jpg"), // 2 (M)
+      media("image", ASSET_ROOT + "loopinglovers/026S.png"), // 3 (S)
+      media("video", ASSET_ROOT + "loopinglovers/030m.mp4"), // 4 (M)
+      media("video", ASSET_ROOT + "loopinglovers/040L.mp4"), // 5 (L)
+      media("video", ASSET_ROOT + "loopinglovers/050S.mp4"), // 6 (S)
+      media("image", ASSET_ROOT + "loopinglovers/060M.jpg"), // 7 (M)
+    ],
+    editorialRows: [
+      { cols: [0, 1], sizes: ["M", "S"], offsets: [0, 50], align: "left" },
+      { cols: [2, 3], sizes: ["M", "S"], offsets: [60, 40], align: "right" },
+      { cols: [4], align: "center", size: "M" },
+      { cols: [5], align: "left" },
+      { cols: [6, 7], sizes: ["S", "M"], offsets: [50, 60], align: "right" },
+    ],
   },
   {
     slug: "afterlife-shows",
@@ -533,10 +551,63 @@ const PROJECTS = [
     tags: ["3D Production"],
     blurb: "3D visual production for Afterlife's world tour shows.",
     hero: media("mux", "IqfxlAhHn00HMetv9Mso53NhrClGQa6B00s4oqbfU4vBI"),
+    // gen_gallery.py picked up 7abd3d218995693.68a83fa7e5f88.jpeg as a
+    // hero candidate (its name starts with a digit) — that's an accidental
+    // match, not a real hero tag, so left out entirely rather than guess
+    // where it belongs; rename it into the convention to bring it in
     previews: previews(),
     galleryStyle: "editorial",
-    gallery: [],
-    editorialRows: [],
+    gallery: [
+      media("image", ASSET_ROOT + "Afterlife Shows/020L.jpg"), // 0 (L)
+      media("image", ASSET_ROOT + "Afterlife Shows/030M.webp"), // 1 (M)
+      media("image", ASSET_ROOT + "Afterlife Shows/040m.png"), // 2 (M)
+      media("image", ASSET_ROOT + "Afterlife Shows/050m.jpg"), // 3 (M)
+      media("video", ASSET_ROOT + "Afterlife Shows/060L.mp4"), // 4 (L)
+      media("video", ASSET_ROOT + "Afterlife Shows/070S.mp4"), // 5 (S)
+      media("video", ASSET_ROOT + "Afterlife Shows/080S.mp4"), // 6 (S)
+      media("video", ASSET_ROOT + "Afterlife Shows/090m.mp4"), // 7 (M)
+      media("image", ASSET_ROOT + "Afterlife Shows/100m.png"), // 8 (M)
+      media("video", ASSET_ROOT + "Afterlife Shows/110S.mov"), // 9 (S)
+      media("image", ASSET_ROOT + "Afterlife Shows/120L.jpg"), // 10 (L)
+    ],
+    editorialRows: [
+      { cols: [0], align: "left" },
+      { cols: [1, 2], sizes: ["M", "M"], offsets: [50, 60], align: "right" },
+      { cols: [3], align: "center", size: "M" },
+      { cols: [4], align: "left" },
+      { cols: [5, 6], sizes: ["S", "S"], offsets: [0, 50], align: "right" },
+      { cols: [7, 8], sizes: ["M", "M"], offsets: [60, 40], align: "center" },
+      { cols: [9], align: "left", size: "S" },
+      { cols: [10], align: "right" },
+    ],
+  },
+  {
+    slug: "afterlife-announcement",
+    title: "Announcement",
+    client: "Afterlife",
+    location: "World Wide",
+    year: "2025", // not given — confirm/adjust
+    role: "Director",
+    credits: [{ role: "Direction", name: "Thomas Mayer" }],
+    tags: ["3D Production"],
+    blurb: "3D visual production for Afterlife's tour announcement.",
+    // gen_gallery.py "Afterlife announement" — no Mux video for this one,
+    // hero is the local 010.jpg
+    hero: media("image", ASSET_ROOT + "Afterlife announement/010.jpg"),
+    previews: previews(),
+    galleryStyle: "editorial",
+    gallery: [
+      media("image", ASSET_ROOT + "Afterlife announement/020M.jpg"), // 0 (M)
+      media("image", ASSET_ROOT + "Afterlife announement/030M.jpg"), // 1 (M)
+      media("video", ASSET_ROOT + "Afterlife announement/040L.mp4"), // 2 (L)
+      media("image", ASSET_ROOT + "Afterlife announement/050S.jpg"), // 3 (S)
+      media("image", ASSET_ROOT + "Afterlife announement/060S.png"), // 4 (S)
+    ],
+    editorialRows: [
+      { cols: [0, 1], sizes: ["M", "M"], offsets: [0, 50], align: "left" },
+      { cols: [2], align: "right" },
+      { cols: [3, 4], sizes: ["S", "S"], offsets: [40, 70], align: "center" },
+    ],
   },
 ];
 
