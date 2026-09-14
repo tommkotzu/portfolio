@@ -246,11 +246,17 @@ button { font: inherit; color: inherit; background: none; border: 0; }
 .detail-scroll-area { position: relative; padding-bottom: 110px; }
 .detail-back { cursor: pointer; font-size: 13px; color: var(--muted); padding: 28px 0 20px; width: fit-content; }
 .detail-meta { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; padding: 36px 0; border-bottom: 1px solid var(--line); }
+.detail-title-group { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.detail-idx { font: 13px ui-monospace, Menlo, monospace; color: var(--faint); }
 .detail-title { font-size: 30px; font-weight: 600; letter-spacing: -0.01em; }
 .detail-cols { display: flex; gap: 36px; flex-wrap: wrap; }
 .detail-col .label { font: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--faint); margin-bottom: 4px; }
 .detail-col .val { font-size: 14px; }
 .detail-blurb { max-width: 560px; padding: 32px 0; font-size: 16px; line-height: 1.8; color: var(--muted2); }
+.credits-list { display: flex; flex-direction: column; max-width: 560px; }
+.credits-row { display: flex; justify-content: space-between; gap: 20px; padding: 12px 0; border-bottom: 1px solid var(--lineSoft); font-size: 14px; }
+.credits-row .credits-role { color: var(--muted); }
+.credits-row .credits-name { color: var(--strong); }
 .gallery-toggle { display: flex; justify-content: flex-end; gap: 6px; padding-bottom: 10px; }
 .gallery-toggle .opt { font-size: 12px; padding: 7px 14px; border: 1px solid var(--lineStrong); cursor: pointer; color: var(--muted); }
 .gallery-toggle .opt.active { background: var(--activeBg); color: var(--text); }

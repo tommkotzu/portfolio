@@ -592,7 +592,11 @@
 
         <div class="detail-narrow">
           <div class="detail-meta">
-            <div class="detail-title">${active.title}</div>
+            <div class="detail-title-group">
+              <span class="detail-idx">${String(realIdx + 1).padStart(2, "0")}</span>
+              <div class="detail-title">${active.title}</div>
+              <div class="tag-row">${tagPills(active.tags)}</div>
+            </div>
             <div class="detail-cols">
               <div class="detail-col"><div class="label">Client</div><div class="val">${active.client}</div></div>
               <div class="detail-col"><div class="label">Role</div><div class="val">${active.role}</div></div>
@@ -605,6 +609,11 @@
             <div class="opt ${state.galleryView === "spacious" ? "active" : ""}" data-set-gallery="spacious">Spacious</div>
             <div class="opt ${state.galleryView === "grid" ? "active" : ""}" data-set-gallery="grid">Grid</div>
           </div>`}
+          ${active.credits && active.credits.length ? `
+          <div class="about-section credits-section">
+            <h2>Credits</h2>
+            <div class="credits-list">${active.credits.map((c) => `<div class="credits-row"><span class="credits-role">${c.role}</span><span class="credits-name">${c.name}</span></div>`).join("")}</div>
+          </div>` : ""}
         </div>
 
         ${isEditorial ? `<div class="detail-wide">${galleryBody}</div>` : `<div class="detail-narrow">${galleryBody}</div>`}

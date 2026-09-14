@@ -35,6 +35,7 @@ const PROJECTS = [
     location: "Online",
     year: "2025",
     role: "Director",
+    credits: [{ role: "Direction", name: "Thomas Mayer" }],
     tags: ["3D Production", "Asset Creation", "Video Production"],
     blurb: "A 3D-led campaign for ACG x Nike — built from the ground up in CG, from lookdev through final comp.",
     hero: null, // no "hero" folder for this project
@@ -80,6 +81,7 @@ const PROJECTS = [
     location: "Home",
     year: "2024",
     role: "Director",
+    credits: [{ role: "Direction", name: "Thomas Mayer" }],
     tags: ["Asset Creation", "Lookdev", "Art Direction", "3D Production"],
     blurb: "Ground-up character design, lookdev and stage-visual direction for Anyma — spanning asset creation, live-show production and tour visuals.",
     // gallery regenerated from Assets/projects/Anyma Character Development/ via
@@ -153,6 +155,7 @@ const PROJECTS = [
     location: "New York",
     year: "2024",
     role: "Director",
+    credits: [{ role: "Direction", name: "Thomas Mayer" }],
     tags: ["Art Direction", "3D Production", "Video Production"],
     blurb: "Out-of-home campaign for Luisa Via Roma x VOGUE, built for the Times Square billboard format.",
     // gallery/hero regenerated from Assets/projects/luisa via roma/ via
@@ -208,6 +211,7 @@ const PROJECTS = [
     location: "Berlin",
     year: "2023",
     role: "Director",
+    credits: [{ role: "Direction", name: "Thomas Mayer" }],
     tags: ["Art Direction", "3D Production", "Lookdev"],
     blurb: "Product launch film and stills for the Adidas NMD_S1, shot and rendered out of the Berlin studio.",
     // gallery/hero regenerated from the 010L/020M/030S-style filenames in
@@ -266,6 +270,7 @@ const PROJECTS = [
     location: "Munich",
     year: "2025",
     role: "Director",
+    credits: [{ role: "Direction", name: "Thomas Mayer" }],
     tags: ["Artist"],
     blurb: "On-location visuals for the opening of OpenAI's Munich office.",
     // gallery/hero regenerated from Assets/projects/openAI/ via
@@ -306,6 +311,7 @@ const PROJECTS = [
     location: "Paris",
     year: "2023",
     role: "Director",
+    credits: [{ role: "Direction", name: "Thomas Mayer" }],
     tags: ["Art Direction", "3D Production"],
     blurb: "AR-driven campaign for the Nike x Pigalle collaboration, art directed and produced for Paris activation.",
     // gallery/hero regenerated from Assets/projects/Pigalle x nike/ via
@@ -367,6 +373,7 @@ const PROJECTS = [
     location: "São Paulo",
     year: "2023",
     role: "Director",
+    credits: [{ role: "Direction", name: "Thomas Mayer" }],
     tags: ["Asset Creation", "3D Production"],
     blurb: "Live-performance visual package for The Weeknd's São Paulo show.",
     // gallery/hero regenerated from Assets/projects/weekend/ via
@@ -418,6 +425,7 @@ const PROJECTS = [
     location: "Berlin",
     year: "2023",
     role: "Director",
+    credits: [{ role: "Direction", name: "Thomas Mayer" }],
     tags: ["3D Production", "VFX Supervisor"],
     blurb: "“Beyond Romance” — a Valentine's campaign for Zalando, full CG production with VFX supervision.",
     // gallery/hero regenerated from Assets/projects/zalando/ via
@@ -458,6 +466,7 @@ const PROJECTS = [
     location: "Seoul",
     year: "2025",
     role: "Director",
+    credits: [{ role: "Direction", name: "Thomas Mayer" }],
     tags: ["Artist", "Art Direction", "Lookdev", "AI"],
     blurb: "Character and stage-visual direction for Superpop's Seoul show, from storyboard through final lookdev.",
     hero: media("mux", "5kPcLdjeceiNMoey3Z8aRW2htQeVrxQOQSiSqF1yN7M"),
