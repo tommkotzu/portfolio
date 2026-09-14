@@ -532,6 +532,7 @@
       if (dist < MIN_DIST && now - lastSpawn < MIN_GAP) return;
       lastX = e.clientX; lastY = e.clientY; lastSpawn = now;
       const urls = JSON.parse(decodeURIComponent(row.dataset.previews));
+      if (!urls.length) return; // no preview images for this project yet
       // a random frame each time, not one mapped to cursor position — avoid
       // repeating whatever the current stamp is already showing
       let idx = Math.floor(Math.random() * urls.length);
