@@ -5,6 +5,11 @@
   const navClock = document.getElementById("nav-clock");
   const themeToggle = document.getElementById("theme-toggle");
 
+  // "Client — Title", or just the title for client-less/self-initiated projects
+  function projectTitle(p) {
+    return p.client ? `${p.client} — ${p.title}` : p.title;
+  }
+
   const state = {
     theme: localStorage.getItem("tm-theme") || "dark",
     density: localStorage.getItem("tm-density") || "2",
@@ -290,7 +295,7 @@
             <div class="featured-card" style="grid-column:${layout.span};margin-top:${layout.offset}px;aspect-ratio:${layout.ratio}" data-open-project="${p.slug}">
               ${scrubMediaHTML(p.previews, { randomStart: true, ambient: true })}
               <div class="card-overlay">
-                <div class="card-overlay-row"><span class="t">${p.client} — ${p.title}</span></div>
+                <div class="card-overlay-row"><span class="t">${projectTitle(p)}</span></div>
                 <div class="tag-row">${tagPills(p.tags.slice(0, 2))}</div>
               </div>
             </div>`
@@ -357,7 +362,7 @@
           (p, i) => `
         <div class="list-row" data-open-project="${p.slug}" data-previews="${encodeURIComponent(JSON.stringify(p.previews.map((pv) => pv.src)))}">
           <span class="li-idx">${String(i + 1).padStart(2, "0")}</span>
-          <span class="li-title">${p.client} — ${p.title}</span>
+          <span class="li-title">${projectTitle(p)}</span>
           <div class="li-tags">${tagPills(p.tags.slice(0, 2))}</div>
           <span class="li-loc">${p.location}</span>
         </div>`
@@ -370,7 +375,7 @@
         <div class="card-full" data-open-project="${p.slug}">
           ${scrubMediaHTML(p.previews, { cls: "card-thumb-full" })}
           <div class="card-meta">
-            <span class="title">${p.client} — ${p.title}</span>
+            <span class="title">${projectTitle(p)}</span>
             <div class="tag-row">${tagPills(p.tags.slice(0, 2))}</div>
             <span class="loc">${p.location}</span>
           </div>
@@ -385,7 +390,7 @@
           <span class="card-index">${String(i + 1).padStart(2, "0")}</span>
           ${scrubMediaHTML(p.previews, { cls: "card-thumb" })}
           <div class="card-meta">
-            <span class="title">${p.client} — ${p.title}</span>
+            <span class="title">${projectTitle(p)}</span>
             <span class="loc">${p.location}</span>
           </div>
         </div>`
@@ -594,7 +599,7 @@
           <div class="detail-meta">
             <div class="detail-title-group">
               <span class="detail-idx">${String(realIdx + 1).padStart(2, "0")}</span>
-              <div class="detail-title">${active.client} — ${active.title}</div>
+              <div class="detail-title">${projectTitle(active)}</div>
               <div class="tag-row">${tagPills(active.tags)}</div>
               <div class="detail-loc">${active.location}</div>
             </div>

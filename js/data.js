@@ -502,6 +502,42 @@ const PROJECTS = [
       { cols: [10], align: "center" },
     ],
   },
+  {
+    slug: "looping-lovers",
+    title: "Looping Lovers",
+    client: "", // self-initiated — no client
+    location: "Schwäbisch Gmünd",
+    year: "Since 2016",
+    role: "Artist",
+    credits: [{ role: "Artist", name: "Thomas Mayer" }],
+    tags: [], // no tags yet
+    blurb: "A personal, ongoing visual project started in 2016 in Schwäbisch Gmünd.",
+    hero: media("mux", "dP01ov5G2vkGsojAKM02cPZXPDzlsgZjTqKfiK01u00tfl00"),
+    previews: previews(),
+    galleryStyle: "editorial",
+    gallery: [
+      media("mux", "ZXnj9502XqarDUPWA76gW2vu16oTH67QdGp113RwMW1o"), // 0 (L)
+    ],
+    editorialRows: [
+      { cols: [0], align: "left" },
+    ],
+  },
+  {
+    slug: "afterlife-shows",
+    title: "Shows",
+    client: "Afterlife",
+    location: "World Wide",
+    year: "2025", // not given — confirm/adjust
+    role: "Director",
+    credits: [{ role: "Direction", name: "Thomas Mayer" }],
+    tags: ["3D Production"],
+    blurb: "3D visual production for Afterlife's world tour shows.",
+    hero: media("mux", "IqfxlAhHn00HMetv9Mso53NhrClGQa6B00s4oqbfU4vBI"),
+    previews: previews(),
+    galleryStyle: "editorial",
+    gallery: [],
+    editorialRows: [],
+  },
 ];
 
 // index into PROJECTS used on the Welcome screen's "Selected Work" grid
