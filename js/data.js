@@ -93,7 +93,7 @@ const PROJECTS = [
     // Also: Entropy@officialrezz.mp4, bts_02 copy.jpg, bts_06 copy (Copy).jpg
     // and bts_06.jpg still have no number prefix, so they were dropped from
     // the gallery — rename them into the 0-9-0-L/M/S scheme to bring them back.
-    hero: null, // no "hero"-named or bare-numbered file in this project
+    hero: media("mux", "IqfxlAhHn00HMetv9Mso53NhrClGQa6B00s4oqbfU4vBI"), // Afterlife Shows
     previews: previews(
       "Anyma Character Development/012L.jpg",
       "Anyma Character Development/034L.jpg",
@@ -161,7 +161,7 @@ const PROJECTS = [
     // gallery/hero regenerated from Assets/projects/luisa via roma/ via
     // scripts/gen_gallery.py — rerun that script after renaming/adding files
     // there instead of hand-editing this list
-    hero: media("video", ASSET_ROOT + "luisa via roma/010.mp4"),
+    hero: media("mux", "dP01ov5G2vkGsojAKM02cPZXPDzlsgZjTqKfiK01u00tfl00"),
     previews: previews(
       "luisa via roma/preview/02.jpg",
       "luisa via roma/preview/2a45c0212037017.672dfbbd2a564.png"
@@ -187,6 +187,7 @@ const PROJECTS = [
       media("image", ASSET_ROOT + "luisa via roma/behind the scenes/160M.gif"), // 16 (M)
       media("image", ASSET_ROOT + "luisa via roma/behind the scenes/160M.png"), // 17 (M)
       media("image", ASSET_ROOT + "luisa via roma/behind the scenes/170S.gif"), // 18 (S)
+      media("mux", "ZXnj9502XqarDUPWA76gW2vu16oTH67QdGp113RwMW1o"), // 19 (L)
     ],
     editorialRows: [
       { cols: [0], align: "left", size: "M" },
@@ -202,6 +203,7 @@ const PROJECTS = [
       { cols: [15], align: "right" },
       { cols: [16, 17], sizes: ["M", "M"], offsets: [50, 60], align: "center" },
       { cols: [18], align: "left", size: "S" },
+      { cols: [19], align: "right" },
     ],
   },
   {
