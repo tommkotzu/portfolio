@@ -290,7 +290,7 @@
             <div class="featured-card" style="grid-column:${layout.span};margin-top:${layout.offset}px;aspect-ratio:${layout.ratio}" data-open-project="${p.slug}">
               ${scrubMediaHTML(p.previews, { randomStart: true, ambient: true })}
               <div class="card-overlay">
-                <div class="card-overlay-row"><span class="t">${p.title}</span><span class="y">${p.year}</span></div>
+                <div class="card-overlay-row"><span class="t">${p.client} — ${p.title}</span></div>
                 <div class="tag-row">${tagPills(p.tags.slice(0, 2))}</div>
               </div>
             </div>`
