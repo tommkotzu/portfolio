@@ -515,12 +515,12 @@ const PROJECTS = [
     hero: media("mux", "dP01ov5G2vkGsojAKM02cPZXPDzlsgZjTqKfiK01u00tfl00"),
     previews: previews(),
     galleryStyle: "editorial",
-    gallery: [
-      media("mux", "ZXnj9502XqarDUPWA76gW2vu16oTH67QdGp113RwMW1o"), // 0 (L)
-    ],
-    editorialRows: [
-      { cols: [0], align: "left" },
-    ],
+    // playback ID ZXnj9502XqarDUPWA76gW2vu16oTH67QdGp113RwMW1o (meant to go
+    // here as an L-size item) now 404s — Mux itself returns "Invalid
+    // Playback ID", so the asset was likely deleted/never finished
+    // processing. Re-add once there's a working ID.
+    gallery: [],
+    editorialRows: [],
   },
   {
     slug: "afterlife-shows",
