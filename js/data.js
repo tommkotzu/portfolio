@@ -70,6 +70,14 @@ const PROJECTS = [
       media("vimeo", "1166048550", { caption: "Main comp breakdown." }), // 10
       media("image", ASSET_ROOT + "Acg/00_acg/preview/image 719.png"), // 11
       media("image", ASSET_ROOT + "Acg/00_acg/preview/Pasted image.png"), // 12
+      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/090m.png"), // 13 (M)
+      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/100L+.jpg"), // 14 (L)
+      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/110M.png"), // 15 (M)
+      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/120m.jpg"), // 16 (M)
+      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/130S.png"), // 17 (S)
+      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/140S.jpg"), // 18 (S)
+      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/150M.png"), // 19 (M)
+      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/160S.png"), // 20 (S)
     ],
     editorialRows: [
       { cols: [0], align: "left" },
@@ -80,6 +88,11 @@ const PROJECTS = [
       { cols: [7, 8], offsets: [0, 50], align: "left" },
       { cols: [9, 10], offsets: [40, 0], align: "right" },
       { cols: [11, 12], offsets: [0, 60], align: "center" },
+      { cols: [13], align: "left", size: "M" },
+      { cols: [14], align: "right" },
+      { cols: [15, 16], sizes: ["M", "M"], offsets: [50, 60], align: "center" },
+      { cols: [17, 18], sizes: ["S", "S"], offsets: [0, 50], align: "left" },
+      { cols: [19, 20], sizes: ["M", "S"], offsets: [60, 40], align: "right" },
     ],
   },
   {
@@ -416,6 +429,8 @@ const PROJECTS = [
       media("video", ASSET_ROOT + "weekend/150S.webm"), // 13 (S)
       media("video", ASSET_ROOT + "weekend/160S.webm"), // 14 (S)
       media("image", ASSET_ROOT + "weekend/170L.png"), // 15 (L)
+      media("image", ASSET_ROOT + "weekend/180m.png"), // 16 (M)
+      media("image", ASSET_ROOT + "weekend/190M.jpg"), // 17 (M)
     ],
     editorialRows: [
       { cols: [0, 1], sizes: ["M", "M"], offsets: [0, 50], align: "left" },
@@ -428,6 +443,7 @@ const PROJECTS = [
       { cols: [11, 12], sizes: ["S", "M"], offsets: [50, 60], align: "right" },
       { cols: [13, 14], sizes: ["S", "S"], offsets: [40, 70], align: "center" },
       { cols: [15], align: "left" },
+      { cols: [16, 17], sizes: ["M", "M"], offsets: [50, 60], align: "right" },
     ],
   },
   {
@@ -460,7 +476,9 @@ const PROJECTS = [
       media("image", ASSET_ROOT + "zalando/048S.jpg"), // 5 (S)
       media("video", ASSET_ROOT + "zalando/050L.webm"), // 6 (L)
       media("image", ASSET_ROOT + "zalando/055S.jpg"), // 7 (S)
-      media("image", ASSET_ROOT + "zalando/060M.jpg"), // 8 (M)
+      media("image", ASSET_ROOT + "zalando/060L.jpg"), // 8 (L)
+      media("image", ASSET_ROOT + "zalando/060M.jpg"), // 9 (M)
+      media("image", ASSET_ROOT + "zalando/065S.jpg"), // 10 (S)
     ],
     editorialRows: [
       { cols: [0], align: "left", size: "S" },
@@ -468,7 +486,9 @@ const PROJECTS = [
       { cols: [2, 3], sizes: ["M", "S"], offsets: [60, 40], align: "center" },
       { cols: [4, 5], sizes: ["M", "S"], offsets: [70, 0], align: "left" },
       { cols: [6], align: "right" },
-      { cols: [7, 8], sizes: ["S", "M"], offsets: [60, 40], align: "center" },
+      { cols: [7], align: "center", size: "S" },
+      { cols: [8], align: "left" },
+      { cols: [9, 10], sizes: ["M", "S"], offsets: [70, 0], align: "right" },
     ],
   },
   {
@@ -501,6 +521,15 @@ const PROJECTS = [
       media("vimeo", "1107468409", { caption: "Character animation — full cut." }), // 8 (L)
       media("image", ASSET_ROOT + "superpop/090L.png"), // 9 (L)
       media("image", ASSET_ROOT + "superpop/100L.jpg"), // 10 (L)
+      media("image", ASSET_ROOT + "superpop/110L.png"), // 11 (L)
+      media("image", ASSET_ROOT + "superpop/130S.png"), // 12 (S)
+      media("image", ASSET_ROOT + "superpop/140S.png"), // 13 (S)
+      media("image", ASSET_ROOT + "superpop/150M.png"), // 14 (M)
+      media("image", ASSET_ROOT + "superpop/180s.png"), // 15 (S)
+      media("image", ASSET_ROOT + "superpop/190S.jpg"), // 16 (S)
+      media("image", ASSET_ROOT + "superpop/195S.jpg"), // 17 (S)
+      media("image", ASSET_ROOT + "superpop/195S.png"), // 18 (S)
+      media("image", ASSET_ROOT + "superpop/200S.png"), // 19 (S)
     ],
     editorialRows: [
       { cols: [0], align: "left" },
@@ -512,6 +541,11 @@ const PROJECTS = [
       { cols: [8], align: "left" },
       { cols: [9], align: "right" },
       { cols: [10], align: "center" },
+      { cols: [11], align: "left" },
+      { cols: [12, 13], sizes: ["S", "S"], offsets: [60, 40], align: "right" },
+      { cols: [14, 15], sizes: ["M", "S"], offsets: [70, 0], align: "center" },
+      { cols: [16, 17], sizes: ["S", "S"], offsets: [50, 60], align: "left" },
+      { cols: [18, 19], sizes: ["S", "S"], offsets: [40, 70], align: "right" },
     ],
   },
   {
