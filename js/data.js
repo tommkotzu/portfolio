@@ -614,7 +614,7 @@ const PROJECTS = [
 // index into PROJECTS used on the Welcome screen's "Selected Work" grid
 const FEATURED_LAYOUT = [
   { span: "1 / 8", offset: 0, ratio: "16/11" },
-  { span: "8 / 13", offset: 90, ratio: "4/5" },
+  { span: "8 / 13", offset: 170, ratio: "4/5" },
   { span: "1 / 6", offset: 60, ratio: "4/5" },
   { span: "6 / 13", offset: 0, ratio: "16/11" },
 ];
