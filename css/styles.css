@@ -349,9 +349,9 @@ button { font: inherit; color: inherit; background: none; border: 0; }
 .screens-page { max-width: 1440px; margin: 0 auto; width: 100%; padding: 70px var(--pad) 110px; }
 .screens-title { font-size: 32px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 6px; }
 .screens-sub { font-size: 14px; color: var(--muted); margin-bottom: 36px; }
-.screens-grid { column-count: 4; column-gap: 24px; }
-.screens-grid .media-wrap { margin-bottom: 24px; break-inside: avoid; }
-.screens-grid img { width: 100%; height: auto; }
+.screens-grid { column-count: 4; column-gap: 8px; }
+.screens-grid .media-wrap { margin-bottom: 8px; break-inside: avoid; border-radius: 4px; }
+.screens-grid img { width: 100%; height: auto; border-radius: 4px; }
 @media (max-width: 900px) { .screens-grid { column-count: 3; } }
 @media (max-width: 600px) { .screens-grid { column-count: 2; } }
 

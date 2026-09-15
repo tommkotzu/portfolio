@@ -786,6 +786,19 @@ const SCREENS = [
   media("image", "Assets/screenshots/candy (2).jpg"),
   media("image", "Assets/screenshots/candy (3).jpg"),
   media("image", "Assets/screenshots/candy (4).jpg"),
+  media("image", "Assets/screenshots/02_04_516.png"),
+  media("image", "Assets/screenshots/02_04_518.png"),
+  media("image", "Assets/screenshots/02_24_626.png"),
+  media("image", "Assets/screenshots/05 -170301 %pn.png"),
+  media("image", "Assets/screenshots/10_18.53_3909.png"),
+  media("image", "Assets/screenshots/14_16.47_3663.png"),
+  media("image", "Assets/screenshots/15_17.17_5579.jpg"),
+  media("image", "Assets/screenshots/17_15.11_69.png"),
+  media("image", "Assets/screenshots/17_15.58_580.gif"),
+  media("image", "Assets/screenshots/17_15.59_2704.png"),
+  media("image", "Assets/screenshots/22.11.18 16.48.46 Cinema_4D.jpg"),
+  media("image", "Assets/screenshots/29_18.33_5608.png"),
+  media("image", "Assets/screenshots/31_14.33_4223.jpg"),
 ];
 
 const CLIENTS_COLLAB = ["Woodblock", "Siemens", "Nike", "Adidas", "Pigalle", "ACG", "RG/A", "Boss", "LuisaViaRoma", "Vogue", "The Weeknd", "Google", "GNTM"];
