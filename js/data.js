@@ -27,6 +27,14 @@ const HOME = {
   reel: media("mux", "zEin01eAJjNEYNt2XS7TEtWanGfaw7nbv02OUZoafvmLo", { poster: a("posters/home-reel.jpg") }),
 };
 
+// About page portrait — click cycles through these
+const PROFILE_PICS = [
+  a("Assets/about/profilePic/010.jpeg"),
+  a("Assets/about/profilePic/2023-02-11 12.57.01-1.jpg"),
+  a("Assets/about/profilePic/2023-04-27 19.17.22.jpg"),
+  a("Assets/about/profilePic/Pasted image.png"),
+];
+
 const PROJECTS = [
   {
     slug: "acg-x-nike",
@@ -162,9 +170,13 @@ const PROJECTS = [
     // scripts/gen_gallery.py — rerun that script after renaming/adding files
     // there instead of hand-editing this list
     hero: media("video", ASSET_ROOT + "luisa via roma/010.mp4"),
+    // "Loopinglovers teaser luisaviaroma.mp4" in this preview/ folder is a
+    // leftover from the Looping Lovers project, not a real preview for this
+    // one — left out rather than mixed in by mistake
     previews: previews(
       "luisa via roma/preview/02.jpg",
-      "luisa via roma/preview/2a45c0212037017.672dfbbd2a564.png"
+      "luisa via roma/preview/2a45c0212037017.672dfbbd2a564.png",
+      "luisa via roma/preview/Pasted image.png"
     ),
     galleryStyle: "editorial",
     gallery: [
@@ -555,7 +567,11 @@ const PROJECTS = [
     // hero candidate (its name starts with a digit) — that's an accidental
     // match, not a real hero tag, so left out entirely rather than guess
     // where it belongs; rename it into the convention to bring it in
-    previews: previews(),
+    previews: previews(
+      "Afterlife Shows/preview/020L.jpg",
+      "Afterlife Shows/preview/040m.png",
+      "Afterlife Shows/preview/120L.jpg"
+    ),
     galleryStyle: "editorial",
     gallery: [
       media("image", ASSET_ROOT + "Afterlife Shows/020L.jpg"), // 0 (L)
@@ -594,7 +610,10 @@ const PROJECTS = [
     // gen_gallery.py "Afterlife announement" — no Mux video for this one,
     // hero is the local 010.jpg
     hero: media("image", ASSET_ROOT + "Afterlife announement/010.jpg"),
-    previews: previews(),
+    previews: previews(
+      "Afterlife announement/preview/010.jpg",
+      "Afterlife announement/preview/060S.png"
+    ),
     galleryStyle: "editorial",
     gallery: [
       media("image", ASSET_ROOT + "Afterlife announement/020M.jpg"), // 0 (M)
@@ -609,6 +628,62 @@ const PROJECTS = [
       { cols: [3, 4], sizes: ["S", "S"], offsets: [40, 70], align: "center" },
     ],
   },
+  {
+    slug: "highsnobiety",
+    title: "Campaign",
+    client: "Highsnobiety",
+    location: "Berlin", // not given beyond "not London" — Highsnobiety's real HQ; confirm/adjust
+    year: "2025", // not given — confirm/adjust
+    role: "Director",
+    credits: [{ role: "Direction", name: "Thomas Mayer" }],
+    tags: [], // not given yet
+    blurb: "Campaign work for Highsnobiety.", // placeholder — flesh out once there's more detail
+    // gen_gallery.py "High Snobiety - not in london" — 160.png is the only
+    // bare-numbered file (no L/M/S letter), so it's the hero by convention
+    hero: media("image", ASSET_ROOT + "High Snobiety - not in london/160.png"),
+    previews: previews(
+      "High Snobiety - not in london/preview/080L.png",
+      "High Snobiety - not in london/preview/100m.jpg",
+      "High Snobiety - not in london/preview/135S.png"
+    ),
+    galleryStyle: "editorial",
+    gallery: [
+      media("video", ASSET_ROOT + "High Snobiety - not in london/010L.mp4"), // 0 (L)
+      media("video", ASSET_ROOT + "High Snobiety - not in london/020M.mp4"), // 1 (M)
+      media("video", ASSET_ROOT + "High Snobiety - not in london/030S.mp4"), // 2 (S)
+      media("video", ASSET_ROOT + "High Snobiety - not in london/040M.mp4"), // 3 (M)
+      media("image", ASSET_ROOT + "High Snobiety - not in london/045S.jpg"), // 4 (S)
+      media("image", ASSET_ROOT + "High Snobiety - not in london/050S.jpg"), // 5 (S)
+      media("image", ASSET_ROOT + "High Snobiety - not in london/060M.png"), // 6 (M)
+      media("image", ASSET_ROOT + "High Snobiety - not in london/070m.png"), // 7 (M)
+      media("image", ASSET_ROOT + "High Snobiety - not in london/080L.png"), // 8 (L)
+      media("image", ASSET_ROOT + "High Snobiety - not in london/090m.png"), // 9 (M)
+      media("image", ASSET_ROOT + "High Snobiety - not in london/100m.jpg"), // 10 (M)
+      media("image", ASSET_ROOT + "High Snobiety - not in london/110m.jpg"), // 11 (M)
+      media("image", ASSET_ROOT + "High Snobiety - not in london/120m.jpg"), // 12 (M)
+      media("image", ASSET_ROOT + "High Snobiety - not in london/130m.gif"), // 13 (M)
+      media("image", ASSET_ROOT + "High Snobiety - not in london/135S.png"), // 14 (S)
+      media("image", ASSET_ROOT + "High Snobiety - not in london/140l.png"), // 15 (L)
+      media("image", ASSET_ROOT + "High Snobiety - not in london/150S.jpg"), // 16 (S)
+      media("image", ASSET_ROOT + "High Snobiety - not in london/170s.png"), // 17 (S)
+      media("image", ASSET_ROOT + "High Snobiety - not in london/180S.png"), // 18 (S)
+      media("image", ASSET_ROOT + "High Snobiety - not in london/190S.png"), // 19 (S)
+    ],
+    editorialRows: [
+      { cols: [0], align: "left" },
+      { cols: [1, 2], sizes: ["M", "S"], offsets: [50, 60], align: "right" },
+      { cols: [3, 4], sizes: ["M", "S"], offsets: [40, 70], align: "center" },
+      { cols: [5, 6], sizes: ["S", "M"], offsets: [0, 50], align: "left" },
+      { cols: [7], align: "right", size: "M" },
+      { cols: [8], align: "center" },
+      { cols: [9, 10], sizes: ["M", "M"], offsets: [70, 0], align: "left" },
+      { cols: [11, 12], sizes: ["M", "M"], offsets: [50, 60], align: "right" },
+      { cols: [13, 14], sizes: ["M", "S"], offsets: [40, 70], align: "center" },
+      { cols: [15], align: "left" },
+      { cols: [16, 17], sizes: ["S", "S"], offsets: [50, 60], align: "right" },
+      { cols: [18, 19], sizes: ["S", "S"], offsets: [40, 70], align: "center" },
+    ],
+  },
 ];
 
 // index into PROJECTS used on the Welcome screen's "Selected Work" grid
@@ -619,7 +694,65 @@ const FEATURED_LAYOUT = [
   { span: "6 / 13", offset: 0, ratio: "16/11" },
 ];
 
-const SCREENS = PROJECTS.flatMap((p) => [...p.previews, ...p.gallery.filter((g) => g.type === "image")]).slice(0, 28);
+// real content from Assets/screenshots/ — a running collection of frames,
+// stills and process shots, not derived from project galleries
+const SCREENS = [
+  media("image", "Assets/screenshots/02_18.52_5557.jpg"),
+  media("image", "Assets/screenshots/03_13.29_6029.png"),
+  media("image", "Assets/screenshots/08_27_1329.png"),
+  media("image", "Assets/screenshots/08_27_1331.png"),
+  media("image", "Assets/screenshots/08_27_1332.png"),
+  media("image", "Assets/screenshots/08_27_1336.png"),
+  media("image", "Assets/screenshots/10_15_108.png"),
+  media("image", "Assets/screenshots/10_15_109.png"),
+  media("image", "Assets/screenshots/10_15_110.png"),
+  media("image", "Assets/screenshots/10_15_112.jpg"),
+  media("image", "Assets/screenshots/11_10_148.jpg"),
+  media("image", "Assets/screenshots/11_10_149.png"),
+  media("image", "Assets/screenshots/15_17.40_5598.png"),
+  media("image", "Assets/screenshots/15_17.40_5599.png"),
+  media("image", "Assets/screenshots/17_15.24_75.jpg"),
+  media("image", "Assets/screenshots/18_10.54_96.png"),
+  media("image", "Assets/screenshots/18_14.44_156.png"),
+  media("image", "Assets/screenshots/20_08.18_1517.jpg"),
+  media("image", "Assets/screenshots/22.05.09 -11.5701 blender.png"),
+  media("image", "Assets/screenshots/22.05.09 -11.5927 blender.png"),
+  media("image", "Assets/screenshots/22.05.09 -12.0403 blender.png"),
+  media("image", "Assets/screenshots/22.05.10 -09.3701 blender.png"),
+  media("image", "Assets/screenshots/22.05.14 -13.5857 DAZStudio.png"),
+  media("image", "Assets/screenshots/22.07.15 -08.5312 chrome.png"),
+  media("image", "Assets/screenshots/22.11.02 -15.5732 Cinema_4D.png"),
+  media("image", "Assets/screenshots/22.11.02 -16.2523 Cinema_4D.png"),
+  media("image", "Assets/screenshots/22.11.02 -18.0036 Cinema_4D.png"),
+  media("image", "Assets/screenshots/22.11.02 -18.0049 Cinema_4D.png"),
+  media("image", "Assets/screenshots/22.11.03 -12.2647 Cinema_4D.png"),
+  media("image", "Assets/screenshots/22.11.03 -13.4048 Cinema_4D.png"),
+  media("image", "Assets/screenshots/22.11.03 -13.4103 Cinema_4D.png"),
+  media("image", "Assets/screenshots/22.11.03 -13.4118 Cinema_4D.png"),
+  media("image", "Assets/screenshots/22.11.03 -13.4140 Cinema_4D.png"),
+  media("image", "Assets/screenshots/22.11.16 15.41.51 Cinema_4D.png"),
+  media("image", "Assets/screenshots/22.11.24 11.53.03 blender_3.3.png"),
+  media("image", "Assets/screenshots/22.12.05 16.08.55 blender_3.3.jpg"),
+  media("image", "Assets/screenshots/22.12.05 16.13.03 blender_3.3.jpg"),
+  media("image", "Assets/screenshots/25_16.09_267.jpg"),
+  media("image", "Assets/screenshots/25_18.45_269.png"),
+  media("image", "Assets/screenshots/25_18.45_270.jpg"),
+  media("image", "Assets/screenshots/27_11.48_622.png"),
+  media("image", "Assets/screenshots/27_11.50_623.png"),
+  media("image", "Assets/screenshots/27_11.53_624.png"),
+  media("image", "Assets/screenshots/27_12.45_625.png"),
+  media("image", "Assets/screenshots/27_12.45_626.png"),
+  media("image", "Assets/screenshots/27_12.45_627.png"),
+  media("image", "Assets/screenshots/27_15.03_4349.png"),
+  media("image", "Assets/screenshots/28_14.22_1561.jpg"),
+  media("image", "Assets/screenshots/30_16.21_278.png"),
+  media("image", "Assets/screenshots/30_16.22_281.png"),
+  media("image", "Assets/screenshots/candy (1).jpg"),
+  media("image", "Assets/screenshots/candy (1).png"),
+  media("image", "Assets/screenshots/candy (2).jpg"),
+  media("image", "Assets/screenshots/candy (3).jpg"),
+  media("image", "Assets/screenshots/candy (4).jpg"),
+];
 
 const CLIENTS_COLLAB = ["Woodblock", "Siemens", "Nike", "Adidas", "Pigalle", "ACG", "RG/A", "Boss", "LuisaViaRoma", "Vogue", "The Weeknd", "Google", "GNTM"];
 const CLIENTS_DIRECT = ["OpenAI", "CRO", "Breuninger", "Zalando", "Anyma", "Afterlife", "Balmain", "Flowers For Society", "Pacemaker", "About You", "Barbie", "Vly"];
