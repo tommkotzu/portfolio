@@ -556,7 +556,7 @@ const PROJECTS = [
     year: "Since 2016",
     role: "Artist",
     credits: [{ role: "Artist", name: "Thomas Mayer" }],
-    tags: [], // no tags yet
+    tags: ["Motion Design", "3D Explorations", "Artist"],
     blurb: "A personal, ongoing visual project started in 2016 in Schwäbisch Gmünd.",
     hero: media("mux", "dP01ov5G2vkGsojAKM02cPZXPDzlsgZjTqKfiK01u00tfl00"),
     // gen_gallery.py loopinglovers — also skipped Comp.mp4 and the long
@@ -664,14 +664,14 @@ const PROJECTS = [
   },
   {
     slug: "highsnobiety",
-    title: "Campaign",
+    title: "Not in London",
     client: "Highsnobiety",
-    location: "Berlin", // not given beyond "not London" — Highsnobiety's real HQ; confirm/adjust
+    location: "Berlin",
     year: "2025", // not given — confirm/adjust
     role: "Director",
     credits: [{ role: "Direction", name: "Thomas Mayer" }],
-    tags: [], // not given yet
-    blurb: "Campaign work for Highsnobiety.", // placeholder — flesh out once there's more detail
+    tags: ["3D Production", "Asset Production", "Motion Design"],
+    blurb: "“Not in London” — work for Highsnobiety.", // flesh out once there's more detail
     // gen_gallery.py "High Snobiety - not in london" — 160.png is the only
     // bare-numbered file (no L/M/S letter), so it's the hero by convention
     hero: media("image", ASSET_ROOT + "High Snobiety - not in london/160.png"),
