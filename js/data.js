@@ -799,6 +799,10 @@ const SCREENS = [
   media("image", "Assets/screenshots/22.11.18 16.48.46 Cinema_4D.jpg"),
   media("image", "Assets/screenshots/29_18.33_5608.png"),
   media("image", "Assets/screenshots/31_14.33_4223.jpg"),
+  media("video", "Assets/screenshots/001_.mp4"),
+  media("video", "Assets/screenshots/05 -152130 %pn.mp4"),
+  media("video", "Assets/screenshots/06 -155454 %pn.mp4"),
+  media("video", "Assets/screenshots/2020_hs_instaActivation.mp4"), // 100MB — heaviest asset on the page by far
 ];
 
 const CLIENTS_COLLAB = ["Woodblock", "Siemens", "Nike", "Adidas", "Pigalle", "ACG", "RG/A", "Boss", "LuisaViaRoma", "Vogue", "The Weeknd", "Google", "GNTM"];

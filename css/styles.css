@@ -351,7 +351,7 @@ button { font: inherit; color: inherit; background: none; border: 0; }
 .screens-sub { font-size: 14px; color: var(--muted); margin-bottom: 36px; }
 .screens-grid { column-count: 4; column-gap: 8px; }
 .screens-grid .media-wrap { margin-bottom: 8px; break-inside: avoid; border-radius: 4px; }
-.screens-grid img { width: 100%; height: auto; border-radius: 4px; }
+.screens-grid img, .screens-grid video { width: 100%; height: auto; border-radius: 4px; }
 @media (max-width: 900px) { .screens-grid { column-count: 3; } }
 @media (max-width: 600px) { .screens-grid { column-count: 2; } }
 
