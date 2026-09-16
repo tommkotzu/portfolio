@@ -763,7 +763,11 @@ const PROJECTS = [
     // gen_gallery.py "FFS - Identity" — 010.mp4 is the only bare-numbered
     // file (no L/M/S letter), so it's the hero by convention
     hero: media("video", ASSET_ROOT + "FFS - Identity/010.mp4"),
-    previews: previews(),
+    previews: previews(
+      "FFS - Identity/preview/020L.jpg",
+      "FFS - Identity/preview/040M.jpg",
+      "FFS - Identity/preview/064M.jpg"
+    ),
     galleryStyle: "editorial",
     gallery: [
       media("image", ASSET_ROOT + "FFS - Identity/020L.jpg"), // 0 (L)
