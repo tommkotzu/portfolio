@@ -435,18 +435,6 @@ button { font: inherit; color: inherit; background: none; border: 0; }
 }
 .view-toggle.visible { opacity: 1; pointer-events: auto; }
 
-.simple-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: clamp(16px, 2vw, 28px); padding-bottom: 40px; max-width: 1320px; margin: 0 auto; }
-.grid-cell { cursor: pointer; }
-.grid-cell.span-l { grid-column: span 6; }
-.grid-cell.span-m { grid-column: span 3; }
-.grid-cell.span-s { grid-column: span 2; }
-.media-wrap.grid-cell-thumb { aspect-ratio: 4/3; }
-.simple-grid .caption { margin-top: 10px; font-size: 13px; color: var(--muted2); }
-@media (max-width: 760px) {
-  .simple-grid { grid-template-columns: repeat(2, 1fr); }
-  .grid-cell.span-l, .grid-cell.span-m, .grid-cell.span-s { grid-column: span 2; }
-}
-
 /* ---------- hover-scrub preview cards ---------- */
 .media-wrap.scrub img {
   position: absolute; inset: 0; width: 100%; height: 100%;
@@ -462,5 +450,4 @@ button { font: inherit; color: inherit; background: none; border: 0; }
    are randomized inline by triggerChaos(), this just sets up the stage */
 .chaos-mode { position: relative; height: 100vh; overflow: hidden; }
 .chaos-mode .editorial-item,
-.chaos-mode .editorial-col,
-.chaos-mode .grid-cell { transition: transform 0.4s ease, top 0.4s ease, left 0.4s ease; }
+.chaos-mode .editorial-col { transition: transform 0.4s ease, top 0.4s ease, left 0.4s ease; }

@@ -66,7 +66,7 @@
   function triggerChaos() {
     const container = document.querySelector(".detail-wide");
     if (!container) return;
-    const items = container.querySelectorAll(".editorial-item, .editorial-col, .grid-cell");
+    const items = container.querySelectorAll(".editorial-item, .editorial-col");
     if (!items.length) return;
     container.classList.add("chaos-mode");
     items.forEach((el) => {
@@ -593,46 +593,13 @@
     return `<div class="editorial-gallery">${active.editorialRows.map(rowHTML).join("")}</div>`;
   }
 
-  // an editorialRows layout already encodes each gallery item's L/M/S size
-  // (single rows with no size = L; single rows with a size = that size;
-  // paired columns = the size in that column's slot) — reuse that instead of
-  // re-deriving it, so the grid view stays in sync with the same file-naming
-  // convention automatically
-  function gallerySizeMap(active) {
-    const sizes = new Array(active.gallery.length).fill("L");
-    (active.editorialRows || []).forEach((row) => {
-      if (row.cols.length === 1) {
-        sizes[row.cols[0]] = row.size || "L";
-      } else {
-        row.cols.forEach((c, i) => { sizes[c] = (row.sizes && row.sizes[i]) || "M"; });
-      }
-    });
-    return sizes;
-  }
-
-  // simple grid preview: same L/M/S sizing, but as a clean uniform grid
-  // instead of the editorial layout's off-grid drift
-  function renderSimpleGrid(active) {
-    const sizes = gallerySizeMap(active);
-    const cells = active.gallery
-      .map((item, i) => {
-        const size = sizes[i];
-        const spanCls = size === "L" ? "span-l" : size === "S" ? "span-s" : "span-m";
-        return `<div class="grid-cell ${spanCls}">
-          ${mediaHTML(item, { cls: "grid-cell-thumb" })}
-          ${item.caption ? `<div class="caption">${item.caption}</div>` : ""}
-        </div>`;
-      })
-      .join("");
-    return `<div class="simple-grid">${cells}</div>`;
-  }
-
   // real masonry via round-robin column assignment — item 0,1,2,3 go into
   // columns 1,2,3,4, then 4,5,6,7 into 1,2,3,4 again, so scanning
   // left-to-right/top-to-bottom follows file order. CSS columns can't do
   // this: they fill one column completely before starting the next
-  function renderMasonryGrid(items) {
-    const count = window.innerWidth <= 600 ? 2 : window.innerWidth <= 900 ? 3 : 4;
+  function renderMasonryGrid(items, breakpoints = { mobile: 2, tablet: 3, desktop: 4 }) {
+    const w = window.innerWidth;
+    const count = w <= 600 ? breakpoints.mobile : w <= 900 ? breakpoints.tablet : breakpoints.desktop;
     const cols = Array.from({ length: count }, () => []);
     items.forEach((item, i) => cols[i % count].push(item));
     return `<div class="screens-grid">${cols
@@ -640,12 +607,12 @@
       .join("")}</div>`;
   }
 
-  // preview: the same masonry grid the Screens page uses (natural
-  // uncropped proportions, tight gap) as an alternate gallery layout —
-  // scoped to one project at a time via MASONRY_TEST_SLUGS below
-  const MASONRY_TEST_SLUGS = ["ffs-identity"];
-  function renderMasonryGallery(active) {
-    return renderMasonryGrid(active.gallery);
+  // grid view for editorial project galleries: same masonry treatment as
+  // Screens (natural uncropped proportions, round-robin reading order),
+  // just a narrower column count since project galleries are shorter
+  const PROJECT_GRID_BREAKPOINTS = { mobile: 1, tablet: 2, desktop: 3 };
+  function renderProjectGrid(active) {
+    return renderMasonryGrid(active.gallery, PROJECT_GRID_BREAKPOINTS);
   }
 
   // ---------- project detail ----------
@@ -657,15 +624,10 @@
     const nextIdx = (realIdx + 1) % PROJECTS.length;
 
     const isEditorial = active.galleryStyle === "editorial";
-    // preview: try the Screens page's masonry grid as a gallery layout,
-    // scoped to just this one project for now
-    const useMasonryTest = MASONRY_TEST_SLUGS.includes(active.slug);
-    const showViewToggle = isEditorial && !useMasonryTest;
+    const showViewToggle = isEditorial;
     const useGrid = showViewToggle && state.editorialGalleryView === "grid";
-    const galleryBody = useMasonryTest
-      ? renderMasonryGallery(active)
-      : isEditorial
-      ? useGrid ? renderSimpleGrid(active) : renderEditorialGallery(active)
+    const galleryBody = isEditorial
+      ? useGrid ? renderProjectGrid(active) : renderEditorialGallery(active)
       : state.galleryView === "grid"
       ? `<div class="gallery-grid">${active.gallery.map((g) => mediaHTML(g, { fill: false })).join("")}</div>`
       : `<div class="gallery-spacious">${active.gallery
@@ -712,7 +674,7 @@
           </div>`}
         </div>
 
-        ${useMasonryTest ? `<div class="detail-narrow">${galleryBody}</div>` : isEditorial ? `<div class="detail-wide">${galleryBody}</div>` : `<div class="detail-narrow">${galleryBody}</div>`}
+        ${isEditorial ? (useGrid ? `<div class="detail-narrow">${galleryBody}</div>` : `<div class="detail-wide">${galleryBody}</div>`) : `<div class="detail-narrow">${galleryBody}</div>`}
       </div>
     </div>
     ${showViewToggle ? `<button class="view-toggle" data-set-editorial-view="${useGrid ? "editorial" : "grid"}">${useGrid ? "Editorial view" : "Grid view"}</button>` : ""}
