@@ -170,6 +170,13 @@ button { font: inherit; color: inherit; background: none; border: 0; }
 .selected-work-head span { font-size: 13px; color: var(--muted); cursor: pointer; }
 .featured-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 380px 110px; }
 .featured-card { cursor: pointer; position: relative; overflow: hidden; }
+/* mobile: a plain, bold single column instead of the desktop off-grid drift —
+   !important overrides the per-card grid-column/margin-top inline styles
+   that FEATURED_LAYOUT sets in JS for the desktop layout */
+@media (max-width: 760px) {
+  .featured-grid { grid-template-columns: 1fr; gap: 48px; }
+  .featured-card { grid-column: 1 / -1 !important; margin-top: 0 !important; }
+}
 .card-overlay {
   position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 28px;
   background: linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0) 60%); opacity: 0; transition: opacity 0.25s ease;
@@ -229,6 +236,11 @@ button { font: inherit; color: inherit; background: none; border: 0; }
 .list-row .li-title { font-size: 16px; font-weight: 500; flex: none; position: relative; }
 .list-row .li-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-left: auto; }
 .list-row .li-loc { font-size: 13px; color: var(--muted); flex: none; white-space: nowrap; }
+@media (max-width: 760px) {
+  .list-row { padding: 10px 0; gap: 12px; }
+  .list-row .li-title { font-size: 14px; }
+  .list-row .li-tags, .list-row .li-loc { display: none; }
+}
 .list-preview-stamp {
   position: fixed; width: 254px; max-width: 41vw; z-index: 10; pointer-events: none;
   overflow: hidden; background: var(--stripe1);
