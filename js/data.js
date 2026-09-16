@@ -44,7 +44,7 @@ const PROJECTS = [
     year: "2025",
     role: "Director",
     credits: [{ role: "Direction", name: "Thomas Mayer" }],
-    tags: ["3D Production", "Asset Creation", "Video Production"],
+    tags: ["3D Production", "Asset Creation", "Video Production", "WebGL"],
     blurb: "A 3D-led campaign for ACG x Nike — built from the ground up in CG, from lookdev through final comp.",
     hero: null, // no "hero" folder for this project
     previews: previews(
@@ -454,7 +454,7 @@ const PROJECTS = [
     year: "2023",
     role: "Director",
     credits: [{ role: "Direction", name: "Thomas Mayer" }],
-    tags: ["3D Production", "VFX Supervisor"],
+    tags: ["3D Production", "VFX Supervisor", "AI"],
     blurb: "“Beyond Romance” — a Valentine's campaign for Zalando, full CG production with VFX supervision.",
     // gallery/hero regenerated from Assets/projects/zalando/ via
     // scripts/gen_gallery.py — rerun that script after renaming/adding files
@@ -639,7 +639,7 @@ const PROJECTS = [
     year: "2025", // not given — confirm/adjust
     role: "Director",
     credits: [{ role: "Direction", name: "Thomas Mayer" }],
-    tags: ["3D Production"],
+    tags: ["3D Production", "ComfyUI", "AI"],
     blurb: "3D visual production for Afterlife's tour announcement.",
     // gen_gallery.py "Afterlife announement" — no Mux video for this one,
     // hero is the local 010.jpg
@@ -716,6 +716,57 @@ const PROJECTS = [
       { cols: [15], align: "left" },
       { cols: [16, 17], sizes: ["S", "S"], offsets: [50, 60], align: "right" },
       { cols: [18, 19], sizes: ["S", "S"], offsets: [40, 70], align: "center" },
+    ],
+  },
+  {
+    slug: "ffs-identity",
+    title: "Identity",
+    client: "FFS",
+    location: "Berlin", // not given — confirm/adjust
+    year: "2025", // not given — confirm/adjust
+    role: "Director",
+    credits: [{ role: "Direction", name: "Thomas Mayer" }],
+    tags: ["Branding", "3D Production", "Art Direction", "AI"],
+    blurb: "Brand identity work for FFS.", // flesh out once there's more detail
+    // gen_gallery.py "FFS - Identity" — 010.mp4 is the only bare-numbered
+    // file (no L/M/S letter), so it's the hero by convention
+    hero: media("video", ASSET_ROOT + "FFS - Identity/010.mp4"),
+    previews: previews(),
+    galleryStyle: "editorial",
+    gallery: [
+      media("image", ASSET_ROOT + "FFS - Identity/020L.jpg"), // 0 (L)
+      media("image", ASSET_ROOT + "FFS - Identity/020S.jpg"), // 1 (S)
+      media("image", ASSET_ROOT + "FFS - Identity/030M.jpg"), // 2 (M)
+      media("image", ASSET_ROOT + "FFS - Identity/040M.jpg"), // 3 (M)
+      media("video", ASSET_ROOT + "FFS - Identity/045L.mp4"), // 4 (L)
+      media("image", ASSET_ROOT + "FFS - Identity/050L.jpg"), // 5 (L)
+      media("video", ASSET_ROOT + "FFS - Identity/060M.mp4"), // 6 (M)
+      media("image", ASSET_ROOT + "FFS - Identity/061M.jpg"), // 7 (M)
+      media("image", ASSET_ROOT + "FFS - Identity/062L.jpg"), // 8 (L)
+      media("image", ASSET_ROOT + "FFS - Identity/063S.jpg"), // 9 (S)
+      media("image", ASSET_ROOT + "FFS - Identity/064M.jpg"), // 10 (M)
+      media("image", ASSET_ROOT + "FFS - Identity/065L.jpg"), // 11 (L)
+      media("image", ASSET_ROOT + "FFS - Identity/070L.jpg"), // 12 (L)
+      media("image", ASSET_ROOT + "FFS - Identity/075m.png"), // 13 (M)
+      media("image", ASSET_ROOT + "FFS - Identity/080M.jpg"), // 14 (M)
+      media("image", ASSET_ROOT + "FFS - Identity/090S.jpg"), // 15 (S)
+      media("image", ASSET_ROOT + "FFS - Identity/090m.gif"), // 16 (M)
+      media("video", ASSET_ROOT + "FFS - Identity/100S.mp4"), // 17 (S)
+    ],
+    editorialRows: [
+      { cols: [0], align: "left" },
+      { cols: [1, 2], sizes: ["S", "M"], offsets: [50, 60], align: "right" },
+      { cols: [3], align: "center", size: "M" },
+      { cols: [4], align: "left" },
+      { cols: [5], align: "right" },
+      { cols: [6, 7], sizes: ["M", "M"], offsets: [50, 60], align: "center" },
+      { cols: [8], align: "left" },
+      { cols: [9, 10], sizes: ["S", "M"], offsets: [70, 0], align: "right" },
+      { cols: [11], align: "center" },
+      { cols: [12], align: "left" },
+      { cols: [13, 14], sizes: ["M", "M"], offsets: [40, 70], align: "right" },
+      { cols: [15, 16], sizes: ["S", "M"], offsets: [0, 50], align: "center" },
+      { cols: [17], align: "left", size: "S" },
     ],
   },
 ];
