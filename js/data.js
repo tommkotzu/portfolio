@@ -40,12 +40,16 @@ const PROJECTS = [
     slug: "acg-x-nike",
     title: "Campaign",
     client: "ACG x Nike",
-    location: "Online",
+    location: "Web",
     year: "2025",
     role: "Director",
-    credits: [{ role: "Direction", name: "Thomas Mayer" }],
+    credits: [
+      { role: "Direction", name: "Thomas Mayer" },
+      { role: "Agency", name: "RG/A" },
+      { role: "Collaboration", name: "Kurt Drubbel" },
+    ],
     tags: ["3D Production", "Asset Creation", "Video Production", "WebGL"],
-    blurb: "A 3D-led campaign for ACG x Nike — built from the ground up in CG, from lookdev through final comp.",
+    blurb: "To relaunch Nike ACG for a new generation of trail runners and hikers — timed to the Milan Winter Olympics and the ACG All Conditions Express train takeover to Cortina d'Ampezzo — we created a site that broke all conventions: a digital experience built to get visitors offline. All Conditions World is an immersive site featuring a WebGL globe that surfaces the wildest trails in Europe, hand-sourced by ACG athletes and trail communities, each route linked to a real route on Strava. Reframing outdoor culture away from standard digital performance metrics and toward play, connection and a sense of shared adventure.",
     hero: null, // no "hero" folder for this project
     previews: previews(
       "Acg/00_acg/preview/10_30_1908.png",
@@ -102,9 +106,12 @@ const PROJECTS = [
     location: "Home",
     year: "2024",
     role: "Director",
-    credits: [{ role: "Direction", name: "Thomas Mayer" }],
-    tags: ["Asset Creation", "Lookdev", "Art Direction", "3D Production"],
-    blurb: "Ground-up character design, lookdev and stage-visual direction for Anyma — spanning asset creation, live-show production and tour visuals.",
+    credits: [
+      { role: "Direction", name: "Thomas Mayer" },
+      { role: "Further Development", name: "Woodblock" },
+    ],
+    tags: ["Artist", "Asset Creation", "Lookdev"],
+    blurb: "Through our work for Afterlife, I created a highly detailed character: a translucent human shell revealing a hybrid interior of mechanical and organic structures. The design resonated so strongly with Anyma that he adopted it as his alter ego for digital performances. After several rounds of refinement, I handed the avatar over to the team at Woodblock, who took it to the next level for The Sphere in Las Vegas.",
     // gallery regenerated from Assets/projects/Anyma Character Development/ via
     // scripts/gen_gallery.py — rerun that script after renaming/adding files
     // there instead of hand-editing this list. NOTE: that folder has no
@@ -176,9 +183,12 @@ const PROJECTS = [
     location: "New York",
     year: "2024",
     role: "Director",
-    credits: [{ role: "Direction", name: "Thomas Mayer" }],
+    credits: [
+      { role: "Direction", name: "Thomas Mayer" },
+      { role: "Studio", name: "April Studio" },
+    ],
     tags: ["Art Direction", "3D Production", "Video Production"],
-    blurb: "Out-of-home campaign for Luisa Via Roma x VOGUE, built for the Times Square billboard format.",
+    blurb: "We collaborated with Luisaviaroma and Vogue to create a captivating out-of-home video displayed in the heart of Times Square, New York. The piece combines a series of dynamic, monochromatic animations that evoke the essence of fashion and creation. Through abstract shapes and seamless transitions, the video tells a visual story that resonates with the spirit of haute couture and innovation, capturing the audience's attention in one of the world's most iconic locations.",
     // gallery/hero regenerated from Assets/projects/luisa via roma/ via
     // scripts/gen_gallery.py — rerun that script after renaming/adding files
     // there instead of hand-editing this list
@@ -236,9 +246,14 @@ const PROJECTS = [
     location: "Berlin",
     year: "2023",
     role: "Director",
-    credits: [{ role: "Direction", name: "Thomas Mayer" }],
+    credits: [
+      { role: "Direction", name: "Thomas Mayer" },
+      { role: "Studio", name: "OBJ.Studio" },
+      { role: "Collaboration", name: "Bjoern Dunne" },
+      { role: "Collaboration", name: "Overkill" },
+    ],
     tags: ["Art Direction", "3D Production", "Lookdev"],
-    blurb: "Product launch film and stills for the Adidas NMD_S1, shot and rendered out of the Berlin studio.",
+    blurb: "For the launch of the Adidas NMD_S1 we created an art movie in cooperation with OBJ.Studio and Overkill. The film tells the story of two humans longing for a physical connection in an uninhabitable space. To achieve its unique look we used a mix of classic filmmaking with cutting-edge physical LED technology and highly artistic CGI, shot in AMBION's Superoom XR studio.",
     // gallery/hero regenerated from the 010L/020M/030S-style filenames in
     // Assets/projects/adidas/ via scripts/gen_gallery.py — rerun that script
     // after renaming/adding files there instead of hand-editing this list
@@ -295,9 +310,14 @@ const PROJECTS = [
     location: "Munich",
     year: "2025",
     role: "Director",
-    credits: [{ role: "Direction", name: "Thomas Mayer" }],
-    tags: ["Artist"],
-    blurb: "On-location visuals for the opening of OpenAI's Munich office.",
+    credits: [
+      { role: "Direction", name: "Thomas Mayer" },
+      { role: "Collaboration", name: "Philipp Ries" },
+      { role: "Collaboration", name: "Jan Sommer" },
+      { role: "Collaboration", name: "Henning Herrholz" },
+    ],
+    tags: ["Artist", "360"],
+    blurb: "OpenAI invited Looping Lovers to create an artistic centrepiece for the opening of its new Munich office — a cinematic installation that embodied the dialogue between human and intelligent systems. Presented inside the 360° Streaming Dome of the Deutsches Museum, “The Space Between” transformed movement into a living field of light and sound, exploring creativity as a shared process between body and machine.",
     // gallery/hero regenerated from Assets/projects/openAI/ via
     // scripts/gen_gallery.py — rerun that script after renaming/adding files
     // there instead of hand-editing this list
@@ -336,9 +356,13 @@ const PROJECTS = [
     location: "Paris",
     year: "2023",
     role: "Director",
-    credits: [{ role: "Direction", name: "Thomas Mayer" }],
-    tags: ["Art Direction", "3D Production"],
-    blurb: "AR-driven campaign for the Nike x Pigalle collaboration, art directed and produced for Paris activation.",
+    credits: [
+      { role: "Direction", name: "Thomas Mayer" },
+      { role: "Collaboration", name: "Artificial Rome" },
+      { role: "Collaboration", name: "cables.gl" },
+    ],
+    tags: ["Art Direction", "3D Production", "Augmented Reality"],
+    blurb: "The fifth iteration of the Pigalle Duperré court in Paris, this time featuring a more graphical, block-colour design to tie in with the new Nike Pigalle Converse collection. Since the court is narrower than usual and surrounded by walls, players have additional ways to score points — bouncing balls off the wall for extra points. We set out to bring this rulebook to life on the court with web AR technology, implementing an Augmented Reality application that explains the court-specific rules.",
     // gallery/hero regenerated from Assets/projects/Pigalle x nike/ via
     // scripts/gen_gallery.py — rerun that script after renaming/adding files
     // there instead of hand-editing this list. NOTE: page/Animations/*.mp4 and
@@ -394,13 +418,13 @@ const PROJECTS = [
   {
     slug: "the-weeknd-performance",
     title: "Performance",
-    client: "Weekend",
+    client: "The Weeknd",
     location: "São Paulo",
     year: "2023",
     role: "Director",
     credits: [{ role: "Direction", name: "Thomas Mayer" }],
     tags: ["Asset Creation", "3D Production"],
-    blurb: "Live-performance visual package for The Weeknd's São Paulo show.",
+    blurb: "For The Weeknd's exclusive São Paulo show, we delivered a set of media assets, including the stage opening doors and IMAX visuals. Working closely with the team, we ran through multiple iterations to meet the standard a world-class artist demands — under real pressure, tight deadlines, and no room for error.",
     // gallery/hero regenerated from Assets/projects/weekend/ via
     // scripts/gen_gallery.py — rerun that script after renaming/adding files
     // there instead of hand-editing this list
@@ -455,7 +479,7 @@ const PROJECTS = [
     role: "Director",
     credits: [{ role: "Direction", name: "Thomas Mayer" }],
     tags: ["3D Production", "VFX Supervisor", "AI"],
-    blurb: "“Beyond Romance” — a Valentine's campaign for Zalando, full CG production with VFX supervision.",
+    blurb: "“Beyond Romance” became the core of Zalando's Valentine's campaign, translating the brand's message of inclusive love into a cinematic moving-image format.",
     // gallery/hero regenerated from Assets/projects/zalando/ via
     // scripts/gen_gallery.py — rerun that script after renaming/adding files
     // there instead of hand-editing this list
@@ -498,9 +522,13 @@ const PROJECTS = [
     location: "Seoul",
     year: "2025",
     role: "Director",
-    credits: [{ role: "Direction", name: "Thomas Mayer" }],
+    credits: [
+      { role: "Direction", name: "Thomas Mayer" },
+      { role: "Collaboration", name: "Philipp Ries" },
+      { role: "Collaboration", name: "Henning Herrholz" },
+    ],
     tags: ["Artist", "Art Direction", "Lookdev", "AI"],
-    blurb: "Character and stage-visual direction for Superpop's Seoul show, from storyboard through final lookdev.",
+    blurb: "SuperPop Festival invited us to contribute a visual artist performance to their show. Alongside a lineup of musicians and artists, we delivered a stage show in collaboration with DJ Raiden — built around a falling star, and a moment of freedom and power, as experienced through music. We brought together our full 3D pipeline, motion capture, environment building, and the latest AI methods to make it happen.",
     hero: media("mux", "5kPcLdjeceiNMoey3Z8aRW2htQeVrxQOQSiSqF1yN7M"),
     previews: previews(
       "superpop/preview/cleaned-copy-1536x866.jpg",
@@ -557,7 +585,7 @@ const PROJECTS = [
     role: "Artist",
     credits: [{ role: "Artist", name: "Thomas Mayer" }],
     tags: ["Motion Design", "3D Explorations", "Artist"],
-    blurb: "A personal, ongoing visual project started in 2016 in Schwäbisch Gmünd.",
+    blurb: "Loopinglovers began at university as a creative outlet — a way to be part of an emerging digital pop culture and contribute to the kind of imagery I found genuinely mesmerizing. It grew into a core identity project: using humanoid meshes to explore both production tools and artistic identity, always pushing to try something new. That exploration led to collaborations with musicians, solo exhibitions, and, over time, growing interest from brands and talents worldwide.",
     hero: media("mux", "dP01ov5G2vkGsojAKM02cPZXPDzlsgZjTqKfiK01u00tfl00"),
     // gen_gallery.py loopinglovers — also skipped Comp.mp4 and the long
     // Instagram-caption-named .mp4, both with no number prefix; rename them
@@ -588,14 +616,14 @@ const PROJECTS = [
   },
   {
     slug: "afterlife-shows",
-    title: "Shows",
+    title: "Stage Shows",
     client: "Afterlife",
-    location: "World Wide",
+    location: "World",
     year: "2025", // not given — confirm/adjust
     role: "Director",
     credits: [{ role: "Direction", name: "Thomas Mayer" }],
-    tags: ["3D Production"],
-    blurb: "3D visual production for Afterlife's world tour shows.",
+    tags: ["3D Production", "Art Direction", "Lookdev"],
+    blurb: "Afterlife became a long-term collaboration partner. Over the years we contributed visuals to numerous stage shows across locations and songs — always high-end, always on tight timelines, keeping pace with the relentless demand of this visual, music-driven storytelling machine. The work came with a lot of creative freedom, backed by sharp art direction from the team, and took us to the US and London to see the massive screen installations first hand.",
     hero: media("mux", "IqfxlAhHn00HMetv9Mso53NhrClGQa6B00s4oqbfU4vBI"),
     // gen_gallery.py picked up 7abd3d218995693.68a83fa7e5f88.jpeg as a
     // hero candidate (its name starts with a digit) — that's an accidental
@@ -633,14 +661,14 @@ const PROJECTS = [
   },
   {
     slug: "afterlife-announcement",
-    title: "Announcement",
+    title: "Tour Announcement",
     client: "Afterlife",
-    location: "World Wide",
-    year: "2025", // not given — confirm/adjust
+    location: "South America",
+    year: "2024",
     role: "Director",
     credits: [{ role: "Direction", name: "Thomas Mayer" }],
     tags: ["3D Production", "ComfyUI", "AI"],
-    blurb: "3D visual production for Afterlife's tour announcement.",
+    blurb: "For the 2024 South America Tour of Afterlife.OFC, we created a full visual trailer using some of the most advanced generative AI image workflows available at the time. Our pipeline combined ComfyUI with a custom-developed Stable Diffusion img2img workflow, allowing us to merge traditional 3D asset creation with generative AI. Base assets were modeled and animated in Cinema 4D, AI layers were generated and refined through our tailored workflows, and everything was brought together in compositing to achieve the final look.",
     // gen_gallery.py "Afterlife announement" — no Mux video for this one,
     // hero is the local 010.jpg
     hero: media("image", ASSET_ROOT + "Afterlife announement/010.jpg"),
@@ -664,14 +692,18 @@ const PROJECTS = [
   },
   {
     slug: "highsnobiety",
-    title: "Not in London",
+    title: "Not In London",
     client: "Highsnobiety",
     location: "Berlin",
     year: "2025", // not given — confirm/adjust
     role: "Director",
-    credits: [{ role: "Direction", name: "Thomas Mayer" }],
+    credits: [
+      { role: "Direction", name: "Thomas Mayer" },
+      { role: "Collaboration", name: "Manus Browne" },
+      { role: "Collaboration", name: "Laura Fritz" },
+    ],
     tags: ["3D Production", "Asset Production", "Motion Design"],
-    blurb: "“Not in London” — work for Highsnobiety.", // flesh out once there's more detail
+    blurb: "Not In London is an editorial series for a lifestyle magazine. We visualized a selection of classic stereotypes across the series — a fun, exploratory project that gave us room to try out different ideas and bring our own take to the work.",
     // gen_gallery.py "High Snobiety - not in london" — 160.png is the only
     // bare-numbered file (no L/M/S letter), so it's the hero by convention
     hero: media("image", ASSET_ROOT + "High Snobiety - not in london/160.png"),
@@ -726,8 +758,8 @@ const PROJECTS = [
     year: "2025", // not given — confirm/adjust
     role: "Director",
     credits: [{ role: "Direction", name: "Thomas Mayer" }],
-    tags: ["Branding", "3D Production", "Art Direction", "AI"],
-    blurb: "Brand identity work for FFS.", // flesh out once there's more detail
+    tags: ["Branding", "3D Production", "Art Direction", "AI", "NFT"],
+    blurb: "We developed the full core identity for Flowers for Society's exclusive NFT membership club, building a narrative rooted in the essence of their young, bold brand and their long-lasting journey in the sneaker world. Each digital flower became a symbol of growth, individuality, and belonging — generated through a custom AI-driven process, training models on curated datasets and crossbreeding imagery with tools like Artbreeder and RunwayML. Every flower was analyzed and categorized into metadata, forming a collection of 5,000 unique NFTs that act as membership keys to the Flowers for Society world. The visuals extended beyond the digital space, carried into the physical world through apparel prints and brand touchpoints — bridging sneakers, technology and art into one cohesive universe.",
     // gen_gallery.py "FFS - Identity" — 010.mp4 is the only bare-numbered
     // file (no L/M/S letter), so it's the hero by convention
     hero: media("video", ASSET_ROOT + "FFS - Identity/010.mp4"),
