@@ -101,6 +101,9 @@ button { font: inherit; color: inherit; background: none; border: 0; }
 .nav-link.active { border-bottom-color: currentColor; opacity: 1; }
 .nav-right { display: flex; align-items: center; gap: 14px; }
 .nav-clock { font-size: 12px; letter-spacing: 0.02em; white-space: nowrap; opacity: 0.6; }
+@media (max-width: 1024px) {
+  .nav-clock { display: none; }
+}
 
 .theme-toggle {
   width: 26px; height: 26px; border: 0;
@@ -170,10 +173,10 @@ button { font: inherit; color: inherit; background: none; border: 0; }
 .selected-work-head span { font-size: 13px; color: var(--muted); cursor: pointer; }
 .featured-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 380px 110px; }
 .featured-card { cursor: pointer; position: relative; overflow: hidden; }
-/* mobile: a plain, bold single column instead of the desktop off-grid drift —
-   !important overrides the per-card grid-column/margin-top inline styles
-   that FEATURED_LAYOUT sets in JS for the desktop layout */
-@media (max-width: 760px) {
+/* mobile + tablet: a plain, bold single column instead of the desktop
+   off-grid drift — !important overrides the per-card grid-column/
+   margin-top inline styles that FEATURED_LAYOUT sets in JS for desktop */
+@media (max-width: 1024px) {
   .featured-grid { grid-template-columns: 1fr; gap: 48px; }
   .featured-card { grid-column: 1 / -1 !important; margin-top: 0 !important; }
 }
