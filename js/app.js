@@ -627,6 +627,14 @@
     return `<div class="simple-grid">${cells}</div>`;
   }
 
+  // preview: the same masonry grid the Screens page uses (CSS columns,
+  // natural uncropped proportions, tight gap) as an alternate gallery
+  // layout — scoped to one project at a time via MASONRY_TEST_SLUGS below
+  const MASONRY_TEST_SLUGS = ["ffs-identity"];
+  function renderMasonryGallery(active) {
+    return `<div class="screens-grid">${active.gallery.map((g) => mediaHTML(g, { fill: false })).join("")}</div>`;
+  }
+
   // ---------- project detail ----------
   function renderDetail(slug) {
     const idx = PROJECTS.findIndex((p) => p.slug === slug);
@@ -636,9 +644,14 @@
     const nextIdx = (realIdx + 1) % PROJECTS.length;
 
     const isEditorial = active.galleryStyle === "editorial";
-    const showViewToggle = isEditorial;
+    // preview: try the Screens page's masonry grid as a gallery layout,
+    // scoped to just this one project for now
+    const useMasonryTest = MASONRY_TEST_SLUGS.includes(active.slug);
+    const showViewToggle = isEditorial && !useMasonryTest;
     const useGrid = showViewToggle && state.editorialGalleryView === "grid";
-    const galleryBody = isEditorial
+    const galleryBody = useMasonryTest
+      ? renderMasonryGallery(active)
+      : isEditorial
       ? useGrid ? renderSimpleGrid(active) : renderEditorialGallery(active)
       : state.galleryView === "grid"
       ? `<div class="gallery-grid">${active.gallery.map((g) => mediaHTML(g, { fill: false })).join("")}</div>`
@@ -686,7 +699,7 @@
           </div>`}
         </div>
 
-        ${isEditorial ? `<div class="detail-wide">${galleryBody}</div>` : `<div class="detail-narrow">${galleryBody}</div>`}
+        ${useMasonryTest ? `<div class="detail-narrow">${galleryBody}</div>` : isEditorial ? `<div class="detail-wide">${galleryBody}</div>` : `<div class="detail-narrow">${galleryBody}</div>`}
       </div>
     </div>
     ${showViewToggle ? `<button class="view-toggle" data-set-editorial-view="${useGrid ? "editorial" : "grid"}">${useGrid ? "Editorial view" : "Grid view"}</button>` : ""}
