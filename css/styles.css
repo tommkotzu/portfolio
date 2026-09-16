@@ -239,7 +239,7 @@ button { font: inherit; color: inherit; background: none; border: 0; }
 .list-row .li-title { font-size: 16px; font-weight: 500; flex: none; position: relative; }
 .list-row .li-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-left: auto; }
 .list-row .li-loc { font-size: 13px; color: var(--muted); flex: none; white-space: nowrap; }
-@media (max-width: 760px) {
+@media (max-width: 1024px) {
   .list-row { padding: 10px 0; gap: 12px; }
   .list-row .li-title { font-size: 14px; }
   .list-row .li-tags, .list-row .li-loc { display: none; }
