@@ -627,12 +627,25 @@
     return `<div class="simple-grid">${cells}</div>`;
   }
 
-  // preview: the same masonry grid the Screens page uses (CSS columns,
-  // natural uncropped proportions, tight gap) as an alternate gallery
-  // layout — scoped to one project at a time via MASONRY_TEST_SLUGS below
+  // real masonry via round-robin column assignment — item 0,1,2,3 go into
+  // columns 1,2,3,4, then 4,5,6,7 into 1,2,3,4 again, so scanning
+  // left-to-right/top-to-bottom follows file order. CSS columns can't do
+  // this: they fill one column completely before starting the next
+  function renderMasonryGrid(items) {
+    const count = window.innerWidth <= 600 ? 2 : window.innerWidth <= 900 ? 3 : 4;
+    const cols = Array.from({ length: count }, () => []);
+    items.forEach((item, i) => cols[i % count].push(item));
+    return `<div class="screens-grid">${cols
+      .map((col) => `<div class="screens-col">${col.map((g) => mediaHTML(g, { fill: false })).join("")}</div>`)
+      .join("")}</div>`;
+  }
+
+  // preview: the same masonry grid the Screens page uses (natural
+  // uncropped proportions, tight gap) as an alternate gallery layout —
+  // scoped to one project at a time via MASONRY_TEST_SLUGS below
   const MASONRY_TEST_SLUGS = ["ffs-identity"];
   function renderMasonryGallery(active) {
-    return `<div class="screens-grid">${active.gallery.map((g) => mediaHTML(g, { fill: false })).join("")}</div>`;
+    return renderMasonryGrid(active.gallery);
   }
 
   // ---------- project detail ----------
@@ -718,7 +731,7 @@
     return `<div class="page screens-page" data-screen="screens">
       <div class="screens-title">Screens</div>
       <div class="screens-sub">A running collection of frames, stills and process shots.</div>
-      <div class="screens-grid">${SCREENS.map((s) => mediaHTML(s, { fill: false })).join("")}</div>
+      ${renderMasonryGrid(SCREENS)}
     </div>`;
   }
 

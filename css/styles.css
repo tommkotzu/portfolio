@@ -370,11 +370,15 @@ button { font: inherit; color: inherit; background: none; border: 0; }
 .screens-page { max-width: 1440px; margin: 0 auto; width: 100%; padding: 70px var(--pad) 110px; }
 .screens-title { font-size: 32px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 6px; }
 .screens-sub { font-size: 14px; color: var(--muted); margin-bottom: 36px; }
-.screens-grid { column-count: 4; column-gap: 8px; }
-.screens-grid .media-wrap { margin-bottom: 8px; break-inside: avoid; border-radius: 4px; }
+/* a real masonry (JS-computed round-robin column assignment) rather than
+   CSS columns — CSS columns fill one column completely before starting the
+   next, so scanning left-to-right across the top reads items out of order;
+   round-robin (item 0,1,2,3 into col 1,2,3,4, then 4,5,6,7 into 1,2,3,4...)
+   keeps the reading order matching file order left-to-right, top-to-bottom */
+.screens-grid { display: flex; gap: 8px; align-items: flex-start; }
+.screens-col { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 0; }
+.screens-grid .media-wrap { border-radius: 4px; }
 .screens-grid img, .screens-grid video { width: 100%; height: auto; border-radius: 4px; }
-@media (max-width: 900px) { .screens-grid { column-count: 3; } }
-@media (max-width: 600px) { .screens-grid { column-count: 2; } }
 
 /* ---------- about ---------- */
 .about-page { max-width: 1440px; margin: 0 auto; width: 100%; padding: 70px var(--pad) 110px; }
