@@ -592,7 +592,7 @@
         <div class="list-row" data-open-project="${p.slug}" data-previews="${encodeURIComponent(JSON.stringify(p.previews.map((pv) => pv.src)))}">
           <span class="li-idx">${String(i + 1).padStart(2, "0")}</span>
           <span class="li-title">${projectTitle(p)}</span>
-          <div class="li-tags">${tagPills(p.tags.slice(0, 2))}</div>
+          <div class="li-tags">${tagPills(p.tags)}</div>
           <span class="li-loc">${p.location}</span>
         </div>`
         ).join("")}
@@ -605,7 +605,7 @@
           ${scrubMediaHTML(p.previews, { cls: "card-thumb-full" })}
           <div class="card-meta">
             <span class="title">${projectTitle(p)}</span>
-            <div class="tag-row">${tagPills(p.tags.slice(0, 2))}</div>
+            <div class="tag-row">${tagPills(p.tags)}</div>
             <span class="loc">${p.location}</span>
           </div>
         </div>`
