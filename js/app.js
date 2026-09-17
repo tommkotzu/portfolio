@@ -507,7 +507,7 @@
       <div class="intro">
         <div class="intro-headline">Hey there, I'm Thomas, <span id="role-article">a</span> <span class="role-roulette-wrap" id="role-roulette-wrap"><span class="role-roulette" id="role-roulette">multidisciplinary designer</span></span>.</div>
         <div class="intro-bio">
-          <p>I <svg class="heart-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 20.6c-.3 0-.6-.1-.83-.33C7.4 16.86 4 13.3 4 9.6 4 6.6 6.24 4.4 9.1 4.4c1.63 0 3.2.76 4.4 1.98 1.2-1.22 2.77-1.98 4.4-1.98 2.86 0 5.1 2.2 5.1 5.2 0 3.7-3.4 7.26-7.17 10.67-.23.23-.53.33-.83.33z"/></svg> working in 3D, and I get complex things done — on time, and exactly the way you want them. Need a hand on a project? <a href="mailto:thomasludwigwork@pm.me" class="intro-mail-link">Let's chat.</a></p>
+          <p>I <svg class="heart-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 20.6c-.3 0-.6-.1-.83-.33C7.4 16.86 4 13.3 4 9.6 4 6.6 6.24 4.4 9.1 4.4c1.63 0 3.2.76 4.4 1.98 1.2-1.22 2.77-1.98 4.4-1.98 2.86 0 5.1 2.2 5.1 5.2 0 3.7-3.4 7.26-7.17 10.67-.23.23-.53.33-.83.33z"/></svg> working in 3D. Let's get complex things done exactly the way you want — on time! Need a hand, <a href="mailto:thomasludwigwork@pm.me" class="intro-mail-link">let's chat!</a></p>
         </div>
       </div>
 
