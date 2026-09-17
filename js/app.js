@@ -10,6 +10,14 @@
     return p.client ? `${p.client} — ${p.title}` : p.title;
   }
 
+  function linkDomain(url) {
+    try {
+      return new URL(url).hostname.replace(/^www\./, "");
+    } catch {
+      return url;
+    }
+  }
+
   const state = {
     theme: localStorage.getItem("tm-theme") || "dark",
     density: localStorage.getItem("tm-density") || "2",
@@ -683,7 +691,7 @@
           ${active.links && active.links.length ? `
           <div class="detail-links">
             <h3>Links</h3>
-            <ul>${active.links.map((l) => `<li><a href="${l}" target="_blank" rel="noopener">${l.replace(/^https?:\/\//, "")}</a></li>`).join("")}</ul>
+            <ul>${active.links.map((l) => `<li><a href="${l}" target="_blank" rel="noopener">${linkDomain(l)}</a></li>`).join("")}</ul>
           </div>` : ""}
         </div>
       </div>
@@ -853,7 +861,10 @@
       (entries) => {
         entries.forEach((entry) => toggle.classList.toggle("visible", !entry.isIntersecting));
       },
-      { threshold: 0 }
+      // negative bottom margin shrinks the effective viewport, so the toggle
+      // appears as soon as the text block scrolls into that bottom band —
+      // well before it's fully off-screen
+      { threshold: 0, rootMargin: "0px 0px -60% 0px" }
     );
     viewToggleObserver.observe(textBlockEl);
   }
