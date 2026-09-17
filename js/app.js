@@ -192,7 +192,7 @@
     "Blender nerd", "Linux enthusiast", "salad chef",
     "creative", "problem solver", "style framer", "interaction designer",
     "carpenter", "papa", "notion organizer", "Vibecoder",
-    "animator", "keyframe schubser", "node noodler", "cgMeems subscriber",
+    "animator", "keyframe schubser", "node noodler", "cgMemes subscriber",
   ];
   let roleRouletteTimer = null;
   function mountRoleRoulette() {
