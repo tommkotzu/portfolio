@@ -191,7 +191,7 @@
     "motion designer", "3D generalist", "art director", "creative producer",
     "Blender nerd", "Linux enthusiast", "salad chef",
     "creative", "problem solver", "style framer", "interaction designer",
-    "carpenter", "papa", "notion nerd", "Vibecoder",
+    "carpenter", "papa", "notion organizer", "Vibecoder",
   ];
   let roleRouletteTimer = null;
   function mountRoleRoulette() {
