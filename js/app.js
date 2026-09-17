@@ -852,47 +852,9 @@
     </div>`;
   }
 
-  // hides the fixed prev/next pills while the hero is in view, so they never
-  // overlap it (they stay visible for the rest of the page by default)
-  let heroNavObserver = null;
-  function observeHeroForNav(heroEl) {
-    const projNav = document.querySelector(".project-nav");
-    if (!projNav) return;
-    if (!heroEl) { projNav.classList.remove("hide-for-hero"); return; }
-    if (heroNavObserver) heroNavObserver.disconnect();
-    heroNavObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => projNav.classList.toggle("hide-for-hero", entry.isIntersecting));
-      },
-      { threshold: 0.15 }
-    );
-    heroNavObserver.observe(heroEl);
-  }
-
-  // the grid/editorial view toggle fades in only once the title/description/
-  // credits block has scrolled past — kept out of the way while reading
-  let viewToggleObserver = null;
-  function observeViewToggle(textBlockEl) {
-    const toggle = document.querySelector(".view-toggle");
-    if (!toggle || !textBlockEl) return;
-    if (viewToggleObserver) viewToggleObserver.disconnect();
-    viewToggleObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => toggle.classList.toggle("visible", !entry.isIntersecting));
-      },
-      // negative bottom margin shrinks the effective viewport, so the toggle
-      // appears as soon as the text block scrolls into that bottom band —
-      // well before it's fully off-screen
-      { threshold: 0, rootMargin: "0px 0px -60% 0px" }
-    );
-    viewToggleObserver.observe(textBlockEl);
-  }
 
   function mountDetailHero() {
     const wrap = document.getElementById("hero-video-wrap");
-    const heroSection = document.querySelector(".hero-detail");
-    observeHeroForNav(heroSection);
-    observeViewToggle(document.getElementById("detail-text-block"));
     if (!wrap) return;
     const video = wrap.querySelector("video, mux-video");
     const overlay = document.getElementById("hero-play-toggle");

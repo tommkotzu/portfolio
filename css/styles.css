@@ -345,15 +345,12 @@ button { font: inherit; color: inherit; background: none; border: 0; }
   .editorial-gallery .media-natural { max-height: 70vh; }
 }
 
-/* fixed at vertical center for the whole detail page; JS (observeHeroForNav)
-   hides it while the hero is in view so it never overlaps it */
+/* fixed at vertical center for the whole detail page, always visible */
 .project-nav {
   position: fixed; top: 50%; left: 0; right: 0; transform: translateY(-50%);
   display: flex; justify-content: space-between; padding: 0 18px;
   font-size: 13px; z-index: 40; pointer-events: none;
-  opacity: 1; transition: opacity 0.25s ease;
 }
-.project-nav.hide-for-hero { opacity: 0; }
 .project-nav a {
   cursor: pointer; color: var(--muted2); pointer-events: auto;
   display: flex; align-items: center; gap: 10px;
@@ -363,7 +360,7 @@ button { font: inherit; color: inherit; background: none; border: 0; }
   opacity: 0.5; transition: opacity 0.2s ease;
 }
 .project-nav a:hover { opacity: 1; color: var(--text); }
-.project-nav .arrow { font-size: 24px; line-height: 1; flex: none; }
+.project-nav .arrow { font-size: 24px; font-weight: 700; line-height: 1; flex: none; }
 .project-nav .proj-title {
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 26vw;
   opacity: 0; transition: opacity 0.2s ease;
@@ -429,6 +426,8 @@ button { font: inherit; color: inherit; background: none; border: 0; }
 }
 .site-footer .links { display: flex; gap: 18px; }
 .site-footer .links:first-child { font-weight: 400; }
+.site-footer .social-links { align-items: center; gap: 16px; }
+.social-icon { width: 16px; height: 16px; display: block; }
 .site-footer a:hover { opacity: 0.7; }
 .site-footer .footer-link { cursor: pointer; }
 .site-footer .footer-link:hover { opacity: 0.7; }
@@ -452,9 +451,7 @@ button { font: inherit; color: inherit; background: none; border: 0; }
   -webkit-appearance: none; appearance: none;
   font-size: 13px; letter-spacing: 0.02em; cursor: pointer;
   background: transparent; color: #fff; mix-blend-mode: difference; isolation: isolate;
-  opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
 }
-.view-toggle.visible { opacity: 1; pointer-events: auto; }
 
 /* ---------- hover-scrub preview cards ---------- */
 .media-wrap.scrub img {

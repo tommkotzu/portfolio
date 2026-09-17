@@ -833,6 +833,20 @@ const PROJECTS = [
       { cols: [17], align: "left", size: "S" },
     ],
   },
+  {
+    slug: "robotics",
+    title: "Robotics",
+    client: "", // confidential — no client name to show
+    location: "Berlin",
+    year: "2025", // not given — confirm/adjust
+    role: "Director",
+    credits: [{ role: "Direction", name: "Thomas Mayer" }],
+    tags: ["Kidad", "CAD", "Automation"],
+    blurb: "Ongoing robotics and automation work — CAD design and hardware build. Case details available on request.",
+    hero: null, // no public content yet
+    previews: previews(),
+    gallery: [],
+  },
 ];
 
 // index into PROJECTS used on the Welcome screen's "Selected Work" grid
