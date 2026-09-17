@@ -692,7 +692,7 @@
             </div>
           </div>
           <div class="detail-blurb">${active.blurb}</div>
-          ${isEditorial ? "" : `
+          ${isEditorial || !active.gallery.length ? "" : `
           <div class="gallery-toggle">
             <div class="opt ${state.galleryView === "spacious" ? "active" : ""}" data-set-gallery="spacious">Spacious</div>
             <div class="opt ${state.galleryView === "grid" ? "active" : ""}" data-set-gallery="grid">Grid</div>

@@ -840,7 +840,7 @@ const PROJECTS = [
     location: "Berlin",
     year: "2025", // not given — confirm/adjust
     role: "Director",
-    credits: [{ role: "Direction", name: "Thomas Mayer" }],
+    credits: [],
     tags: ["Kidad", "CAD", "Automation"],
     blurb: "Ongoing robotics and automation work — CAD design and hardware build. Case details available on request.",
     hero: null, // no public content yet
