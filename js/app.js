@@ -196,6 +196,7 @@
     clearInterval(roleRouletteTimer);
     const el = document.getElementById("role-roulette");
     const articleEl = document.getElementById("role-article");
+    const wrap = document.getElementById("role-roulette-wrap");
     if (!el) return;
 
     let lastShown = el.textContent;
@@ -232,19 +233,59 @@
       return next;
     }
 
+    function restartTimer() {
+      clearInterval(roleRouletteTimer);
+      roleRouletteTimer = setInterval(advance, 15000);
+    }
+
     function advance() {
       const next = pickNext();
       if (articleEl) articleEl.textContent = articleFor(next);
       scrambleTo(next, 400);
     }
 
+    function selectRole(word) {
+      lastShown = word;
+      if (articleEl) articleEl.textContent = articleFor(word);
+      scrambleTo(word, 400);
+      restartTimer();
+    }
+
     el.addEventListener("mouseenter", () => {
       advance();
-      clearInterval(roleRouletteTimer);
-      roleRouletteTimer = setInterval(advance, 15000);
+      restartTimer();
     });
 
-    roleRouletteTimer = setInterval(advance, 15000);
+    // click opens a dropdown of every role so a visitor can just pick one,
+    // instead of only ever landing on one at random
+    if (wrap) {
+      let dropdown = null;
+      function closeDropdown() {
+        if (dropdown) { dropdown.remove(); dropdown = null; }
+        document.removeEventListener("click", onOutsideClick);
+      }
+      function onOutsideClick(e) {
+        if (!wrap.contains(e.target)) closeDropdown();
+      }
+      wrap.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (dropdown) { closeDropdown(); return; }
+        dropdown = document.createElement("div");
+        dropdown.className = "role-dropdown";
+        dropdown.innerHTML = ROLE_ROULETTE.map((w) => `<div class="role-dropdown-item" data-role="${w}">${w}</div>`).join("");
+        wrap.appendChild(dropdown);
+        dropdown.addEventListener("click", (ev) => {
+          ev.stopPropagation();
+          const item = ev.target.closest(".role-dropdown-item");
+          if (!item) return;
+          selectRole(item.dataset.role);
+          closeDropdown();
+        });
+        document.addEventListener("click", onOutsideClick);
+      });
+    }
+
+    restartTimer();
   }
 
   // ---------- clock ----------
@@ -455,7 +496,7 @@
       </div>
 
       <div class="intro">
-        <div class="intro-headline">Hey there, I'm Thomas, <span id="role-article">a</span> <span class="role-roulette" id="role-roulette">multidisciplinary designer</span>.</div>
+        <div class="intro-headline">Hey there, I'm Thomas, <span id="role-article">a</span> <span class="role-roulette-wrap" id="role-roulette-wrap"><span class="role-roulette" id="role-roulette">multidisciplinary designer</span></span>.</div>
         <div class="intro-bio">
           <p>I <svg class="heart-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 20.6c-.3 0-.6-.1-.83-.33C7.4 16.86 4 13.3 4 9.6 4 6.6 6.24 4.4 9.1 4.4c1.63 0 3.2.76 4.4 1.98 1.2-1.22 2.77-1.98 4.4-1.98 2.86 0 5.1 2.2 5.1 5.2 0 3.7-3.4 7.26-7.17 10.67-.23.23-.53.33-.83.33z"/></svg> working in 3D, and I get complex things done — on time, and exactly the way you want them. Need a hand on a project? <a href="mailto:thomasludwigwork@pm.me" class="intro-mail-link">Let's chat.</a></p>
         </div>
