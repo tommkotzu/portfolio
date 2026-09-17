@@ -32,7 +32,7 @@ const PROFILE_PICS = [
   a("Assets/about/profilePic/010.jpeg"),
   a("Assets/about/profilePic/2023-02-11 12.57.01-1.jpg"),
   a("Assets/about/profilePic/2023-04-27 19.17.22.jpg"),
-  a("Assets/about/profilePic/Pasted image.png"),
+  a("Assets/about/profilePic/Pasted image.webp"),
 ];
 
 const PROJECTS = [
@@ -57,32 +57,32 @@ const PROJECTS = [
       "Acg/00_acg/preview/11_05_2318.png",
       "Acg/00_acg/preview/11_24_2631.jpg",
       "Acg/00_acg/preview/Image 3_4.png",
-      "Acg/00_acg/preview/image 719.png",
-      "Acg/00_acg/preview/Pasted image.png"
+      "Acg/00_acg/preview/image 719.webp",
+      "Acg/00_acg/preview/Pasted image.webp"
     ),
     galleryStyle: "editorial",
     gallery: [
       media("vimeo", "1165000847", { caption: "Hero cut." }), // 0
-      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/03.png"), // 1
-      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/04.png"), // 2
+      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/03.webp"), // 1
+      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/04.webp"), // 2
       media("vimeo", "1165509413", { caption: "Globe rotation pass." }), // 3
       media("image", ASSET_ROOT + "Acg/00_acg/preview/11_05_2318.png"), // 4
-      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/06.png"), // 5
+      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/06.webp"), // 5
       media("vimeo", "1165502822", { caption: "Modeling breakdown." }), // 6
       media("image", ASSET_ROOT + "Acg/00_acg/preview/11_24_2631.jpg"), // 7
       media("vimeo", "1165513848", { caption: "Lookdev pass." }), // 8
       media("image", ASSET_ROOT + "Acg/00_acg/preview/Image 3_4.png"), // 9
       media("vimeo", "1166048550", { caption: "Main comp breakdown." }), // 10
-      media("image", ASSET_ROOT + "Acg/00_acg/preview/image 719.png"), // 11
-      media("image", ASSET_ROOT + "Acg/00_acg/preview/Pasted image.png"), // 12
-      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/090m.png"), // 13 (M)
+      media("image", ASSET_ROOT + "Acg/00_acg/preview/image 719.webp"), // 11
+      media("image", ASSET_ROOT + "Acg/00_acg/preview/Pasted image.webp"), // 12
+      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/090m.webp"), // 13 (M)
       media("image", ASSET_ROOT + "Acg/00_acg/acg_be/100L+.jpg"), // 14 (L)
       media("image", ASSET_ROOT + "Acg/00_acg/acg_be/110M.png"), // 15 (M)
       media("image", ASSET_ROOT + "Acg/00_acg/acg_be/120m.jpg"), // 16 (M)
-      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/130S.png"), // 17 (S)
+      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/130S.webp"), // 17 (S)
       media("image", ASSET_ROOT + "Acg/00_acg/acg_be/140S.jpg"), // 18 (S)
-      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/150M.png"), // 19 (M)
-      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/160S.png"), // 20 (S)
+      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/150M.webp"), // 19 (M)
+      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/160S.webp"), // 20 (S)
     ],
     editorialRows: [
       { cols: [0], align: "left" },
@@ -145,7 +145,7 @@ const PROJECTS = [
       media("image", ASSET_ROOT + "Anyma Character Development/060M.jpg"), // 11 (M)
       media("video", ASSET_ROOT + "Anyma Character Development/100M.mp4"), // 12 (M)
       media("image", ASSET_ROOT + "Anyma Character Development/110m.jpg"), // 13 (M)
-      media("image", ASSET_ROOT + "Anyma Character Development/120M.png"), // 14 (M)
+      media("image", ASSET_ROOT + "Anyma Character Development/120M.webp"), // 14 (M)
       media("image", ASSET_ROOT + "Anyma Character Development/130M.jpg"), // 15 (M)
       media("image", ASSET_ROOT + "Anyma Character Development/140L.jpg"), // 16 (L)
       media("image", ASSET_ROOT + "Anyma Character Development/140M.jpg"), // 17 (M)
@@ -153,9 +153,9 @@ const PROJECTS = [
       media("image", ASSET_ROOT + "Anyma Character Development/160L.jpg"), // 19 (L)
       media("image", ASSET_ROOT + "Anyma Character Development/160M.jpg"), // 20 (M)
       media("image", ASSET_ROOT + "Anyma Character Development/170L.jpg"), // 21 (L)
-      media("image", ASSET_ROOT + "Anyma Character Development/180M.png"), // 22 (M)
-      media("image", ASSET_ROOT + "Anyma Character Development/190M.png"), // 23 (M)
-      media("image", ASSET_ROOT + "Anyma Character Development/200S.png"), // 24 (S)
+      media("image", ASSET_ROOT + "Anyma Character Development/180M.webp"), // 22 (M)
+      media("image", ASSET_ROOT + "Anyma Character Development/190M.webp"), // 23 (M)
+      media("image", ASSET_ROOT + "Anyma Character Development/200S.webp"), // 24 (S)
     ],
     editorialRows: [
       { cols: [0], align: "left" },
@@ -200,7 +200,7 @@ const PROJECTS = [
     // one — left out rather than mixed in by mistake
     previews: previews(
       "luisa via roma/preview/02.jpg",
-      "luisa via roma/preview/2a45c0212037017.672dfbbd2a564.png",
+      "luisa via roma/preview/2a45c0212037017.672dfbbd2a564.webp",
       "luisa via roma/preview/Pasted image.png"
     ),
     galleryStyle: "editorial",
@@ -208,22 +208,22 @@ const PROJECTS = [
       media("image", ASSET_ROOT + "luisa via roma/020M.jpg"), // 0 (M)
       media("video", ASSET_ROOT + "luisa via roma/025L.mp4"), // 1 (L)
       media("image", ASSET_ROOT + "luisa via roma/030M.png"), // 2 (M)
-      media("image", ASSET_ROOT + "luisa via roma/040L.png"), // 3 (L)
+      media("image", ASSET_ROOT + "luisa via roma/040L.webp"), // 3 (L)
       media("video", ASSET_ROOT + "luisa via roma/045M.mp4"), // 4 (M)
-      media("image", ASSET_ROOT + "luisa via roma/050M.png"), // 5 (M)
+      media("image", ASSET_ROOT + "luisa via roma/050M.webp"), // 5 (M)
       media("image", ASSET_ROOT + "luisa via roma/060S.jpg"), // 6 (S)
       media("image", ASSET_ROOT + "luisa via roma/070M.jpg"), // 7 (M)
       media("image", ASSET_ROOT + "luisa via roma/080M.jpg"), // 8 (M)
       media("image", ASSET_ROOT + "luisa via roma/085S.jpg"), // 9 (S)
       media("image", ASSET_ROOT + "luisa via roma/090M.jpg"), // 10 (M)
       media("image", ASSET_ROOT + "luisa via roma/100S.jpg"), // 11 (S)
-      media("image", ASSET_ROOT + "luisa via roma/behind the scenes/120M.png"), // 12 (M)
+      media("image", ASSET_ROOT + "luisa via roma/behind the scenes/120M.webp"), // 12 (M)
       media("video", ASSET_ROOT + "luisa via roma/behind the scenes/130M.mp4"), // 13 (M)
-      media("image", ASSET_ROOT + "luisa via roma/behind the scenes/140S.gif"), // 14 (S)
+      media("video", ASSET_ROOT + "luisa via roma/behind the scenes/140S.webm"), // 14 (S)
       media("video", ASSET_ROOT + "luisa via roma/behind the scenes/150L.mp4"), // 15 (L)
-      media("image", ASSET_ROOT + "luisa via roma/behind the scenes/160M.gif"), // 16 (M)
+      media("video", ASSET_ROOT + "luisa via roma/behind the scenes/160M.webm"), // 16 (M)
       media("image", ASSET_ROOT + "luisa via roma/behind the scenes/160M.png"), // 17 (M)
-      media("image", ASSET_ROOT + "luisa via roma/behind the scenes/170S.gif"), // 18 (S)
+      media("video", ASSET_ROOT + "luisa via roma/behind the scenes/170S.webm"), // 18 (S)
     ],
     editorialRows: [
       { cols: [0], align: "left", size: "M" },
@@ -326,16 +326,16 @@ const PROJECTS = [
     // there instead of hand-editing this list
     hero: media("video", ASSET_ROOT + "openAI/010.mp4"),
     previews: previews(
-      "openAI/preview/Pasted image (2).png",
-      "openAI/preview/Pasted image (3).png",
-      "openAI/preview/Pasted image (4).png",
+      "openAI/preview/Pasted image (2).webp",
+      "openAI/preview/Pasted image (3).webp",
+      "openAI/preview/Pasted image (4).webp",
       "openAI/preview/Pasted image.png"
     ),
     galleryStyle: "editorial",
     gallery: [
-      media("image", ASSET_ROOT + "openAI/020M.png"), // 0 (M)
+      media("image", ASSET_ROOT + "openAI/020M.webp"), // 0 (M)
       media("image", ASSET_ROOT + "openAI/020S.png"), // 1 (S)
-      media("image", ASSET_ROOT + "openAI/030M.png"), // 2 (M)
+      media("image", ASSET_ROOT + "openAI/030M.webp"), // 2 (M)
       media("video", ASSET_ROOT + "openAI/040S.webm"), // 3 (S)
       media("video", ASSET_ROOT + "openAI/050M.webm"), // 4 (M)
       media("video", ASSET_ROOT + "openAI/060L.webm"), // 5 (L)
@@ -388,7 +388,7 @@ const PROJECTS = [
       media("image", ASSET_ROOT + "Pigalle x nike/070S.jpg"), // 5 (S)
       media("image", ASSET_ROOT + "Pigalle x nike/075S.jpg"), // 6 (S)
       media("image", ASSET_ROOT + "Pigalle x nike/080M.jpg"), // 7 (M)
-      media("image", ASSET_ROOT + "Pigalle x nike/090M.png"), // 8 (M)
+      media("image", ASSET_ROOT + "Pigalle x nike/090M.webp"), // 8 (M)
       media("image", ASSET_ROOT + "Pigalle x nike/100L.jpg"), // 9 (L)
       media("image", ASSET_ROOT + "Pigalle x nike/110M.jpg"), // 10 (M)
       media("image", ASSET_ROOT + "Pigalle x nike/120L.jpg"), // 11 (L)
@@ -436,10 +436,10 @@ const PROJECTS = [
     // there instead of hand-editing this list
     hero: media("video", ASSET_ROOT + "weekend/010.webm"),
     previews: previews(
-      "weekend/preview/Screenshot From 2026-09-11 13-56-28.png",
-      "weekend/preview/Screenshot From 2026-09-11 13-57-14.png",
+      "weekend/preview/Screenshot From 2026-09-11 13-56-28.webp",
+      "weekend/preview/Screenshot From 2026-09-11 13-57-14.webp",
       "weekend/preview/Screenshot From 2026-09-11 13-57-41.png",
-      "weekend/preview/Screenshot From 2026-09-11 13-58-55.png"
+      "weekend/preview/Screenshot From 2026-09-11 13-58-55.webp"
     ),
     galleryStyle: "editorial",
     gallery: [
@@ -450,16 +450,16 @@ const PROJECTS = [
       media("video", ASSET_ROOT + "weekend/060L.webm"), // 4 (L)
       media("video", ASSET_ROOT + "weekend/070M.webm"), // 5 (M)
       media("image", ASSET_ROOT + "weekend/080S.jpg"), // 6 (S)
-      media("image", ASSET_ROOT + "weekend/090L.png"), // 7 (L)
-      media("image", ASSET_ROOT + "weekend/100M.png"), // 8 (M)
+      media("image", ASSET_ROOT + "weekend/090L.webp"), // 7 (L)
+      media("image", ASSET_ROOT + "weekend/100M.webp"), // 8 (M)
       media("image", ASSET_ROOT + "weekend/110S.png"), // 9 (S)
-      media("image", ASSET_ROOT + "weekend/120L.png"), // 10 (L)
+      media("image", ASSET_ROOT + "weekend/120L.webp"), // 10 (L)
       media("video", ASSET_ROOT + "weekend/130S.webm"), // 11 (S)
       media("video", ASSET_ROOT + "weekend/140M.webm"), // 12 (M)
       media("video", ASSET_ROOT + "weekend/150S.webm"), // 13 (S)
       media("video", ASSET_ROOT + "weekend/160S.webm"), // 14 (S)
       media("image", ASSET_ROOT + "weekend/170L.png"), // 15 (L)
-      media("image", ASSET_ROOT + "weekend/180m.png"), // 16 (M)
+      media("image", ASSET_ROOT + "weekend/180m.webp"), // 16 (M)
       media("image", ASSET_ROOT + "weekend/190M.jpg"), // 17 (M)
     ],
     editorialRows: [
@@ -496,8 +496,8 @@ const PROJECTS = [
     previews: previews(
       "zalando/preview/Foto 05.12.23, 14 08 45.jpg",
       "zalando/preview/Foto 05.12.23, 16 33 12.jpg",
-      "zalando/preview/Pasted image.png",
-      "zalando/preview/Screenshot From 2026-09-11 13-49-32.png"
+      "zalando/preview/Pasted image.webp",
+      "zalando/preview/Screenshot From 2026-09-11 13-49-32.webp"
     ),
     galleryStyle: "editorial",
     gallery: [
@@ -541,28 +541,28 @@ const PROJECTS = [
     hero: media("mux", "5kPcLdjeceiNMoey3Z8aRW2htQeVrxQOQSiSqF1yN7M"),
     previews: previews(
       "superpop/preview/cleaned-copy-1536x866.jpg",
-      "superpop/preview/Pasted image (2).png",
+      "superpop/preview/Pasted image (2).webp",
       "superpop/preview/Pasted image.png",
       "superpop/preview/sh010-1.jpg"
     ),
     galleryStyle: "editorial",
     gallery: [
       media("image", ASSET_ROOT + "superpop/015L.webp"), // 0 (L)
-      media("image", ASSET_ROOT + "superpop/019M.png"), // 1 (M)
-      media("image", ASSET_ROOT + "superpop/020M.png"), // 2 (M)
-      media("image", ASSET_ROOT + "superpop/030S.png"), // 3 (S)
+      media("image", ASSET_ROOT + "superpop/019M.webp"), // 1 (M)
+      media("image", ASSET_ROOT + "superpop/020M.webp"), // 2 (M)
+      media("image", ASSET_ROOT + "superpop/030S.webp"), // 3 (S)
       media("image", ASSET_ROOT + "superpop/040L.webp"), // 4 (L)
-      media("image", ASSET_ROOT + "superpop/060L.png"), // 5 (L)
+      media("image", ASSET_ROOT + "superpop/060L.webp"), // 5 (L)
       media("image", ASSET_ROOT + "superpop/070M.png"), // 6 (M)
-      media("image", ASSET_ROOT + "superpop/080M.png"), // 7 (M)
+      media("image", ASSET_ROOT + "superpop/080M.webp"), // 7 (M)
       media("vimeo", "1107468409", { caption: "Character animation — full cut." }), // 8 (L)
-      media("image", ASSET_ROOT + "superpop/090L.png"), // 9 (L)
+      media("image", ASSET_ROOT + "superpop/090L.webp"), // 9 (L)
       media("image", ASSET_ROOT + "superpop/100L.jpg"), // 10 (L)
-      media("image", ASSET_ROOT + "superpop/110L.png"), // 11 (L)
+      media("image", ASSET_ROOT + "superpop/110L.webp"), // 11 (L)
       media("image", ASSET_ROOT + "superpop/130S.png"), // 12 (S)
       media("image", ASSET_ROOT + "superpop/140S.png"), // 13 (S)
       media("image", ASSET_ROOT + "superpop/150M.png"), // 14 (M)
-      media("image", ASSET_ROOT + "superpop/180s.png"), // 15 (S)
+      media("image", ASSET_ROOT + "superpop/180s.webp"), // 15 (S)
       media("image", ASSET_ROOT + "superpop/190S.jpg"), // 16 (S)
       media("image", ASSET_ROOT + "superpop/195S.jpg"), // 17 (S)
       media("image", ASSET_ROOT + "superpop/195S.png"), // 18 (S)
@@ -606,14 +606,14 @@ const PROJECTS = [
     previews: previews(
       "loopinglovers/preview/Screenshot From 2026-09-14 21-15-54.png",
       "loopinglovers/preview/Screenshot From 2026-09-14 21-16-26.png",
-      "loopinglovers/preview/Screenshot From 2026-09-14 21-16-39.png"
+      "loopinglovers/preview/Screenshot From 2026-09-14 21-16-39.webp"
     ),
     galleryStyle: "editorial",
     gallery: [
       media("video", ASSET_ROOT + "loopinglovers/010M.mp4"), // 0 (M)
       media("video", ASSET_ROOT + "loopinglovers/020S.mp4"), // 1 (S)
       media("image", ASSET_ROOT + "loopinglovers/025m.jpg"), // 2 (M)
-      media("image", ASSET_ROOT + "loopinglovers/026S.png"), // 3 (S)
+      media("image", ASSET_ROOT + "loopinglovers/026S.webp"), // 3 (S)
       media("video", ASSET_ROOT + "loopinglovers/030m.mp4"), // 4 (M)
       media("video", ASSET_ROOT + "loopinglovers/040L.mp4"), // 5 (L)
       media("video", ASSET_ROOT + "loopinglovers/050S.mp4"), // 6 (S)
@@ -650,21 +650,21 @@ const PROJECTS = [
     // match, not a real hero tag, so left out entirely rather than guess
     // where it belongs; rename it into the convention to bring it in
     previews: previews(
-      "Afterlife Shows/preview/020L.jpg",
-      "Afterlife Shows/preview/040m.png",
-      "Afterlife Shows/preview/120L.jpg"
+      "Afterlife Shows/020L.jpg",
+      "Afterlife Shows/040m.webp",
+      "Afterlife Shows/120L.jpg"
     ),
     galleryStyle: "editorial",
     gallery: [
       media("image", ASSET_ROOT + "Afterlife Shows/020L.jpg"), // 0 (L)
       media("image", ASSET_ROOT + "Afterlife Shows/030M.webp"), // 1 (M)
-      media("image", ASSET_ROOT + "Afterlife Shows/040m.png"), // 2 (M)
+      media("image", ASSET_ROOT + "Afterlife Shows/040m.webp"), // 2 (M)
       media("image", ASSET_ROOT + "Afterlife Shows/050m.jpg"), // 3 (M)
       media("video", ASSET_ROOT + "Afterlife Shows/060L.mp4"), // 4 (L)
       media("video", ASSET_ROOT + "Afterlife Shows/070S.mp4"), // 5 (S)
       media("video", ASSET_ROOT + "Afterlife Shows/080S.mp4"), // 6 (S)
       media("video", ASSET_ROOT + "Afterlife Shows/090m.mp4"), // 7 (M)
-      media("image", ASSET_ROOT + "Afterlife Shows/100m.png"), // 8 (M)
+      media("image", ASSET_ROOT + "Afterlife Shows/100m.webp"), // 8 (M)
       media("video", ASSET_ROOT + "Afterlife Shows/110S.mov"), // 9 (S)
       media("image", ASSET_ROOT + "Afterlife Shows/120L.jpg"), // 10 (L)
     ],
@@ -697,8 +697,8 @@ const PROJECTS = [
     // hero is the local 010.jpg
     hero: media("image", ASSET_ROOT + "Afterlife announement/010.jpg"),
     previews: previews(
-      "Afterlife announement/preview/010.jpg",
-      "Afterlife announement/preview/060S.png"
+      "Afterlife announement/010.jpg",
+      "Afterlife announement/060S.png"
     ),
     galleryStyle: "editorial",
     gallery: [
@@ -732,9 +732,9 @@ const PROJECTS = [
     // bare-numbered file (no L/M/S letter), so it's the hero by convention
     hero: media("image", ASSET_ROOT + "High Snobiety - not in london/160.png"),
     previews: previews(
-      "High Snobiety - not in london/preview/080L.png",
-      "High Snobiety - not in london/preview/100m.jpg",
-      "High Snobiety - not in london/preview/135S.png"
+      "High Snobiety - not in london/080L.webp",
+      "High Snobiety - not in london/100m.jpg",
+      "High Snobiety - not in london/135S.webp"
     ),
     galleryStyle: "editorial",
     gallery: [
@@ -745,15 +745,15 @@ const PROJECTS = [
       media("image", ASSET_ROOT + "High Snobiety - not in london/045S.jpg"), // 4 (S)
       media("image", ASSET_ROOT + "High Snobiety - not in london/050S.jpg"), // 5 (S)
       media("image", ASSET_ROOT + "High Snobiety - not in london/060M.png"), // 6 (M)
-      media("image", ASSET_ROOT + "High Snobiety - not in london/070m.png"), // 7 (M)
-      media("image", ASSET_ROOT + "High Snobiety - not in london/080L.png"), // 8 (L)
-      media("image", ASSET_ROOT + "High Snobiety - not in london/090m.png"), // 9 (M)
+      media("image", ASSET_ROOT + "High Snobiety - not in london/070m.webp"), // 7 (M)
+      media("image", ASSET_ROOT + "High Snobiety - not in london/080L.webp"), // 8 (L)
+      media("image", ASSET_ROOT + "High Snobiety - not in london/090m.webp"), // 9 (M)
       media("image", ASSET_ROOT + "High Snobiety - not in london/100m.jpg"), // 10 (M)
       media("image", ASSET_ROOT + "High Snobiety - not in london/110m.jpg"), // 11 (M)
       media("image", ASSET_ROOT + "High Snobiety - not in london/120m.jpg"), // 12 (M)
-      media("image", ASSET_ROOT + "High Snobiety - not in london/130m.gif"), // 13 (M)
-      media("image", ASSET_ROOT + "High Snobiety - not in london/135S.png"), // 14 (S)
-      media("image", ASSET_ROOT + "High Snobiety - not in london/140l.png"), // 15 (L)
+      media("video", ASSET_ROOT + "High Snobiety - not in london/130m.webm"), // 13 (M)
+      media("image", ASSET_ROOT + "High Snobiety - not in london/135S.webp"), // 14 (S)
+      media("image", ASSET_ROOT + "High Snobiety - not in london/140l.webp"), // 15 (L)
       media("image", ASSET_ROOT + "High Snobiety - not in london/150S.jpg"), // 16 (S)
       media("image", ASSET_ROOT + "High Snobiety - not in london/170s.png"), // 17 (S)
       media("image", ASSET_ROOT + "High Snobiety - not in london/180S.png"), // 18 (S)
@@ -792,9 +792,9 @@ const PROJECTS = [
     // file (no L/M/S letter), so it's the hero by convention
     hero: media("video", ASSET_ROOT + "FFS - Identity/010.mp4"),
     previews: previews(
-      "FFS - Identity/preview/020L.jpg",
-      "FFS - Identity/preview/040M.jpg",
-      "FFS - Identity/preview/064M.jpg"
+      "FFS - Identity/020L.jpg",
+      "FFS - Identity/040M.jpg",
+      "FFS - Identity/064M.jpg"
     ),
     galleryStyle: "editorial",
     gallery: [
@@ -814,7 +814,7 @@ const PROJECTS = [
       media("image", ASSET_ROOT + "FFS - Identity/075m.png"), // 13 (M)
       media("image", ASSET_ROOT + "FFS - Identity/080M.jpg"), // 14 (M)
       media("image", ASSET_ROOT + "FFS - Identity/090S.jpg"), // 15 (S)
-      media("image", ASSET_ROOT + "FFS - Identity/090m.gif"), // 16 (M)
+      media("video", ASSET_ROOT + "FFS - Identity/090m.webm"), // 16 (M)
       media("video", ASSET_ROOT + "FFS - Identity/100S.mp4"), // 17 (S)
     ],
     editorialRows: [
@@ -861,77 +861,77 @@ const FEATURED_LAYOUT = [
 // stills and process shots, not derived from project galleries
 const SCREENS = [
   media("video", "Assets/screenshots/001_.mp4"),
-  media("image", "Assets/screenshots/02_04_516.png"),
-  media("image", "Assets/screenshots/02_04_518.png"),
+  media("image", "Assets/screenshots/02_04_516.webp"),
+  media("image", "Assets/screenshots/02_04_518.webp"),
   media("image", "Assets/screenshots/02_18.52_5557.jpg"),
-  media("image", "Assets/screenshots/02_24_626.png"),
+  media("image", "Assets/screenshots/02_24_626.webp"),
   media("image", "Assets/screenshots/03_13.29_6029.png"),
   media("image", "Assets/screenshots/08_16.05_5572.jpg"),
   media("image", "Assets/screenshots/08_22_1290.jpg"),
-  media("image", "Assets/screenshots/08_27_1329.png"),
-  media("image", "Assets/screenshots/08_27_1331.png"),
-  media("image", "Assets/screenshots/08_27_1332.png"),
+  media("image", "Assets/screenshots/08_27_1329.webp"),
+  media("image", "Assets/screenshots/08_27_1331.webp"),
+  media("image", "Assets/screenshots/08_27_1332.webp"),
   media("image", "Assets/screenshots/10_13_94.jpg"),
   media("image", "Assets/screenshots/10_18.53_3909.png"),
-  media("image", "Assets/screenshots/14_16.47_3663.png"),
-  media("image", "Assets/screenshots/15_17.40_5598.png"),
+  media("image", "Assets/screenshots/14_16.47_3663.webp"),
+  media("image", "Assets/screenshots/15_17.40_5598.webp"),
   media("image", "Assets/screenshots/17_15.11_69.png"),
-  media("image", "Assets/screenshots/17_15.58_580.gif"),
+  media("video", "Assets/screenshots/17_15.58_580.webm"),
   media("image", "Assets/screenshots/17_15.59_2704.png"),
   media("video", "Assets/screenshots/2020_hs_instaActivation.mp4"),
   media("image", "Assets/screenshots/20_08.18_1517.jpg"),
   media("image", "Assets/screenshots/22.05.14 -13.5857 DAZStudio.png"),
-  media("image", "Assets/screenshots/22.07.15 -08.5312 chrome.png"),
+  media("image", "Assets/screenshots/22.07.15 -08.5312 chrome.webp"),
   media("image", "Assets/screenshots/22.11.16 15.41.51 Cinema_4D.png"),
   media("image", "Assets/screenshots/22.11.18 16.48.46 Cinema_4D.jpg"),
-  media("image", "Assets/screenshots/22.11.24 11.53.03 blender_3.3.png"),
+  media("image", "Assets/screenshots/22.11.24 11.53.03 blender_3.3.webp"),
   media("image", "Assets/screenshots/22.12.05 16.08.55 blender_3.3.jpg"),
   media("image", "Assets/screenshots/22.12.05 16.13.03 blender_3.3.jpg"),
   media("image", "Assets/screenshots/24_18.31_5965.jpg"),
   media("image", "Assets/screenshots/27_15.03_4349.png"),
   media("image", "Assets/screenshots/28_14.22_1561.jpg"),
-  media("image", "Assets/screenshots/29_18.33_5608.png"),
+  media("image", "Assets/screenshots/29_18.33_5608.webp"),
   media("image", "Assets/screenshots/31_14.33_4223.jpg"),
   media("image", "Assets/screenshots/a_generattive1.jpg"),
-  media("image", "Assets/screenshots/a_generattive2.png"),
-  media("image", "Assets/screenshots/aquatic01.png"),
-  media("image", "Assets/screenshots/aquatic02.png"),
-  media("image", "Assets/screenshots/aquatic03.png"),
-  media("image", "Assets/screenshots/aquatic04.png"),
-  media("image", "Assets/screenshots/aquatic05.png"),
-  media("image", "Assets/screenshots/aquatic06.png"),
-  media("image", "Assets/screenshots/aquatic07.png"),
+  media("image", "Assets/screenshots/a_generattive2.webp"),
+  media("image", "Assets/screenshots/aquatic01.webp"),
+  media("image", "Assets/screenshots/aquatic02.webp"),
+  media("image", "Assets/screenshots/aquatic03.webp"),
+  media("image", "Assets/screenshots/aquatic04.webp"),
+  media("image", "Assets/screenshots/aquatic05.webp"),
+  media("image", "Assets/screenshots/aquatic06.webp"),
+  media("image", "Assets/screenshots/aquatic07.webp"),
   media("image", "Assets/screenshots/aquatic08.png"),
   media("image", "Assets/screenshots/aquatic09.png"),
-  media("image", "Assets/screenshots/aquatic10.png"),
-  media("image", "Assets/screenshots/aquatic11.png"),
-  media("image", "Assets/screenshots/aquatic12.png"),
-  media("image", "Assets/screenshots/barbie - bts  1.png"),
+  media("image", "Assets/screenshots/aquatic10.webp"),
+  media("image", "Assets/screenshots/aquatic11.webp"),
+  media("image", "Assets/screenshots/aquatic12.webp"),
+  media("image", "Assets/screenshots/barbie - bts  1.webp"),
   media("image", "Assets/screenshots/barbie - bts  2.jpg"),
-  media("image", "Assets/screenshots/barbie - bts  2.png"),
-  media("image", "Assets/screenshots/barbie - bts  4.png"),
+  media("image", "Assets/screenshots/barbie - bts  2.webp"),
+  media("image", "Assets/screenshots/barbie - bts  4.webp"),
   media("image", "Assets/screenshots/barbie - bts  5 (1).jpg"),
   media("image", "Assets/screenshots/barbie - bts  5.jpg"),
   media("image", "Assets/screenshots/barbie - comp  1.jpg"),
   media("image", "Assets/screenshots/barbie - comp  11.jpg"),
   media("image", "Assets/screenshots/barbiexbalmain.jpg"),
   media("image", "Assets/screenshots/candy (1).jpg"),
-  media("image", "Assets/screenshots/candy (1).png"),
+  media("image", "Assets/screenshots/candy (1).webp"),
   media("image", "Assets/screenshots/candy (2).jpg"),
   media("image", "Assets/screenshots/candy (3).jpg"),
   media("image", "Assets/screenshots/candy (4).jpg"),
-  media("image", "Assets/screenshots/car4.png"),
+  media("image", "Assets/screenshots/car4.webp"),
   media("image", "Assets/screenshots/car5.png"),
-  media("image", "Assets/screenshots/cyborg1.png"),
-  media("image", "Assets/screenshots/cyborg2.png"),
-  media("image", "Assets/screenshots/cyborg3.png"),
+  media("image", "Assets/screenshots/cyborg1.webp"),
+  media("image", "Assets/screenshots/cyborg2.webp"),
+  media("image", "Assets/screenshots/cyborg3.webp"),
   media("image", "Assets/screenshots/cyborg4.jpg"),
-  media("image", "Assets/screenshots/cyborg5.png"),
+  media("image", "Assets/screenshots/cyborg5.webp"),
   media("image", "Assets/screenshots/cyborg6.jpg"),
   media("image", "Assets/screenshots/fabbit001.png"),
   media("image", "Assets/screenshots/fabbit002.png"),
-  media("image", "Assets/screenshots/fabbit003.png"),
-  media("image", "Assets/screenshots/fabbit004.png"),
+  media("image", "Assets/screenshots/fabbit003.webp"),
+  media("image", "Assets/screenshots/fabbit004.webp"),
   media("image", "Assets/screenshots/ffs006.png"),
   media("image", "Assets/screenshots/ffs014.png"),
   media("image", "Assets/screenshots/ffs_shoes001.jpg"),
@@ -943,10 +943,10 @@ const SCREENS = [
   media("image", "Assets/screenshots/ffs_shoes007.png"),
   media("image", "Assets/screenshots/ffs_shoes008.png"),
   media("image", "Assets/screenshots/ffs_shoes009.png"),
-  media("image", "Assets/screenshots/ffs_shoes010.png"),
-  media("image", "Assets/screenshots/ffs_shoes011.png"),
+  media("image", "Assets/screenshots/ffs_shoes010.webp"),
+  media("image", "Assets/screenshots/ffs_shoes011.webp"),
   media("video", "Assets/screenshots/ffs_shoes012.mp4"),
-  media("image", "Assets/screenshots/ffs_shoes013.png"),
+  media("image", "Assets/screenshots/ffs_shoes013.webp"),
   media("image", "Assets/screenshots/ffs_shoes014.jpg"),
   media("video", "Assets/screenshots/ffs_shoes015.mp4"),
   media("image", "Assets/screenshots/ffs_shoes016.png"),
@@ -958,7 +958,7 @@ const SCREENS = [
   media("image", "Assets/screenshots/ffs_shoes022.png"),
   media("image", "Assets/screenshots/ffs_shoes023.png"),
   media("image", "Assets/screenshots/generative3.jpg"),
-  media("image", "Assets/screenshots/generative4.png"),
+  media("image", "Assets/screenshots/generative4.webp"),
   media("image", "Assets/screenshots/generative5.jpg"),
 ];
 
