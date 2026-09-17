@@ -221,6 +221,7 @@ body.mobile-nav-locked { overflow: hidden; }
 .role-roulette { cursor: default; }
 .intro-bio { flex: 1; min-width: 240px; display: flex; flex-direction: column; gap: 22px; }
 .intro-bio p { font-size: 16px; line-height: 1.75; color: var(--muted2); max-width: 420px; margin: 0; }
+.heart-icon { vertical-align: -2px; margin: 0 1px; }
 .intro-mail-link { color: var(--text); border-bottom: 1px solid var(--text); cursor: pointer; }
 
 /* selected work grid */

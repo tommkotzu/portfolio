@@ -195,10 +195,18 @@
   function mountRoleRoulette() {
     clearInterval(roleRouletteTimer);
     const el = document.getElementById("role-roulette");
+    const articleEl = document.getElementById("role-article");
     if (!el) return;
 
     let lastShown = el.textContent;
     let animToken = 0;
+
+    // "an" before a vowel SOUND — skip any leading digits (e.g. "3D
+    // generalist" is spoken "three-D", a consonant sound, so it stays "a")
+    function articleFor(word) {
+      const firstLetter = word.replace(/^[0-9]+/, "").charAt(0).toLowerCase();
+      return "aeiou".includes(firstLetter) ? "an" : "a";
+    }
 
     function scrambleTo(target, duration) {
       const token = ++animToken;
@@ -225,7 +233,9 @@
     }
 
     function advance() {
-      scrambleTo(pickNext(), 400);
+      const next = pickNext();
+      if (articleEl) articleEl.textContent = articleFor(next);
+      scrambleTo(next, 400);
     }
 
     el.addEventListener("mouseenter", () => {
@@ -445,9 +455,9 @@
       </div>
 
       <div class="intro">
-        <div class="intro-headline">Hey, I'm Thomas — a <span class="role-roulette" id="role-roulette">multidisciplinary designer</span>.</div>
+        <div class="intro-headline">Hey, I'm Thomas — <span id="role-article">a</span> <span class="role-roulette" id="role-roulette">multidisciplinary designer</span>.</div>
         <div class="intro-bio">
-          <p>I ♥ working in 3D, and I get complex things done — on time, and exactly the way you want them. Need a hand on a project? <a href="mailto:thomasludwigwork@pm.me" class="intro-mail-link">Let's chat.</a></p>
+          <p>I <svg class="heart-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 20.6c-.3 0-.6-.1-.83-.33C7.4 16.86 4 13.3 4 9.6 4 6.6 6.24 4.4 9.1 4.4c1.63 0 3.2.76 4.4 1.98 1.2-1.22 2.77-1.98 4.4-1.98 2.86 0 5.1 2.2 5.1 5.2 0 3.7-3.4 7.26-7.17 10.67-.23.23-.53.33-.83.33z"/></svg> working in 3D, and I get complex things done — on time, and exactly the way you want them. Need a hand on a project? <a href="mailto:thomasludwigwork@pm.me" class="intro-mail-link">Let's chat.</a></p>
         </div>
       </div>
 
