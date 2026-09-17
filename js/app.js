@@ -447,7 +447,7 @@
       <div class="intro">
         <div class="intro-headline">Hey, I'm Thomas — a <span class="role-roulette" id="role-roulette">multidisciplinary designer</span>.</div>
         <div class="intro-bio">
-          <p>I ❤️ working in 3D, and I get complex things done — on time, and exactly the way you want them. Need a hand on a project? <a href="mailto:thomasludwigwork@pm.me" class="intro-mail-link">Let's chat.</a></p>
+          <p>I ♥ working in 3D, and I get complex things done — on time, and exactly the way you want them. Need a hand on a project? <a href="mailto:thomasludwigwork@pm.me" class="intro-mail-link">Let's chat.</a></p>
         </div>
       </div>
 
