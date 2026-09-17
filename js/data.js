@@ -194,7 +194,7 @@ const PROJECTS = [
     // gallery/hero regenerated from Assets/projects/luisa via roma/ via
     // scripts/gen_gallery.py — rerun that script after renaming/adding files
     // there instead of hand-editing this list
-    hero: media("video", ASSET_ROOT + "luisa via roma/010.mp4"),
+    hero: media("mux", "GJq7ZR00MQo9u01mZDJFnnbpvGWCJ4cTCsZFBwjuizW64"),
     // "Loopinglovers teaser luisaviaroma.mp4" in this preview/ folder is a
     // leftover from the Looping Lovers project, not a real preview for this
     // one — left out rather than mixed in by mistake
@@ -790,7 +790,7 @@ const PROJECTS = [
     blurb: "We developed the full core identity for Flowers for Society's exclusive NFT membership club, building a narrative rooted in the essence of their young, bold brand and their long-lasting journey in the sneaker world. Each digital flower became a symbol of growth, individuality, and belonging — generated through a custom AI-driven process, training models on curated datasets and crossbreeding imagery with tools like Artbreeder and RunwayML. Every flower was analyzed and categorized into metadata, forming a collection of 5,000 unique NFTs that act as membership keys to the Flowers for Society world. The visuals extended beyond the digital space, carried into the physical world through apparel prints and brand touchpoints — bridging sneakers, technology and art into one cohesive universe.",
     // gen_gallery.py "FFS - Identity" — 010.mp4 is the only bare-numbered
     // file (no L/M/S letter), so it's the hero by convention
-    hero: media("video", ASSET_ROOT + "FFS - Identity/010.mp4"),
+    hero: media("mux", "TtmJrMtL02joO7MzdV00H1QkWghaJepjKCrFrZLAQ8nuA"),
     previews: previews(
       "FFS - Identity/020L.jpg",
       "FFS - Identity/040M.jpg",
