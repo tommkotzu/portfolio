@@ -319,7 +319,7 @@ const PROJECTS = [
       { role: "3D Production", name: "Jan Sommer" },
       { role: "Compositing", name: "Henning Herrholz" },
     ],
-    tags: ["Artist", "360"],
+    tags: ["Artist", "360", "Full Production"],
     blurb: "OpenAI invited Looping Lovers to create an artistic centrepiece for the opening of its new Munich office — a cinematic installation that embodied the dialogue between human and intelligent systems. Presented inside the 360° Streaming Dome of the Deutsches Museum, “The Space Between” transformed movement into a living field of light and sound, exploring creativity as a shared process between body and machine.",
     // gallery/hero regenerated from Assets/projects/openAI/ via
     // scripts/gen_gallery.py — rerun that script after renaming/adding files
@@ -536,7 +536,7 @@ const PROJECTS = [
       { role: "Studio", name: "Looping Lovers" },
       { role: "Compositing", name: "Henning Herrholz" },
     ],
-    tags: ["Artist", "Art Direction", "Lookdev", "AI"],
+    tags: ["Artist", "Art Direction", "Lookdev", "AI", "Full Production"],
     blurb: "SuperPop Festival invited us to contribute a visual artist performance to their show. Alongside a lineup of musicians and artists, we delivered a stage show in collaboration with DJ Raiden — built around a falling star, and a moment of freedom and power, as experienced through music. We brought together our full 3D pipeline, motion capture, environment building, and the latest AI methods to make it happen.",
     hero: media("mux", "5kPcLdjeceiNMoey3Z8aRW2htQeVrxQOQSiSqF1yN7M"),
     previews: previews(
@@ -597,7 +597,7 @@ const PROJECTS = [
       { role: "Partner", name: "Philipp Ries" },
     ],
     links: ["https://www.instagram.com/loopinglovers/"],
-    tags: ["Motion Design", "3D Explorations", "Artist"],
+    tags: ["Motion Design", "3D Explorations", "Artist", "Full Production"],
     blurb: "Loopinglovers began at university as a creative outlet — a way to be part of an emerging digital pop culture and contribute to the kind of imagery I found genuinely mesmerizing. It grew into a core identity project: using humanoid meshes to explore both production tools and artistic identity, always pushing to try something new. That exploration led to collaborations with musicians, solo exhibitions, and, over time, growing interest from brands and talents worldwide.",
     hero: media("mux", "dP01ov5G2vkGsojAKM02cPZXPDzlsgZjTqKfiK01u00tfl00"),
     // gen_gallery.py loopinglovers — also skipped Comp.mp4 and the long
@@ -642,7 +642,7 @@ const PROJECTS = [
       { role: "Partner", name: "Philipp Ries" },
       { role: "Studio", name: "Looping Lovers" },
     ],
-    tags: ["3D Production", "Art Direction", "Lookdev"],
+    tags: ["3D Production", "Art Direction", "Lookdev", "AI"],
     blurb: "Afterlife became a long-term collaboration partner. Over the years we contributed visuals to numerous stage shows across locations and songs — always high-end, always on tight timelines, keeping pace with the relentless demand of this visual, music-driven storytelling machine. The work came with a lot of creative freedom, backed by sharp art direction from the team, and took us to the US and London to see the massive screen installations first hand.",
     hero: media("mux", "IqfxlAhHn00HMetv9Mso53NhrClGQa6B00s4oqbfU4vBI"),
     // gen_gallery.py picked up 7abd3d218995693.68a83fa7e5f88.jpeg as a
@@ -841,7 +841,7 @@ const PROJECTS = [
     year: "2025", // not given — confirm/adjust
     role: "Director",
     credits: [],
-    tags: ["Kidad", "CAD", "Automation"],
+    tags: ["Kidad", "CAD", "Automation", "Product Visualisation"],
     blurb: "Ongoing robotics and automation work — CAD design and hardware build. Case details available on request.",
     hero: null, // no public content yet
     previews: previews(),
