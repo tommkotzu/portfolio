@@ -967,7 +967,7 @@ const CLIENTS_DIRECT = ["OpenAI", "CRO", "Breuninger", "Zalando", "Anyma", "Afte
 
 const EXHIBITIONS = [
   { event: "CCC", location: "Hamburg, Germany" },
-  { event: "Innovation Week", location: "Turkey" },
+  { event: "Innovation Week", location: "Istanbul, Turkey" },
   { event: "Laval Virtual", location: "Laval, France" },
   { event: "Soho House", location: "Berlin, Germany" },
   { event: "Table Tennis World Championship", location: "Shanghai, China" },
@@ -981,12 +981,12 @@ const EXHIBITIONS = [
   { event: "48H, Kunsthalle Rostock", location: "Rostock, Germany" },
   { event: "No28, Soho House", location: "Paris, France" },
   { event: "Misa x OMR", location: "Hamburg, Germany" },
-  { event: "Artbeam", location: "Munich, Germany" },
+  { event: "Artbeam", location: "São Paulo, Brazil" },
   { event: "Subli_me, The Wrong", location: "Brazil" },
   { event: "Cyber Glitch", location: "Bristol, UK" },
   { event: "sadgif, Glasshouse", location: "New York, USA" },
   { event: "sadgif, Floodwall Studio", location: "Virginia, USA" },
-  { event: "Computer Generated", location: "Art Anthology Book" },
+  { event: "Computer Generated", location: "Art Anthology Book, Print" },
   { event: "Forward Festival", location: "Berlin and Hamburg, Germany" },
-  { event: "Superpop", location: "Korea" },
+  { event: "Superpop", location: "Seoul, Korea" },
 ];
