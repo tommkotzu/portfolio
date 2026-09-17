@@ -460,7 +460,7 @@ button { font: inherit; color: inherit; background: none; border: 0; }
    the footer's text) — .site-footer is pointer-events: none outside its
    actual links now, so the two no longer fight over clicks in that band */
 .view-toggle {
-  position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); z-index: 40;
+  position: fixed; left: 50%; bottom: 9px; transform: translateX(-50%); z-index: 40;
   padding: 10px 20px; margin: 0; border: 0; box-sizing: border-box;
   display: inline-flex; align-items: center; justify-content: center; line-height: 1;
   -webkit-appearance: none; appearance: none;
