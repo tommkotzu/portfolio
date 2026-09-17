@@ -57,6 +57,14 @@
   });
   applyTheme();
 
+  const cookieBanner = document.getElementById("cookie-banner");
+  const cookieBtn = document.getElementById("cookie-notice-btn");
+  const cookieClose = document.getElementById("cookie-banner-close");
+  if (cookieBtn && cookieBanner && cookieClose) {
+    cookieBtn.addEventListener("click", () => { cookieBanner.hidden = false; });
+    cookieClose.addEventListener("click", () => { cookieBanner.hidden = true; });
+  }
+
   // easter egg: 5 rapid clicks on the editorial/grid view toggle scrambles the
   // gallery — everything crooked, overlapping and crushed into one screen.
   // preview: only wired up for Luisa Via Roma for now.
@@ -390,14 +398,11 @@
     const setVolume = () => { video.muted = false; video.volume = 0.8; };
     if (typeof video.play === "function") setVolume();
     else customElements.whenDefined(video.tagName.toLowerCase()).then(setVolume);
-    const toggle = () => {
-      if (video.paused) { video.play(); overlay.style.display = "none"; }
-      else { video.pause(); overlay.style.display = "flex"; }
-    };
+    const toggle = () => { if (video.paused) video.play(); else video.pause(); };
     video.addEventListener("click", toggle);
     overlay.addEventListener("click", toggle);
-    video.addEventListener("pause", () => { overlay.style.display = "flex"; });
-    video.addEventListener("play", () => { overlay.style.display = "none"; });
+    video.addEventListener("pause", () => wrap.classList.remove("is-playing"));
+    video.addEventListener("play", () => wrap.classList.add("is-playing"));
     document.querySelectorAll(".featured-card .media-wrap.scrub.ambient").forEach(scheduleAmbientScrub);
   }
 
@@ -645,9 +650,9 @@
     <div class="page" data-screen="detail">
       ${hero ? `
       <div class="hero hero-detail hero-detail-top">
-        <div class="hero-inner" id="hero-video-wrap">
+        <div class="hero-inner is-playing" id="hero-video-wrap">
           ${mediaHTML(hero, { hero: true })}
-          ${hero.type !== "vimeo" ? `<div class="hero-play" id="hero-play-toggle" style="display:none"><div class="hero-play-glyph"></div></div>` : ""}
+          ${hero.type !== "vimeo" ? `<div class="hero-play" id="hero-play-toggle"><div class="hero-play-glyph"></div></div>` : ""}
         </div>
       </div>` : ""}
 
@@ -675,6 +680,19 @@
         </div>
 
         ${isEditorial ? (useGrid ? `<div class="detail-narrow">${galleryBody}</div>` : `<div class="detail-wide">${galleryBody}</div>`) : `<div class="detail-narrow">${galleryBody}</div>`}
+
+        <div class="detail-narrow detail-footer">
+          ${active.credits && active.credits.length ? `
+          <div class="detail-credits">
+            <h3>Credits</h3>
+            <ul>${active.credits.map((c) => `<li><span class="credit-role">${c.role}</span><span class="credit-name">${c.name}</span></li>`).join("")}</ul>
+          </div>` : ""}
+          ${active.links && active.links.length ? `
+          <div class="detail-links">
+            <h3>Links</h3>
+            <ul>${active.links.map((l) => `<li><a href="${l}" target="_blank" rel="noopener">${l.replace(/^https?:\/\//, "")}</a></li>`).join("")}</ul>
+          </div>` : ""}
+        </div>
       </div>
     </div>
     ${showViewToggle ? `<button class="view-toggle" data-set-editorial-view="${useGrid ? "editorial" : "grid"}">${useGrid ? "Editorial view" : "Grid view"}</button>` : ""}
@@ -691,7 +709,7 @@
   // ---------- screens ----------
   function renderScreens() {
     return `<div class="page screens-page" data-screen="screens">
-      <div class="screens-title">Screens</div>
+      <div class="screens-title">Notes</div>
       <div class="screens-sub">A running collection of frames, stills and process shots.</div>
       ${renderMasonryGrid(SCREENS)}
     </div>`;
@@ -705,7 +723,7 @@
           <h1>About</h1>
           <p>I'm Thomas Mayer, motion director and editor. For over ten years I've been shaping story through rhythm — commercials, music films, brand work — with an obsessive eye for pacing, texture and sound design.</p>
           <div class="about-actions">
-            <a class="btn-primary" href="mailto:hello@thomasmayer.com">Get in touch</a>
+            <a class="btn-primary" href="mailto:thomasludwigwork@pm.me">Get in touch</a>
             <a class="btn-ghost" href="#">Download CV ↓</a>
           </div>
         </div>
@@ -771,7 +789,7 @@
       </div>
       <div class="legal-section">
         <h2>Kontakt</h2>
-        <p>Telefon: [Telefonnummer]<br>E-Mail: <a href="mailto:hello@thomasmayer.com">hello@thomasmayer.com</a></p>
+        <p>Telefon: [Telefonnummer]<br>E-Mail: <a href="mailto:thomasludwigwork@pm.me">thomasludwigwork@pm.me</a></p>
       </div>
       <div class="legal-section">
         <h2>Umsatzsteuer-ID</h2>
@@ -793,7 +811,7 @@
       <h1>Datenschutzerklärung</h1>
       <div class="legal-section">
         <h2>Verantwortlicher</h2>
-        <p>Thomas Mayer<br>Boxhagener Straße 42<br>10245 Berlin<br>E-Mail: <a href="mailto:hello@thomasmayer.com">hello@thomasmayer.com</a></p>
+        <p>Thomas Mayer<br>Boxhagener Straße 42<br>10245 Berlin<br>E-Mail: <a href="mailto:thomasludwigwork@pm.me">thomasludwigwork@pm.me</a></p>
       </div>
       <div class="legal-section">
         <h2>Hosting</h2>
@@ -853,14 +871,11 @@
     const overlay = document.getElementById("hero-play-toggle");
     if (video && overlay) {
       safePlay(video);
-      const toggle = () => {
-        if (video.paused) { video.play(); overlay.style.display = "none"; }
-        else { video.pause(); overlay.style.display = "flex"; }
-      };
+      const toggle = () => { if (video.paused) video.play(); else video.pause(); };
       video.addEventListener("click", toggle);
       overlay.addEventListener("click", toggle);
-      video.addEventListener("pause", () => { overlay.style.display = "flex"; });
-      video.addEventListener("play", () => { overlay.style.display = "none"; });
+      video.addEventListener("pause", () => wrap.classList.remove("is-playing"));
+      video.addEventListener("play", () => wrap.classList.add("is-playing"));
     }
     const openLb = document.getElementById("hero-lightbox-open");
     if (openLb) openLb.addEventListener("click", () => { state.lightboxOpen = true; render(); });

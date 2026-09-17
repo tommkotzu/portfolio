@@ -13,7 +13,7 @@
     <nav class="nav-links">
       <span class="nav-link" data-nav="welcome">Home</span>
       <span class="nav-link" data-nav="work">Work</span>
-      <span class="nav-link" data-nav="screens">Screens</span>
+      <span class="nav-link" data-nav="screens">Notes</span>
       <span class="nav-link" data-nav="about">About</span>
     </nav>
     <div class="nav-right">
@@ -32,13 +32,19 @@
       <span>© 2026 Thomas Mayer</span>
       <span class="footer-link" data-nav="impressum">Impressum</span>
       <span class="footer-link" data-nav="datenschutz">Datenschutz</span>
+      <span class="footer-link" id="cookie-notice-btn">Cookies</span>
     </div>
     <div class="links">
-      <a href="mailto:hello@thomasmayer.com">Email</a>
+      <a href="mailto:thomasludwigwork@pm.me">Email</a>
       <a href="https://www.instagram.com/tomm.boo/" target="_blank" rel="noopener">Instagram</a>
       <a href="https://www.behance.net/thomasmayerberlin" target="_blank" rel="noopener">Behance</a>
     </div>
   </footer>
+
+  <div class="cookie-banner" id="cookie-banner" hidden>
+    <p>This site doesn't use tracking or advertising cookies. Videos are streamed via Mux and Vimeo, which may set essential playback cookies on their own domains.</p>
+    <button class="btn-ghost" id="cookie-banner-close" type="button">Got it</button>
+  </div>
 
   <script type="module" src="https://cdn.jsdelivr.net/npm/@mux/mux-video@0.31.3/dist/mux-video.mjs"></script>
   <script src="js/data.js"></script>
