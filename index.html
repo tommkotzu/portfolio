@@ -10,6 +10,9 @@
 <body>
   <header class="nav">
     <div class="nav-logo" data-nav="welcome">THOMAS MAYER</div>
+    <button class="nav-menu-toggle" id="nav-menu-toggle" aria-label="Menu" aria-expanded="false" type="button">
+      <span></span><span></span><span></span>
+    </button>
     <nav class="nav-links">
       <span class="nav-link" data-nav="welcome">Home</span>
       <span class="nav-link" data-nav="work">Work</span>
@@ -24,6 +27,15 @@
       </button>
     </div>
   </header>
+
+  <div class="mobile-nav-overlay" id="mobile-nav-overlay">
+    <nav class="mobile-nav-links">
+      <span class="mobile-nav-link" data-nav="welcome">Home</span>
+      <span class="mobile-nav-link" data-nav="work">Work</span>
+      <span class="mobile-nav-link" data-nav="screens">Notes</span>
+      <span class="mobile-nav-link" data-nav="about">About</span>
+    </nav>
+  </div>
 
   <main id="app"></main>
 

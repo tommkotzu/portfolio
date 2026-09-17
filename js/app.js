@@ -24,7 +24,21 @@
     galleryView: "spacious",
     editorialGalleryView: "editorial", // "editorial" | "grid" — preview toggle, superpop only for now
     lightboxOpen: false,
+    mobileNavOpen: false,
   };
+
+  // ---------- mobile nav ----------
+  const mobileNavToggle = document.getElementById("nav-menu-toggle");
+  const mobileNavOverlay = document.getElementById("mobile-nav-overlay");
+  function setMobileNavOpen(open) {
+    state.mobileNavOpen = open;
+    mobileNavToggle.classList.toggle("open", open);
+    mobileNavToggle.setAttribute("aria-expanded", String(open));
+    mobileNavOverlay.classList.toggle("open", open);
+    document.body.classList.toggle("mobile-nav-locked", open);
+  }
+  mobileNavToggle.addEventListener("click", () => setMobileNavOpen(!state.mobileNavOpen));
+  mobileNavOverlay.addEventListener("click", (e) => { if (e.target === mobileNavOverlay) setMobileNavOpen(false); });
 
   // ---------- theme ----------
   function applyTheme() {
@@ -877,7 +891,7 @@
   }
 
   function updateNavActive(page) {
-    document.querySelectorAll(".nav-link").forEach((el) => {
+    document.querySelectorAll(".nav-link, .mobile-nav-link").forEach((el) => {
       const target = el.dataset.nav;
       const isActive = target === page || (target === "work" && page === "detail");
       el.classList.toggle("active", isActive);
@@ -945,7 +959,7 @@
   // ---------- delegated events ----------
   document.body.addEventListener("click", (e) => {
     const navEl = e.target.closest("[data-nav]");
-    if (navEl) { goto(navEl.dataset.nav); return; }
+    if (navEl) { setMobileNavOpen(false); goto(navEl.dataset.nav); return; }
 
     const openEl = e.target.closest("[data-open-project]");
     if (openEl) { goto("detail", openEl.dataset.openProject); return; }
