@@ -427,7 +427,7 @@ button { font: inherit; color: inherit; background: none; border: 0; }
 .site-footer .links { display: flex; gap: 18px; }
 .site-footer .links:first-child { font-weight: 400; }
 .site-footer .social-links { align-items: center; gap: 16px; }
-.social-icon { width: 16px; height: 16px; display: block; }
+.social-icon { width: 24px; height: 24px; display: block; }
 .site-footer a:hover { opacity: 0.7; }
 .site-footer .footer-link { cursor: pointer; }
 .site-footer .footer-link:hover { opacity: 0.7; }
