@@ -183,6 +183,60 @@
     });
   }
 
+  // welcome-page headline: the role word auto-shuffles on a timer, and
+  // hovering it jumps straight to another one (same letter-scramble as the
+  // nav-logo roulette above, just lowercase and on a slower, ambient cadence)
+  const ROLE_ROULETTE = [
+    "multidisciplinary designer", "artist", "technologist", "little geek",
+    "motion designer", "3D generalist", "art director", "creative producer",
+    "Blender nerd", "Linux enthusiast", "salad chef",
+  ];
+  let roleRouletteTimer = null;
+  function mountRoleRoulette() {
+    clearInterval(roleRouletteTimer);
+    const el = document.getElementById("role-roulette");
+    if (!el) return;
+
+    let lastShown = el.textContent;
+    let animToken = 0;
+
+    function scrambleTo(target, duration) {
+      const token = ++animToken;
+      const start = performance.now();
+      (function frame(now) {
+        if (token !== animToken) return;
+        const progress = Math.min(1, (now - start) / duration);
+        const lockedCount = Math.floor(progress * target.length);
+        let out = "";
+        for (let i = 0; i < target.length; i++) {
+          out += i < lockedCount || target[i] === " " ? target[i] : SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+        }
+        el.textContent = out;
+        if (progress < 1) requestAnimationFrame(frame);
+        else el.textContent = target;
+      })(start);
+    }
+
+    function pickNext() {
+      let next = lastShown;
+      while (next === lastShown) next = ROLE_ROULETTE[Math.floor(Math.random() * ROLE_ROULETTE.length)];
+      lastShown = next;
+      return next;
+    }
+
+    function advance() {
+      scrambleTo(pickNext(), 400);
+    }
+
+    el.addEventListener("mouseenter", () => {
+      advance();
+      clearInterval(roleRouletteTimer);
+      roleRouletteTimer = setInterval(advance, 5000);
+    });
+
+    roleRouletteTimer = setInterval(advance, 5000);
+  }
+
   // ---------- clock ----------
   function updateClock() {
     const now = new Date();
@@ -391,10 +445,9 @@
       </div>
 
       <div class="intro">
-        <div class="intro-headline">Motion director shaping stories through movement.</div>
+        <div class="intro-headline">Hey, I'm Thomas — a <span class="role-roulette" id="role-roulette">multidisciplinary designer</span>.</div>
         <div class="intro-bio">
-          <p>Thomas Mayer is a motion director and editor working across film, brand and music. Ten years spent turning raw footage into rhythm — direction, edit, and everything in the timeline between.</p>
-          <div class="intro-link" data-nav="about">More about me →</div>
+          <p>I ❤️ working in 3D, and I get complex things done — on time, and exactly the way you want them. Need a hand on a project? <a href="mailto:thomasludwigwork@pm.me" class="intro-mail-link">Let's chat.</a></p>
         </div>
       </div>
 
@@ -422,6 +475,7 @@
   }
 
   function mountWelcome() {
+    mountRoleRoulette();
     const wrap = document.getElementById("hero-video-wrap");
     const video = wrap.querySelector("video, mux-video");
     const overlay = document.getElementById("hero-play-toggle");
