@@ -149,10 +149,11 @@ button { font: inherit; color: inherit; background: none; border: 0; }
   cursor: pointer; background: transparent;
   opacity: 1; transition: opacity 0.25s ease;
 }
-/* while a hero clip is playing, its play/pause UI hides itself and only
-   reappears on hover — same expectation as any normal video player */
-.hero-inner.is-playing .hero-play { opacity: 0; pointer-events: none; }
-.hero-inner.is-playing:hover .hero-play { opacity: 1; pointer-events: auto; }
+/* while a hero clip is playing, its play/pause UI hides itself; hovering
+   reveals the browser's own native controls (volume, scrub, fullscreen)
+   instead, so this custom glyph steps aside rather than doubling up */
+.hero-inner.is-playing .hero-play,
+.hero-inner:hover .hero-play { opacity: 0; pointer-events: none; }
 .hero-play-glyph {
   width: 64px; height: 64px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.75);
   display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px);

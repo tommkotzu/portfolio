@@ -190,6 +190,23 @@
     customElements.whenDefined(video.tagName.toLowerCase()).then(attempt);
   }
 
+  // native controls (volume, scrub bar, fullscreen) only while hovering the
+  // hero — familiar browser UI without it sitting on screen the rest of the
+  // time. onHoverChange lets the caller suppress its own click-to-toggle
+  // while the native control bar is what the visitor is actually clicking on
+  function mountHeroHoverControls(wrap, video, onHoverChange) {
+    const setControls = (on) => { video.controls = on; };
+    wrap.addEventListener("mouseenter", () => {
+      onHoverChange(true);
+      if (typeof video.play === "function") setControls(true);
+      else customElements.whenDefined(video.tagName.toLowerCase()).then(() => setControls(true));
+    });
+    wrap.addEventListener("mouseleave", () => {
+      onHoverChange(false);
+      setControls(false);
+    });
+  }
+
   // ---------- media rendering ----------
   function mediaHTML(item, opts = {}) {
     const cls = opts.cls || "";
@@ -399,11 +416,13 @@
     const setVolume = () => { video.muted = false; video.volume = 0.8; };
     if (typeof video.play === "function") setVolume();
     else customElements.whenDefined(video.tagName.toLowerCase()).then(setVolume);
-    const toggle = () => { if (video.paused) video.play(); else video.pause(); };
+    let hovering = false;
+    const toggle = () => { if (hovering) return; if (video.paused) video.play(); else video.pause(); };
     video.addEventListener("click", toggle);
     overlay.addEventListener("click", toggle);
     video.addEventListener("pause", () => wrap.classList.remove("is-playing"));
     video.addEventListener("play", () => wrap.classList.add("is-playing"));
+    mountHeroHoverControls(wrap, video, (v) => { hovering = v; });
     document.querySelectorAll(".featured-card .media-wrap.scrub.ambient").forEach(scheduleAmbientScrub);
   }
 
@@ -879,11 +898,13 @@
     const overlay = document.getElementById("hero-play-toggle");
     if (video && overlay) {
       safePlay(video);
-      const toggle = () => { if (video.paused) video.play(); else video.pause(); };
+      let hovering = false;
+      const toggle = () => { if (hovering) return; if (video.paused) video.play(); else video.pause(); };
       video.addEventListener("click", toggle);
       overlay.addEventListener("click", toggle);
       video.addEventListener("pause", () => wrap.classList.remove("is-playing"));
       video.addEventListener("play", () => wrap.classList.add("is-playing"));
+      mountHeroHoverControls(wrap, video, (v) => { hovering = v; });
     }
     const openLb = document.getElementById("hero-lightbox-open");
     if (openLb) openLb.addEventListener("click", () => { state.lightboxOpen = true; render(); });
