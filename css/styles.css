@@ -429,9 +429,14 @@ button { font: inherit; color: inherit; background: none; border: 0; }
 .site-footer {
   margin-top: auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
   padding: 18px var(--pad); font-size: 12px; font-weight: 600;
-  position: sticky; bottom: 0; z-index: 40;
+  position: sticky; bottom: 0; z-index: 40; pointer-events: none;
   background: transparent; color: #fff; mix-blend-mode: difference; isolation: isolate;
 }
+/* the footer's own box spans the full width even though its text sits at
+   the two edges — without this, that empty middle strip still swallowed
+   clicks meant for whatever sits at the same height (e.g. the view-toggle
+   button), so only the actual links stay clickable */
+.site-footer a, .site-footer .footer-link { pointer-events: auto; }
 .site-footer .links { display: flex; gap: 18px; }
 .site-footer .links:first-child { font-weight: 400; }
 .site-footer .social-links { align-items: center; gap: 16px; font-weight: 700; }
@@ -451,12 +456,11 @@ button { font: inherit; color: inherit; background: none; border: 0; }
 /* ---------- editorial/grid view toggle (preview) ---------- */
 /* same no-background, always-legible trick as the top nav: its own pixels
    invert against whatever's behind, so it reads over any image or video.
-   bottom: 80px (not the usual ~20-30px) clears the sticky footer (~51px
-   tall) — the footer sits later in the DOM so it was winning the click
-   whenever the two overlapped, which read as "the button's hit area is
-   above its own text" */
+   sits inline with the footer (bottom: 28px puts it at the same height as
+   the footer's text) — .site-footer is pointer-events: none outside its
+   actual links now, so the two no longer fight over clicks in that band */
 .view-toggle {
-  position: fixed; left: 50%; bottom: 80px; transform: translateX(-50%); z-index: 40;
+  position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); z-index: 40;
   padding: 10px 20px; margin: 0; border: 0; box-sizing: border-box;
   display: inline-flex; align-items: center; justify-content: center; line-height: 1;
   -webkit-appearance: none; appearance: none;
