@@ -841,7 +841,7 @@ const PROJECTS = [
     year: "2025", // not given — confirm/adjust
     role: "Director",
     credits: [],
-    tags: ["Kidad", "CAD", "Automation", "Product Visualisation"],
+    tags: ["KiCAD", "CAD", "Automation", "Product Visualisation"],
     blurb: "Ongoing robotics and automation work — CAD design and hardware build. Case details available on request.",
     hero: null, // no public content yet
     previews: previews(),
@@ -861,8 +861,8 @@ const FEATURED_LAYOUT = [
 // stills and process shots, not derived from project galleries
 const SCREENS = [
   media("video", "Assets/screenshots/001_.mp4"),
-  media("image", "Assets/screenshots/02_04_516.webp"),
-  media("image", "Assets/screenshots/02_04_518.webp"),
+  media("image", "Assets/screenshots/00Gen.jpg"),
+  media("image", "Assets/screenshots/00Gen2.webp"),
   media("image", "Assets/screenshots/02_18.52_5557.jpg"),
   media("image", "Assets/screenshots/02_24_626.webp"),
   media("image", "Assets/screenshots/03_13.29_6029.png"),
@@ -873,10 +873,8 @@ const SCREENS = [
   media("image", "Assets/screenshots/08_27_1332.webp"),
   media("image", "Assets/screenshots/10_13_94.jpg"),
   media("image", "Assets/screenshots/10_18.53_3909.png"),
-  media("image", "Assets/screenshots/14_16.47_3663.webp"),
   media("image", "Assets/screenshots/15_17.40_5598.webp"),
   media("image", "Assets/screenshots/17_15.11_69.png"),
-  media("video", "Assets/screenshots/17_15.58_580.webm"),
   media("image", "Assets/screenshots/17_15.59_2704.png"),
   media("video", "Assets/screenshots/2020_hs_instaActivation.mp4"),
   media("image", "Assets/screenshots/20_08.18_1517.jpg"),
@@ -888,12 +886,9 @@ const SCREENS = [
   media("image", "Assets/screenshots/22.12.05 16.08.55 blender_3.3.jpg"),
   media("image", "Assets/screenshots/22.12.05 16.13.03 blender_3.3.jpg"),
   media("image", "Assets/screenshots/24_18.31_5965.jpg"),
-  media("image", "Assets/screenshots/27_15.03_4349.png"),
   media("image", "Assets/screenshots/28_14.22_1561.jpg"),
   media("image", "Assets/screenshots/29_18.33_5608.webp"),
   media("image", "Assets/screenshots/31_14.33_4223.jpg"),
-  media("image", "Assets/screenshots/a_generattive1.jpg"),
-  media("image", "Assets/screenshots/a_generattive2.webp"),
   media("image", "Assets/screenshots/aquatic01.webp"),
   media("image", "Assets/screenshots/aquatic02.webp"),
   media("image", "Assets/screenshots/aquatic03.webp"),
@@ -906,6 +901,7 @@ const SCREENS = [
   media("image", "Assets/screenshots/aquatic10.webp"),
   media("image", "Assets/screenshots/aquatic11.webp"),
   media("image", "Assets/screenshots/aquatic12.webp"),
+  media("video", "Assets/screenshots/bHand.mp4"),
   media("image", "Assets/screenshots/barbie - bts  1.webp"),
   media("image", "Assets/screenshots/barbie - bts  2.jpg"),
   media("image", "Assets/screenshots/barbie - bts  2.webp"),
@@ -960,6 +956,8 @@ const SCREENS = [
   media("image", "Assets/screenshots/generative3.jpg"),
   media("image", "Assets/screenshots/generative4.webp"),
   media("image", "Assets/screenshots/generative5.jpg"),
+  media("image", "Assets/screenshots/mBag.webp"),
+  media("image", "Assets/screenshots/mbag2.webp"),
 ];
 
 const CLIENTS_COLLAB = ["Woodblock", "Siemens", "Nike", "Adidas", "Pigalle", "ACG", "RG/A", "LuisaViaRoma", "Vogue", "The Weeknd", "Google", "GNTM", "Psyop", "YouTube", "Artificial Rome", "B-Reel"];
