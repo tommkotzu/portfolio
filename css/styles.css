@@ -220,15 +220,22 @@ body.mobile-nav-locked { overflow: hidden; }
 /* min-height reserves room for the tallest the shuffling role word can
    make this wrap to (3 lines), so Selected Work below never jumps when a
    longer word rotates in — em-based so it scales with the clamp() font-size */
-.intro-headline { flex: 1.3; min-width: 280px; font-size: clamp(32px, 5vw, 58px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.05; min-height: 3.15em; }
+/* overflow: hidden is the real fix for the shuffle's mid-scramble jitter —
+   random scrambled characters aren't the same width as the real letters,
+   so the browser briefly re-wraps to more lines than the settled text
+   needs; clipping that keeps it from ever pushing Selected Work around */
+.intro-headline { flex: 1.3; min-width: 280px; font-size: clamp(32px, 5vw, 58px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.05; min-height: 3.15em; overflow: hidden; }
 @media (max-width: 1024px) {
   /* narrower column wraps the longest role word ("multidisciplinary
      designer") onto a 4th line instead of 3 */
   .intro-headline { min-height: 4.2em; }
 }
 .role-roulette-wrap { position: relative; display: inline-block; cursor: pointer; }
+/* fixed, not absolute — appended to <body> with JS-computed top/left, since
+   .intro-headline's overflow: hidden (see above) would otherwise clip an
+   absolutely-positioned dropdown nested inside it */
 .role-dropdown {
-  position: absolute; top: 100%; left: 0; margin-top: 10px; z-index: 20;
+  position: fixed; z-index: 120;
   display: flex; flex-direction: column;
   background: var(--bg); border: 1px solid var(--lineStrong); border-radius: 4px;
   padding: 6px; min-width: 240px; max-height: 320px; overflow-y: auto;

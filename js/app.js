@@ -190,6 +190,8 @@
     "multidisciplinary designer", "artist", "technologist", "little geek",
     "motion designer", "3D generalist", "art director", "creative producer",
     "Blender nerd", "Linux enthusiast", "salad chef",
+    "creative", "problem solver", "style framer", "interaction designer",
+    "carpenter", "papa", "notion nerd", "Vibecoder",
   ];
   let roleRouletteTimer = null;
   function mountRoleRoulette() {
@@ -257,7 +259,10 @@
     });
 
     // click opens a dropdown of every role so a visitor can just pick one,
-    // instead of only ever landing on one at random
+    // instead of only ever landing on one at random — appended to <body>
+    // (not wrap) with fixed positioning computed from wrap's own rect,
+    // since .intro-headline clips overflow (see above) and would otherwise
+    // clip this dropdown along with it
     if (wrap) {
       let dropdown = null;
       function closeDropdown() {
@@ -265,15 +270,18 @@
         document.removeEventListener("click", onOutsideClick);
       }
       function onOutsideClick(e) {
-        if (!wrap.contains(e.target)) closeDropdown();
+        if (!wrap.contains(e.target) && !(dropdown && dropdown.contains(e.target))) closeDropdown();
       }
       wrap.addEventListener("click", (e) => {
         e.stopPropagation();
         if (dropdown) { closeDropdown(); return; }
+        const rect = wrap.getBoundingClientRect();
         dropdown = document.createElement("div");
         dropdown.className = "role-dropdown";
+        dropdown.style.top = `${rect.bottom + 10}px`;
+        dropdown.style.left = `${rect.left}px`;
         dropdown.innerHTML = ROLE_ROULETTE.map((w) => `<div class="role-dropdown-item" data-role="${w}">${w}</div>`).join("");
-        wrap.appendChild(dropdown);
+        document.body.appendChild(dropdown);
         dropdown.addEventListener("click", (ev) => {
           ev.stopPropagation();
           const item = ev.target.closest(".role-dropdown-item");
