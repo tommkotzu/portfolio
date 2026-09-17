@@ -10,9 +10,6 @@
 <body>
   <header class="nav">
     <div class="nav-logo" data-nav="welcome">THOMAS MAYER</div>
-    <button class="nav-menu-toggle" id="nav-menu-toggle" aria-label="Menu" aria-expanded="false" type="button">
-      <span></span><span></span><span></span>
-    </button>
     <nav class="nav-links">
       <span class="nav-link" data-nav="welcome">Home</span>
       <span class="nav-link" data-nav="work">Work</span>
@@ -25,6 +22,9 @@
         <svg class="icon-sun" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12h2.5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>
         <svg class="icon-moon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>
       </button>
+      <button class="nav-menu-toggle" id="nav-menu-toggle" aria-label="Menu" aria-expanded="false" type="button">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
 
@@ -35,6 +35,21 @@
       <span class="mobile-nav-link" data-nav="screens">Notes</span>
       <span class="mobile-nav-link" data-nav="about">About</span>
     </nav>
+    <div class="mobile-nav-footer">
+      <button class="theme-toggle" id="theme-toggle-mobile" aria-label="Toggle theme" type="button">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12h2.5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>
+      </button>
+      <div class="mobile-nav-social">
+        <a href="mailto:thomasludwigwork@pm.me" aria-label="Email">mail</a>
+        <a href="https://www.instagram.com/tomm.boo/" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
+        <a href="https://www.linkedin.com/in/thomas-ludwig-mayer-9b2088138/" target="_blank" rel="noopener" aria-label="LinkedIn">in</a>
+      </div>
+      <div class="mobile-nav-legal">
+        <span class="mobile-nav-legal-link" data-nav="impressum">Impressum</span>
+        <span class="mobile-nav-legal-link" data-nav="datenschutz">Datenschutz</span>
+      </div>
+    </div>
   </div>
 
   <main id="app"></main>

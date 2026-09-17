@@ -3,7 +3,7 @@
 
   const app = document.getElementById("app");
   const navClock = document.getElementById("nav-clock");
-  const themeToggle = document.getElementById("theme-toggle");
+  const themeToggles = document.querySelectorAll(".theme-toggle");
 
   // "Client — Title", or just the title for client-less/self-initiated projects
   function projectTitle(p) {
@@ -38,7 +38,9 @@
     document.body.classList.toggle("mobile-nav-locked", open);
   }
   mobileNavToggle.addEventListener("click", () => setMobileNavOpen(!state.mobileNavOpen));
-  mobileNavOverlay.addEventListener("click", (e) => { if (e.target === mobileNavOverlay) setMobileNavOpen(false); });
+  mobileNavOverlay.addEventListener("click", (e) => {
+    if (e.target === mobileNavOverlay || e.target.closest("a")) setMobileNavOpen(false);
+  });
 
   // ---------- theme ----------
   function applyTheme() {
@@ -64,7 +66,7 @@
     );
   }
 
-  themeToggle.addEventListener("click", () => {
+  themeToggles.forEach((btn) => btn.addEventListener("click", () => {
     state.theme = state.theme === "dark" ? "light" : "dark";
     localStorage.setItem("tm-theme", state.theme);
     applyTheme();
@@ -76,7 +78,7 @@
       discoClicks = 0;
       triggerDisco();
     }
-  });
+  }));
   applyTheme();
 
 
