@@ -1,0 +1,3 @@
+# staging folder for videos queued to upload to Mux — not meant to be
+# committed, it's a duplicate copy of files that already live under Assets/
+Assets/_mux_upload/
