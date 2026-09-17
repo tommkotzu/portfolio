@@ -57,13 +57,6 @@
   });
   applyTheme();
 
-  const cookieBanner = document.getElementById("cookie-banner");
-  const cookieBtn = document.getElementById("cookie-notice-btn");
-  const cookieClose = document.getElementById("cookie-banner-close");
-  if (cookieBtn && cookieBanner && cookieClose) {
-    cookieBtn.addEventListener("click", () => { cookieBanner.hidden = false; });
-    cookieClose.addEventListener("click", () => { cookieBanner.hidden = true; });
-  }
 
   // easter egg: 5 rapid clicks on the editorial/grid view toggle scrambles the
   // gallery — everything crooked, overlapping and crushed into one screen.
@@ -820,6 +813,10 @@
       <div class="legal-section">
         <h2>Eingebettete Videos (Vimeo, Mux)</h2>
         <p>Auf dieser Seite werden Videos über die Dienste Vimeo (Vimeo.com Inc., New York, USA) und Mux (Mux, Inc., San Francisco, USA) eingebunden. Beim Abspielen eines Videos wird eine Verbindung zu den Servern des jeweiligen Anbieters hergestellt, wobei technische Daten (u. a. IP-Adresse) übertragen werden können. Weitere Informationen: <a href="https://vimeo.com/privacy" target="_blank" rel="noopener">Vimeo Datenschutz</a>, <a href="https://www.mux.com/privacy" target="_blank" rel="noopener">Mux Datenschutz</a>.</p>
+      </div>
+      <div class="legal-section">
+        <h2>Cookies</h2>
+        <p>Diese Website selbst setzt keine Tracking- oder Werbe-Cookies. Beim Abspielen eingebetteter Videos können die Anbieter Vimeo und Mux technisch notwendige Cookies auf ihren eigenen Domains setzen, die für die Wiedergabe erforderlich sind.</p>
       </div>
       <div class="legal-section">
         <h2>Ihre Rechte</h2>

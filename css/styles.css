@@ -431,18 +431,6 @@ button { font: inherit; color: inherit; background: none; border: 0; }
 .site-footer .footer-link { cursor: pointer; }
 .site-footer .footer-link:hover { opacity: 0.7; }
 
-.cookie-banner {
-  position: fixed; left: 50%; bottom: 70px; transform: translateX(-50%); z-index: 60;
-  display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
-  max-width: min(560px, calc(100vw - 2 * var(--pad)));
-  padding: 16px 20px; border-radius: 10px;
-  background: var(--strong); color: var(--bg);
-  font-size: 13px; line-height: 1.5;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
-}
-.cookie-banner p { margin: 0; flex: 1; min-width: 220px; }
-.cookie-banner .btn-ghost { flex: none; border: 1px solid currentColor; border-radius: 999px; padding: 6px 16px; cursor: pointer; }
-
 /* ---------- legal (impressum / datenschutz) ---------- */
 .legal-page { max-width: 760px; margin: 0 auto; width: 100%; padding: 70px var(--pad) 110px; }
 .legal-page h1 { font-size: 28px; font-weight: 600; letter-spacing: -0.01em; margin: 0 0 40px; }
