@@ -757,9 +757,11 @@
     const w = window.innerWidth;
     const count = w <= 600 ? breakpoints.mobile : w <= 900 ? breakpoints.tablet : breakpoints.desktop;
     const cols = Array.from({ length: count }, () => []);
-    items.forEach((item, i) => cols[i % count].push(item));
+    items.forEach((item, i) => cols[i % count].push({ item, idx: i }));
     return `<div class="screens-grid">${cols
-      .map((col) => `<div class="screens-col">${col.map((g) => mediaHTML(g, { fill: false })).join("")}</div>`)
+      .map((col) => `<div class="screens-col">${col
+        .map(({ item, idx }) => `<div class="screens-item" data-idx="${idx}">${mediaHTML(item, { fill: false })}</div>`)
+        .join("")}</div>`)
       .join("")}</div>`;
   }
 
@@ -871,8 +873,9 @@
     return `<div class="page about-page" data-screen="about">
       <div class="about-hero">
         <div class="about-hero-text">
-          <h1>About</h1>
-          <p>I'm Thomas Mayer, motion director and editor. For over ten years I've been shaping story through rhythm — commercials, music films, brand work — with an obsessive eye for pacing, texture and sound design.</p>
+          <div class="about-eyebrow">About</div>
+          <h1>Motion Design and 3D generalist for Artists and Marketing clients.</h1>
+          <p>For over ten years I've worked across commercials, music films and brand work — with an obsessive eye for pacing, texture and sound design.</p>
           <div class="about-actions">
             <a class="btn-primary" href="mailto:thomasludwigwork@pm.me">Get in touch</a>
             <a class="btn-ghost" href="#">Download CV ↓</a>
@@ -884,26 +887,30 @@
         </div>
       </div>
 
-      <div class="about-section">
-        <h2>What I Do</h2>
-        <div class="about-services">Direction · Editing · Motion Design · Sound Design · Concept &amp; Storyboard · Colour</div>
+      <div class="about-row">
+        <div class="about-row-label">What I Do</div>
+        <div class="about-services">${SERVICES.map((s) => `<span>${s}</span>`).join('<span class="dot">·</span>')}</div>
       </div>
 
-      <div class="about-section clients-row">
-        <div class="clients-col">
-          <h2>Selected Clients — Collaboration</h2>
-          <div class="client-list">${CLIENTS_COLLAB.map((c) => `<div>${c}</div>`).join("")}</div>
-        </div>
-        <div class="clients-col">
-          <h2>Direct Clients</h2>
-          <div class="client-list">${CLIENTS_DIRECT.map((c) => `<div>${c}</div>`).join("")}</div>
+      <div class="about-row">
+        <div class="about-row-label">Clients</div>
+        <div class="clients-row">
+          <div class="clients-col">
+            <div class="clients-col-label">Studios</div>
+            <div class="client-list">${CLIENTS_COLLAB.map((c) => `<div>${c}</div>`).join("")}</div>
+          </div>
+          <div class="clients-col">
+            <div class="clients-col-label">Direct Clients</div>
+            <div class="client-list">${CLIENTS_DIRECT.map((c) => `<div>${c}</div>`).join("")}</div>
+          </div>
         </div>
       </div>
 
-      <div class="about-section">
-        <h2>Exhibitions &amp; Talks</h2>
-        <div class="exhib-head"><div>Event</div><div>Location</div></div>
-        ${EXHIBITIONS.map((e) => `<div class="exhib-row"><div>${e.event}</div><div class="loc">${e.location}</div></div>`).join("")}
+      <div class="about-row">
+        <div class="about-row-label">Exhibitions &amp; Talks</div>
+        <div class="exhibitions-content">
+          ${EXHIBITIONS.map((e) => `<div class="exhib-row"><span>${e.event}</span><span></span><span class="loc">${e.location}</span></div>`).join("")}
+        </div>
       </div>
     </div>`;
   }
