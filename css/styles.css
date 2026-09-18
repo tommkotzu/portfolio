@@ -504,10 +504,9 @@ body.mobile-nav-locked { overflow: hidden; }
 .client-list { display: flex; flex-direction: column; gap: 2px; }
 .client-list div { font-size: 17px; color: var(--strong); padding: 6px 0; }
 
-.exhibitions-content { flex: 1; min-width: 280px; max-width: 500px; }
-.exhib-row { display: grid; grid-template-columns: 1fr 60px 1fr; padding: 13px 0; border-bottom: 1px solid var(--lineSoft); }
-.exhib-row span:first-child { font-size: 15px; color: var(--strong); }
-.exhib-row .loc { font-size: 14px; color: var(--muted); }
+.exhib-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 6px 0; }
+.exhib-row span:first-child { font-size: 17px; color: var(--strong); }
+.exhib-row .loc { font-size: 14px; color: var(--muted); white-space: nowrap; }
 
 /* ---------- footer ---------- */
 .site-footer {

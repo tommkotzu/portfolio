@@ -908,8 +908,14 @@
 
       <div class="about-row">
         <div class="about-row-label">Exhibitions &amp; Talks</div>
-        <div class="exhibitions-content">
-          ${EXHIBITIONS.map((e) => `<div class="exhib-row"><span>${e.event}</span><span></span><span class="loc">${e.location}</span></div>`).join("")}
+        <div class="clients-row">
+          ${[EXHIBITIONS.slice(0, Math.ceil(EXHIBITIONS.length / 2)), EXHIBITIONS.slice(Math.ceil(EXHIBITIONS.length / 2))]
+            .map(
+              (col) => `<div class="clients-col">
+            ${col.map((e) => `<div class="exhib-row"><span>${e.event}</span><span class="loc">${e.location}</span></div>`).join("")}
+          </div>`
+            )
+            .join("")}
         </div>
       </div>
     </div>`;
