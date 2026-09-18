@@ -869,6 +869,22 @@
   }
 
   // ---------- about ----------
+  // splits a client list into two side-by-side columns (so Studios + Direct
+  // Clients together read as 4 columns) — the group label sits only on the
+  // first column, the second just continues the list
+  function clientGroupHTML(label, list) {
+    const mid = Math.ceil(list.length / 2);
+    const cols = [list.slice(0, mid), list.slice(mid)];
+    return cols
+      .map(
+        (col, i) => `<div class="clients-col">
+          ${i === 0 ? `<div class="clients-col-label">${label}</div>` : ""}
+          <div class="client-list">${col.map((c) => `<div>${c}</div>`).join("")}</div>
+        </div>`
+      )
+      .join("");
+  }
+
   function renderAbout() {
     return `<div class="page about-page" data-screen="about">
       <div class="about-hero">
@@ -895,14 +911,8 @@
       <div class="about-row">
         <div class="about-row-label">Clients</div>
         <div class="clients-row">
-          <div class="clients-col">
-            <div class="clients-col-label">Studios</div>
-            <div class="client-list">${CLIENTS_COLLAB.map((c) => `<div>${c}</div>`).join("")}</div>
-          </div>
-          <div class="clients-col">
-            <div class="clients-col-label">Direct Clients</div>
-            <div class="client-list">${CLIENTS_DIRECT.map((c) => `<div>${c}</div>`).join("")}</div>
-          </div>
+          ${clientGroupHTML("Studios", CLIENTS_COLLAB)}
+          ${clientGroupHTML("Direct Clients", CLIENTS_DIRECT)}
         </div>
       </div>
 
