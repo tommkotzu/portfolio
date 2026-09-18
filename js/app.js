@@ -878,7 +878,7 @@
     return cols
       .map(
         (col, i) => `<div class="clients-col">
-          ${i === 0 ? `<div class="clients-col-label">${label}</div>` : ""}
+          <div class="clients-col-label"${i === 0 ? "" : ' style="visibility:hidden"'}>${label}</div>
           <div class="client-list">${col.map((c) => `<div>${c}</div>`).join("")}</div>
         </div>`
       )
