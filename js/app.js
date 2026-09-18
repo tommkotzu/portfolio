@@ -909,9 +909,9 @@
       </div>
 
       <div class="about-row">
-        <div class="about-row-label">Clients</div>
+        <div class="about-row-label">References</div>
         <div class="clients-row">
-          ${clientGroupHTML("Studios", CLIENTS_COLLAB)}
+          ${clientGroupHTML("Collaborations", CLIENTS_COLLAB)}
           ${clientGroupHTML("Direct Clients", CLIENTS_DIRECT)}
         </div>
       </div>

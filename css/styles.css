@@ -499,7 +499,7 @@ body.mobile-nav-locked { overflow: hidden; }
 .about-services .dot { color: var(--faint); }
 
 .clients-row { flex: 1; min-width: 280px; display: flex; gap: 60px; flex-wrap: wrap; }
-.clients-col { flex: 1; min-width: 220px; }
+.clients-col { flex: 1; min-width: 170px; }
 .clients-col-label { font-size: 14px; font-weight: 500; color: var(--muted2); margin-bottom: 16px; }
 .client-list { display: flex; flex-direction: column; gap: 2px; }
 .client-list div { font-size: 17px; color: var(--strong); padding: 6px 0; }
