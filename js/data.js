@@ -24,7 +24,9 @@ const SOCIAL = {
 };
 
 const HOME = {
-  reel: media("mux", "zEin01eAJjNEYNt2XS7TEtWanGfaw7nbv02OUZoafvmLo", { poster: a("posters/home-reel.jpg") }),
+  // no local poster override — mux-video pulls its own thumbnail straight
+  // from Mux for this playback-id, so updating it there (not here) is enough
+  reel: media("mux", "zEin01eAJjNEYNt2XS7TEtWanGfaw7nbv02OUZoafvmLo"),
 };
 
 // About page portrait — click cycles through these
