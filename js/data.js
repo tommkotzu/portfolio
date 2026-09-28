@@ -24,9 +24,12 @@ const SOCIAL = {
 };
 
 const HOME = {
-  // no local poster override — mux-video pulls its own thumbnail straight
-  // from Mux for this playback-id, so updating it there (not here) is enough
-  reel: media("mux", "zEin01eAJjNEYNt2XS7TEtWanGfaw7nbv02OUZoafvmLo"),
+  // poster pinned to frame 0 via Mux's thumbnail image API (matches the
+  // thumbnail-time=0 the player.mux.com embed uses) instead of mux-video's
+  // own default frame pick
+  reel: media("mux", "zEin01eAJjNEYNt2XS7TEtWanGfaw7nbv02OUZoafvmLo", {
+    poster: "https://image.mux.com/zEin01eAJjNEYNt2XS7TEtWanGfaw7nbv02OUZoafvmLo/thumbnail.jpg?time=0",
+  }),
 };
 
 // About page portrait — click cycles through these
