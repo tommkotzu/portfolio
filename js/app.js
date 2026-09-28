@@ -434,24 +434,47 @@
     back.src = url;
   }
 
-  // delegated hover-scrub: works for any .media-wrap.scrub on the page, survives re-renders.
-  // crossfades between two stacked <img> layers instead of hard-cutting the src.
-  document.body.addEventListener("mousemove", (e) => {
-    const el = e.target.closest(".media-wrap.scrub");
-    if (!el) return;
+  // hover-scrub for project preview thumbnails (Work page cards): on
+  // hover, auto-cycle through that project's preview images on a fixed
+  // interval, crossfading each step; stops and resets on mouseleave.
+  // Rebuilt from the original cursor-Y-position-mapped version, which was
+  // prone to racing itself — a fast mousemove could fire swapScrubImage
+  // again before the previous swap's image had even loaded, so "front"/
+  // "back" got queried mid-flight and the crossfade landed on the wrong
+  // layer. A plain timed cycle sidesteps that entirely: only one swap is
+  // ever in flight, driven by the interval, not by every mousemove event.
+  // (Ambient homepage cards are excluded — they already have their own
+  // calmer, timer-driven rotation via scheduleAmbientScrub and shouldn't
+  // also react to hover.)
+  const scrubIntervals = new WeakMap();
+  function startScrubCycle(el) {
+    if (scrubIntervals.has(el)) return;
     const urls = JSON.parse(decodeURIComponent(el.dataset.scrub));
     if (urls.length < 2) return;
-    const rect = el.getBoundingClientRect();
-    const pct = (e.clientY - rect.top) / rect.height;
-    const idx = Math.min(urls.length - 1, Math.max(0, Math.floor(pct * urls.length)));
-    if (Number(el.dataset.idx) === idx) return;
-    swapScrubImage(el, idx, urls[idx]);
+    const id = setInterval(() => {
+      const next = (Number(el.dataset.idx) + 1) % urls.length;
+      swapScrubImage(el, next, urls[next]);
+    }, 700);
+    scrubIntervals.set(el, id);
+  }
+  function stopScrubCycle(el, reset) {
+    const id = scrubIntervals.get(el);
+    if (id) { clearInterval(id); scrubIntervals.delete(el); }
+    if (reset && el.dataset.idx !== "0") {
+      const urls = JSON.parse(decodeURIComponent(el.dataset.scrub));
+      swapScrubImage(el, 0, urls[0]);
+    }
+  }
+  document.body.addEventListener("mouseover", (e) => {
+    const el = e.target.closest(".media-wrap.scrub");
+    if (!el || el.classList.contains("ambient")) return;
+    if (e.relatedTarget && el.contains(e.relatedTarget)) return;
+    startScrubCycle(el);
   });
   document.body.addEventListener("mouseout", (e) => {
     const el = e.target.closest(".media-wrap.scrub");
     if (!el || (e.relatedTarget && el.contains(e.relatedTarget)) || el.classList.contains("ambient")) return;
-    const urls = JSON.parse(decodeURIComponent(el.dataset.scrub));
-    if (el.dataset.idx !== "0") swapScrubImage(el, 0, urls[0]);
+    stopScrubCycle(el, true);
   });
 
   // ambient rotation for the welcome page's featured cards: every so often,
@@ -695,13 +718,18 @@
     if (!rows) return;
     let lastX = null, lastY = null, lastSpawn = 0;
     let currentStamp = null;
-    const MIN_DIST = 70, MIN_GAP = 90;
+    // both a minimum distance AND a minimum time must have passed since the
+    // last stamp — previously this was "either", via `dist < MIN_DIST &&
+    // now - lastSpawn < MIN_GAP` only skipping when BOTH were still small,
+    // so a nearly-stationary cursor kept spawning a fresh stamp every
+    // MIN_GAP regardless of movement, which is what made the trail dense
+    const MIN_DIST = 110, MIN_GAP = 220;
     rows.addEventListener("mousemove", (e) => {
       const row = e.target.closest(".list-row");
       if (!row) return;
       const now = performance.now();
       const dist = lastX === null ? Infinity : Math.hypot(e.clientX - lastX, e.clientY - lastY);
-      if (dist < MIN_DIST && now - lastSpawn < MIN_GAP) return;
+      if (dist < MIN_DIST || now - lastSpawn < MIN_GAP) return;
       lastX = e.clientX; lastY = e.clientY; lastSpawn = now;
       const urls = JSON.parse(decodeURIComponent(row.dataset.previews));
       if (!urls.length) return; // no preview images for this project yet
