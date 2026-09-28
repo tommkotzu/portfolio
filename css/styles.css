@@ -502,11 +502,30 @@ body.mobile-nav-locked { overflow: hidden; }
 .about-services { flex: 1; min-width: 280px; display: flex; flex-wrap: wrap; gap: 14px; font-size: 22px; font-weight: 500; letter-spacing: -0.01em; color: var(--strong); }
 .about-services .dot { color: var(--faint); }
 
-.clients-row { flex: 1; min-width: 280px; display: flex; gap: 60px; flex-wrap: wrap; }
+.about-row-content { flex: 1; min-width: 280px; display: flex; flex-direction: column; gap: 40px; }
+
+/* client-supplied logo files come in whatever colors/formats they came
+   in — a CSS mask ignores all of that and uses the PNG purely as a
+   shape, filled with the current theme color, so every logo reads as a
+   flat monochrome mark that flips with light/dark like everything else */
+.client-logos { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 28px 32px; align-items: center; }
+.client-logo {
+  height: 34px; background-color: var(--strong);
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: left center; mask-position: left center;
+  -webkit-mask-size: contain; mask-size: contain;
+}
+
+.clients-row { display: flex; gap: 60px; flex-wrap: wrap; }
 .clients-col { flex: 1; min-width: 170px; }
 .clients-col-label { font-size: 14px; font-weight: 500; color: var(--muted2); margin-bottom: 16px; }
 .client-list { display: flex; flex-direction: column; gap: 2px; }
 .client-list div { font-size: 17px; color: var(--strong); padding: 6px 0; }
+
+@media (max-width: 1024px) {
+  .client-logos { grid-template-columns: repeat(2, 1fr); }
+  .clients-col { flex: 0 0 calc(50% - 30px); min-width: 0; }
+}
 
 .exhib-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 6px 0; }
 .exhib-row span:first-child { font-size: 17px; color: var(--strong); }

@@ -963,7 +963,30 @@ const SCREENS = [
 const SERVICES = ["Blender", "Cinema 4D", "Motion Design", "CAD Optimization", "Asset Creation", "Shader Development", "Geometry Nodes", "Brand Assets", "Imagery", "Visual Design"];
 
 const CLIENTS_COLLAB = ["Woodblock", "Siemens", "Nike", "Adidas", "Pigalle", "ACG", "RG/A", "LuisaViaRoma", "Vogue", "The Weeknd", "Google", "GNTM", "Psyop", "YouTube", "Artificial Rome", "B-Reel"];
-const CLIENTS_DIRECT = ["OpenAI", "CRO", "Breuninger", "Zalando", "Anyma", "Afterlife", "Balmain", "Flowers For Society", "Pacemaker", "About You", "Barbie", "Vly"];
+const CLIENTS_DIRECT = ["OpenAI", "CRO", "Breuninger", "Zalando", "Anyma", "Afterlife", "Balmain", "Flowers For Society", "Pacemaker", "About You", "Barbie", "Vly", "Dior"];
+
+// client name -> logo file in Assets/logos/ (only clients we actually have
+// artwork for show up in the About page's logo wall; everyone else still
+// appears in the plain-text client lists below it)
+const CLIENT_LOGOS = {
+  ACG: "acg.png",
+  Dior: "dior.png",
+  "Flowers For Society": "ffs.png",
+  OpenAI: "opanAI.png",
+  Nike: "nike.png",
+  Pacemaker: "pacemaker.png",
+  Adidas: "adidas.png",
+  YouTube: "youtube.webp",
+  Balmain: "Balmain.png",
+  Vogue: "Vogue.png",
+  Vly: "vly.png",
+  Google: "google.png",
+  LuisaViaRoma: "luisaviaroma.png",
+  "The Weeknd": "weekend.png",
+  Pigalle: "pigalle.png",
+  Barbie: "Logo_08.png",
+  GNTM: "Logo_10.png",
+};
 
 const EXHIBITIONS = [
   { event: "CCC", location: "Hamburg, Germany" },

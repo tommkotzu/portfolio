@@ -901,6 +901,19 @@
       .join("");
   }
 
+  // logo wall for clients we actually have artwork for — a CSS mask turns
+  // each logo (regardless of its own brand colors) into a flat silhouette
+  // filled with the current theme color, so a colorful PNG still reads as
+  // pure black/white and flips correctly with the theme toggle
+  function clientLogosHTML() {
+    return Object.entries(CLIENT_LOGOS)
+      .map(([name, file]) => {
+        const url = `Assets/logos/${file}`;
+        return `<div class="client-logo" style="-webkit-mask-image:url('${url}');mask-image:url('${url}')" title="${name}" aria-label="${name}"></div>`;
+      })
+      .join("");
+  }
+
   function renderAbout() {
     return `<div class="page about-page" data-screen="about">
       <div class="about-hero">
@@ -926,9 +939,12 @@
 
       <div class="about-row">
         <div class="about-row-label">References</div>
-        <div class="clients-row">
-          ${clientGroupHTML("Collaborations", CLIENTS_COLLAB)}
-          ${clientGroupHTML("Direct Clients", CLIENTS_DIRECT)}
+        <div class="about-row-content">
+          <div class="client-logos">${clientLogosHTML()}</div>
+          <div class="clients-row">
+            ${clientGroupHTML("Collaborations", CLIENTS_COLLAB)}
+            ${clientGroupHTML("Direct Clients", CLIENTS_DIRECT)}
+          </div>
         </div>
       </div>
 
