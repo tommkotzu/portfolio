@@ -188,12 +188,12 @@
   // hovering it jumps straight to another one (same letter-scramble as the
   // nav-logo roulette above, just lowercase and on a slower, ambient cadence)
   const ROLE_ROULETTE = [
-    "multidisciplinary designer", "artist", "technologist", "little geek",
+    "artist", "technologist", "little geek",
     "motion designer", "3D generalist", "art director", "creative producer",
     "Blender nerd", "Linux enthusiast", "salad chef",
     "creative", "problem solver", "style framer", "interaction designer",
     "carpenter", "papa", "notion organizer", "Vibecoder",
-    "animator", "keyframe schubser", "node noodler", "cgMemes subscriber",
+    "animator", "keyframe schubser", "node noodler", "cg meme machine",
   ];
   let roleRouletteTimer = null;
   function mountRoleRoulette() {
@@ -511,8 +511,20 @@
   window.addEventListener("hashchange", render);
 
   // ---------- welcome ----------
+  function featuredCardHTML(card) {
+    const p = PROJECTS.find((pr) => pr.slug === card.slug);
+    if (!p) return "";
+    return `
+      <div class="featured-card" style="flex-basis:${card.width}%;margin-top:${card.offset}px;aspect-ratio:${card.ratio}" data-open-project="${p.slug}">
+        ${scrubMediaHTML(p.previews, { randomStart: true, ambient: true })}
+        <div class="card-overlay">
+          <div class="card-overlay-row"><span class="t">${projectTitle(p)}</span></div>
+          <div class="tag-row">${tagPills(p.tags.slice(0, 2))}</div>
+        </div>
+      </div>`;
+  }
+
   function renderWelcome() {
-    const featured = PROJECTS.slice(0, 4).map((p, i) => ({ p, layout: FEATURED_LAYOUT[i] }));
     return `
     <div class="page" data-screen="welcome">
       <div class="hero">
@@ -538,18 +550,7 @@
           <span data-nav="work">View all →</span>
         </div>
         <div class="featured-grid">
-          ${featured
-            .map(
-              ({ p, layout }) => `
-            <div class="featured-card" style="grid-column:${layout.span};margin-top:${layout.offset}px;aspect-ratio:${layout.ratio}" data-open-project="${p.slug}">
-              ${scrubMediaHTML(p.previews, { randomStart: true, ambient: true })}
-              <div class="card-overlay">
-                <div class="card-overlay-row"><span class="t">${projectTitle(p)}</span></div>
-                <div class="tag-row">${tagPills(p.tags.slice(0, 2))}</div>
-              </div>
-            </div>`
-            )
-            .join("")}
+          ${FEATURED_ROWS.map((row) => `<div class="featured-row">${row.cards.map(featuredCardHTML).join("")}</div>`).join("")}
         </div>
       </div>
     </div>`;

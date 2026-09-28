@@ -848,11 +848,28 @@ const PROJECTS = [
 ];
 
 // index into PROJECTS used on the Welcome screen's "Selected Work" grid
-const FEATURED_LAYOUT = [
-  { span: "1 / 8", offset: 0, ratio: "16/11" },
-  { span: "8 / 13", offset: 170, ratio: "4/5" },
-  { span: "1 / 6", offset: 60, ratio: "4/5" },
-  { span: "6 / 13", offset: 0, ratio: "16/11" },
+// welcome page "Selected Work" — picked by slug (independent of PROJECTS'
+// own order, which drives the Work page), grouped into rows the same way
+// editorialRows groups a project's own gallery: each row is flexible cards
+// with a width share, a vertical drift offset and its own aspect ratio,
+// laid out with the same generous flex gaps as .editorial-gallery instead of
+// a rigid grid — see .featured-grid/.featured-row in styles.css
+const FEATURED_ROWS = [
+  {
+    cards: [
+      { slug: "openai-munich-hq", width: 58, offset: 0, ratio: "16/11" },
+      { slug: "anyma-character-development", width: 42, offset: 450, ratio: "4/5" },
+    ],
+  },
+  {
+    cards: [{ slug: "acg-x-nike", width: 58, offset: 0, ratio: "16/11" }],
+  },
+  {
+    cards: [
+      { slug: "adidas-nmd-s1", width: 42, offset: 340, ratio: "4/5" },
+      { slug: "the-weeknd-performance", width: 58, offset: 0, ratio: "16/11" },
+    ],
+  },
 ];
 
 // real content from Assets/screenshots/ — a running collection of frames,

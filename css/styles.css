@@ -263,19 +263,32 @@ body.mobile-nav-locked { overflow: hidden; }
 .selected-work-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 44px; }
 .selected-work-head h2 { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; margin: 0; }
 .selected-work-head span { font-size: 13px; color: var(--muted); cursor: pointer; }
-.featured-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 380px 110px; }
-.featured-card { cursor: pointer; position: relative; overflow: hidden; }
+/* same rules as the project detail's editorial gallery (.editorial-gallery/
+   .editorial-row): flexible rows with generous, viewport-relative gaps
+   instead of a rigid grid — that's what gives editorial its spacious feel */
+.featured-grid { display: flex; flex-direction: column; gap: clamp(140px, 20vh, 280px); }
+/* nowrap: the two cards' flex-basis percentages sum to 100%, leaving no
+   room for the gap — under wrap that pushed the second card onto its own
+   line (stacked, not side by side); nowrap lets them flex-shrink to fit
+   instead. Mobile stacking is handled by flex-direction:column below, not
+   by wrapping. */
+.featured-row { display: flex; gap: clamp(28px, 6vw, 110px); flex-wrap: nowrap; align-items: flex-start; }
+.featured-card { cursor: pointer; position: relative; overflow: hidden; flex: 0 1 auto; }
 /* mobile + tablet: a plain, bold single column instead of the desktop
-   off-grid drift — !important overrides the per-card grid-column/
-   margin-top inline styles that FEATURED_LAYOUT sets in JS for desktop */
+   off-grid drift — !important overrides the per-card flex-basis/margin-top
+   inline styles that FEATURED_ROWS sets in JS for desktop */
 @media (max-width: 1024px) {
-  .featured-grid { grid-template-columns: 1fr; gap: 48px; }
-  .featured-card { grid-column: 1 / -1 !important; margin-top: 0 !important; }
+  .featured-grid { gap: 48px; }
+  .featured-row { flex-direction: column; gap: 24px; }
+  .featured-card { flex-basis: 100% !important; margin-top: 0 !important; }
 }
 .card-overlay {
   position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 28px;
-  background: linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0) 60%); opacity: 0; transition: opacity 0.25s ease;
+  opacity: 0; transition: opacity 0.25s ease;
   color: #fff;
+  /* inverts against whatever's beneath it instead of relying on a dark
+     scrim, so the title stays legible over light frames too */
+  mix-blend-mode: difference;
 }
 .featured-card:hover .card-overlay { opacity: 1; }
 .card-overlay-row { display: flex; align-items: baseline; gap: 16px; }
