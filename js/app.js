@@ -25,6 +25,7 @@
     editorialGalleryView: "editorial", // "editorial" | "grid" — preview toggle, superpop only for now
     lightboxOpen: false,
     mobileNavOpen: false,
+    screensLightboxIndex: null,
   };
 
   // ---------- mobile nav ----------
@@ -891,6 +892,98 @@
     </div>`;
   }
 
+  // click-to-enlarge overlay for the Notes grid — kept out of renderScreens()
+  // and patched directly into the DOM (see updateScreensLightbox) so opening/
+  // navigating it never touches the masonry grid itself: no full re-render,
+  // no scroll jump, no restarting whatever clips are already playing there
+  function renderScreensLightbox(idx) {
+    const item = SCREENS[idx];
+    return `<div class="lightbox screens-lightbox" id="screens-lightbox">
+      <div class="lightbox-media">
+        <div class="lightbox-slide">${mediaHTML(item, { controls: true, hero: true, fill: false })}</div>
+      </div>
+      <div class="lightbox-close" id="screens-lightbox-close">Close ✕</div>
+      <div class="lightbox-nav lightbox-prev" id="screens-lightbox-prev" aria-label="Previous">←</div>
+      <div class="lightbox-nav lightbox-next" id="screens-lightbox-next" aria-label="Next">→</div>
+      <div class="lightbox-counter">${idx + 1} / ${SCREENS.length}</div>
+    </div>`;
+  }
+
+  // opening/closing rebuilds the whole overlay (its own fade-in); stepping
+  // between items reuses that same overlay and only swaps the slide inside
+  // .lightbox-media (see stepScreensLightbox) — recreating the whole modal on
+  // every arrow press was what caused the clipping/flicker, since the chrome
+  // (backdrop, close, arrows) doesn't need to re-animate in, only the image
+  function updateScreensLightbox() {
+    const existing = document.getElementById("screens-lightbox");
+    if (existing) existing.remove();
+    screensLightboxTopSlide = null;
+    const idx = state.screensLightboxIndex;
+    if (idx === null) return;
+    document.body.insertAdjacentHTML("beforeend", renderScreensLightbox(idx));
+    const lb = document.getElementById("screens-lightbox");
+    const close = () => { state.screensLightboxIndex = null; updateScreensLightbox(); };
+    document.getElementById("screens-lightbox-close").addEventListener("click", close);
+    document.getElementById("screens-lightbox-prev").addEventListener("click", () => stepScreensLightbox(-1));
+    document.getElementById("screens-lightbox-next").addEventListener("click", () => stepScreensLightbox(1));
+    lb.addEventListener("click", (e) => { if (e.target === lb) close(); });
+    // clicking the media itself also closes — except on a video, where a
+    // click is scrubbing/play-pause on its native controls, not "dismiss"
+    lb.querySelector(".lightbox-media").addEventListener("click", (e) => {
+      if (e.target.tagName !== "VIDEO" && e.target.tagName !== "MUX-VIDEO") close();
+    });
+    safePlay(lb.querySelector("video, mux-video"));
+  }
+
+  // true two-slide crossfade: the outgoing and incoming items are separate
+  // absolutely-positioned elements that animate at the same time (outgoing
+  // slides off one side while incoming slides in from the other), rather
+  // than one element fading out and back in sequentially — that's what
+  // actually reads as "sliding across the screen". no lock gates repeat
+  // arrow presses: each press immediately starts a fresh transition using
+  // whatever slide is currently on top (even if it's still mid-entrance from
+  // the previous press), tracked via screensLightboxTopSlide rather than
+  // re-querying the DOM — so fast repeats stay responsive instead of being
+  // throttled to one per animation. Each outgoing slide cleans itself up on
+  // its own timer (matching the CSS duration, not transitionend — that can
+  // fail to fire on a backgrounded/interrupted transition) independently of
+  // the others, so a pile-up of quick presses can never get stuck.
+  const SCREENS_LIGHTBOX_SLIDE_MS = 280;
+  let screensLightboxTopSlide = null;
+  function stepScreensLightbox(dir) {
+    if (state.screensLightboxIndex === null) return;
+    const viewport = document.querySelector("#screens-lightbox .lightbox-media");
+    const outgoing = screensLightboxTopSlide || (viewport && viewport.querySelector(".lightbox-slide"));
+    if (!viewport || !outgoing) return;
+
+    const newIdx = (state.screensLightboxIndex + dir + SCREENS.length) % SCREENS.length;
+    state.screensLightboxIndex = newIdx;
+
+    const incoming = document.createElement("div");
+    incoming.className = "lightbox-slide " + (dir > 0 ? "lb-off-right" : "lb-off-left");
+    incoming.innerHTML = mediaHTML(SCREENS[newIdx], { controls: true, hero: true, fill: false });
+    viewport.appendChild(incoming);
+    safePlay(incoming.querySelector("video, mux-video"));
+    screensLightboxTopSlide = incoming;
+
+    const counter = document.querySelector(".lightbox-counter");
+    if (counter) counter.textContent = `${newIdx + 1} / ${SCREENS.length}`;
+
+    // commit the incoming slide's starting (off-screen) position before
+    // animating, so the browser doesn't collapse the "appear off-screen then
+    // move to center" into a single no-op transition
+    void incoming.offsetWidth;
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        outgoing.classList.add(dir > 0 ? "lb-off-left" : "lb-off-right");
+        incoming.classList.remove("lb-off-left", "lb-off-right");
+      });
+    });
+
+    setTimeout(() => outgoing.remove(), SCREENS_LIGHTBOX_SLIDE_MS + 30);
+  }
+
   // ---------- about ----------
   // splits a client list into two side-by-side columns (so Studios + Direct
   // Clients together read as 4 columns) — the group label sits only on the
@@ -1103,39 +1196,25 @@
 
   // ---------- main render ----------
   // gallery videos (data-autoplay) only actually play while scrolled into view —
-  // starting every clip on a page at once (e.g. Weekend's 8 clips, or the Notes
-  // masonry grid with a couple dozen clips) chokes the browser, so playback
-  // follows the viewport and is hard-capped to a couple clips at a time: a
-  // generous rootMargin plus a wide masonry grid could otherwise mark most of
-  // the page "intersecting" at once, and calling .play() on that many videos
-  // forces them all to fully buffer regardless of their preload hint.
+  // starting every clip on a page at once used to choke the browser with the
+  // old VP9 1080p clips, but now that gallery/grid clips are re-encoded as
+  // lighter H.264 at grid-display resolution, all intersecting clips are
+  // allowed to play concurrently (no hard cap).
   let galleryVideoObserver = null;
-  const MAX_CONCURRENT_GALLERY_VIDEOS = 2;
-  let playingGalleryVideos = [];
   function observeGalleryVideos() {
     if (!galleryVideoObserver) {
       galleryVideoObserver = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             const v = entry.target;
-            if (entry.isIntersecting) {
-              if (playingGalleryVideos.includes(v)) return;
-              while (playingGalleryVideos.length >= MAX_CONCURRENT_GALLERY_VIDEOS) {
-                playingGalleryVideos.shift().pause();
-              }
-              playingGalleryVideos.push(v);
-              v.play().catch(() => {});
-            } else {
-              v.pause();
-              playingGalleryVideos = playingGalleryVideos.filter((p) => p !== v);
-            }
+            if (entry.isIntersecting) v.play().catch(() => {});
+            else v.pause();
           });
         },
         { rootMargin: "0px", threshold: 0.4 }
       );
     }
     galleryVideoObserver.disconnect();
-    playingGalleryVideos = [];
     app.querySelectorAll("video[data-autoplay], mux-video[data-autoplay]").forEach((v) => galleryVideoObserver.observe(v));
   }
 
@@ -1155,6 +1234,7 @@
       app.innerHTML = renderDetail(route.slug);
       mountDetailHero();
     } else if (route.page === "screens") {
+      state.screensLightboxIndex = null;
       app.innerHTML = renderScreens();
     } else if (route.page === "about") {
       app.innerHTML = renderAbout();
@@ -1182,6 +1262,13 @@
 
     const openEl = e.target.closest("[data-open-project]");
     if (openEl) { goto("detail", openEl.dataset.openProject); return; }
+
+    const screensItemEl = e.target.closest(".screens-page .screens-item");
+    if (screensItemEl) {
+      state.screensLightboxIndex = Number(screensItemEl.dataset.idx);
+      updateScreensLightbox();
+      return;
+    }
 
     const densityEl = e.target.closest("[data-set-density]");
     if (densityEl) {
@@ -1215,6 +1302,21 @@
       if (route.page === "detail") rerenderDetail(route.slug);
       return;
     }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (state.screensLightboxIndex === null) return;
+    if (e.key === "Escape") {
+      state.screensLightboxIndex = null;
+      updateScreensLightbox();
+    } else if (e.key === "ArrowLeft") {
+      stepScreensLightbox(-1);
+    } else if (e.key === "ArrowRight") {
+      stepScreensLightbox(1);
+    } else {
+      return;
+    }
+    e.preventDefault();
   });
 
   render();
