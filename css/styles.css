@@ -189,7 +189,11 @@ body.mobile-nav-locked { overflow: hidden; }
 
 /* ---------- welcome: hero ---------- */
 .hero {
-  position: relative; width: 100%; aspect-ratio: 16/9; max-height: 78vh;
+  /* full container width, height follows from the ratio — max-height
+     used to cap this, but combined with aspect-ratio it was shrinking
+     the box narrower than the container on taller viewports instead of
+     just capping height, so it's dropped */
+  position: relative; width: 100%; aspect-ratio: 16/9;
   padding: 0 var(--pad) 40px; background: transparent; box-sizing: border-box;
 }
 .hero-inner { position: relative; width: 100%; height: 100%; overflow: hidden; }
@@ -463,7 +467,7 @@ body.mobile-nav-locked { overflow: hidden; }
 .lightbox-close { position: fixed; top: 28px; right: 36px; font-size: 14px; color: oklch(90% 0.003 260); cursor: pointer; }
 
 /* ---------- screens ---------- */
-.screens-page { max-width: 1440px; margin: 0 auto; width: 100%; padding: 70px var(--pad) 110px; }
+.screens-page { max-width: 1800px; margin: 0 auto; width: 100%; padding: 70px var(--pad) 110px; }
 .screens-title { font-size: 32px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 6px; }
 .screens-sub { font-size: 14px; color: var(--muted); margin-bottom: 36px; }
 /* a real masonry (JS-computed round-robin column assignment) rather than
@@ -491,7 +495,7 @@ body.mobile-nav-locked { overflow: hidden; }
 .about-portrait img.active { opacity: 1; }
 
 /* left-label / right-content row, reused for What I Do, Clients, Exhibitions */
-.about-row { display: flex; gap: 80px; flex-wrap: wrap; padding-bottom: 90px; }
+.about-row { display: flex; gap: 80px; flex-wrap: wrap; padding: 50px 0 90px; border-top: 1px solid var(--line); }
 .about-row:last-child { padding-bottom: 0; }
 .about-row-label { flex: none; width: 180px; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); }
 
@@ -524,8 +528,8 @@ body.mobile-nav-locked { overflow: hidden; }
 .site-footer .links:first-child { font-weight: 400; }
 .site-footer .social-links { align-items: center; gap: 16px; font-weight: 700; }
 .site-footer a:hover { opacity: 0.7; }
-.site-footer .footer-link { cursor: pointer; }
-.site-footer .footer-link:hover { opacity: 0.7; }
+.site-footer .footer-link { cursor: pointer; opacity: 0.5; }
+.site-footer .footer-link:hover { opacity: 0.8; }
 @media (max-width: 1024px) {
   /* unsticky on mobile — just a normal footer at the true end of the page */
   .site-footer { position: static; }
@@ -548,7 +552,7 @@ body.mobile-nav-locked { overflow: hidden; }
    actual links now, so the two no longer fight over clicks in that band */
 .view-toggle {
   position: fixed; left: 50%; bottom: 9px; transform: translateX(-50%); z-index: 40;
-  padding: 10px 20px; margin: 0; border: 0; box-sizing: border-box;
+  padding: 10px 20px; margin: 0; border: 1px solid var(--lineStrong); border-radius: 999px; box-sizing: border-box;
   display: inline-flex; align-items: center; justify-content: center; line-height: 1;
   -webkit-appearance: none; appearance: none;
   font-size: 13px; letter-spacing: 0.02em; cursor: pointer;

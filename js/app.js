@@ -196,7 +196,7 @@
   ];
   let roleRouletteTimer = null;
   function mountRoleRoulette() {
-    clearInterval(roleRouletteTimer);
+    clearTimeout(roleRouletteTimer);
     const el = document.getElementById("role-roulette");
     const articleEl = document.getElementById("role-article");
     const wrap = document.getElementById("role-roulette-wrap");
@@ -236,9 +236,21 @@
       return next;
     }
 
+    // first 3 auto-shuffles are quick (every 5s) to show off the effect,
+    // then it settles into a slower ambient pace (every 10s)
+    let autoCount = 0;
+    function scheduleNext() {
+      clearTimeout(roleRouletteTimer);
+      const delay = autoCount < 3 ? 5000 : 10000;
+      roleRouletteTimer = setTimeout(() => {
+        autoCount++;
+        advance();
+        scheduleNext();
+      }, delay);
+    }
     function restartTimer() {
-      clearInterval(roleRouletteTimer);
-      roleRouletteTimer = setInterval(advance, 15000);
+      autoCount = 0;
+      scheduleNext();
     }
 
     function advance() {
@@ -541,12 +553,16 @@
     const video = wrap.querySelector("video, mux-video");
     const overlay = document.getElementById("hero-play-toggle");
     if (!video) return;
-    // starts paused with sound on (not autoplaying) — visitor has to press play.
-    // guarded the same way as safePlay: pre-upgrade property writes on a custom
-    // element like <mux-video> can get lost once its real setters take over
+    // autoplays with sound on, same as the project-detail heroes — if the
+    // browser's autoplay policy blocks unmuted playback (no prior user
+    // interaction with the site), it just stays paused and the play glyph
+    // below covers that. guarded the same way as safePlay: pre-upgrade
+    // property writes on a custom element like <mux-video> can get lost
+    // once its real setters take over
     const setVolume = () => { video.muted = false; video.volume = 0.8; };
     if (typeof video.play === "function") setVolume();
     else customElements.whenDefined(video.tagName.toLowerCase()).then(setVolume);
+    safePlay(video);
     let hovering = false;
     const toggle = () => { if (hovering) return; if (video.paused) video.play(); else video.pause(); };
     video.addEventListener("click", toggle);

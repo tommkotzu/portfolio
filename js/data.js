@@ -104,7 +104,7 @@ const PROJECTS = [
     slug: "anyma-character-development",
     title: "Character Development",
     client: "Anyma",
-    location: "Home",
+    location: "Berlin, Germany",
     year: "2024",
     role: "Director",
     credits: [
@@ -181,7 +181,7 @@ const PROJECTS = [
     slug: "luisa-via-roma-x-vogue",
     title: "Time Square OOH",
     client: "Luisa Via Roma x VOGUE",
-    location: "New York",
+    location: "New York, USA",
     year: "2024",
     role: "Director",
     credits: [
@@ -245,7 +245,7 @@ const PROJECTS = [
     slug: "adidas-nmd-s1",
     title: "ADIDAS NMD_S1",
     client: "Adidas",
-    location: "Berlin",
+    location: "Berlin, Germany",
     year: "2023",
     role: "Director",
     credits: [
@@ -310,7 +310,7 @@ const PROJECTS = [
     slug: "openai-munich-hq",
     title: "De Headquarter Opening Munich",
     client: "OpenAI",
-    location: "Munich",
+    location: "Munich, Germany",
     year: "2025",
     role: "Director",
     credits: [
@@ -356,7 +356,7 @@ const PROJECTS = [
     slug: "nike-x-pigalle",
     title: "AR Campaign",
     client: "Nike x PIGALLE",
-    location: "Paris",
+    location: "Paris, France",
     year: "2023",
     role: "Director",
     credits: [
@@ -422,7 +422,7 @@ const PROJECTS = [
     slug: "the-weeknd-performance",
     title: "Performance",
     client: "The Weeknd",
-    location: "São Paulo",
+    location: "São Paulo, Brazil",
     year: "2023",
     role: "Director",
     credits: [
@@ -480,7 +480,7 @@ const PROJECTS = [
     slug: "zalando-valentines",
     title: "Valentines Campaign",
     client: "Zalando",
-    location: "Berlin",
+    location: "Berlin, Germany",
     year: "2023",
     role: "Director",
     credits: [
@@ -528,7 +528,7 @@ const PROJECTS = [
     slug: "superpop-stage-show",
     title: "Stage Show",
     client: "Superpop",
-    location: "Seoul",
+    location: "Seoul, Korea",
     year: "2025",
     role: "Director",
     credits: [
@@ -589,7 +589,7 @@ const PROJECTS = [
     slug: "looping-lovers",
     title: "Looping Lovers",
     client: "", // self-initiated — no client
-    location: "Schwäbisch Gmünd",
+    location: "Schwäbisch Gmünd, Germany",
     year: "Since 2016",
     role: "Artist",
     credits: [
@@ -718,7 +718,7 @@ const PROJECTS = [
     slug: "highsnobiety",
     title: "Not In London",
     client: "Highsnobiety",
-    location: "Berlin",
+    location: "Berlin, Germany",
     year: "2025", // not given — confirm/adjust
     role: "Director",
     credits: [
@@ -778,7 +778,7 @@ const PROJECTS = [
     slug: "ffs-identity",
     title: "Identity",
     client: "FFS",
-    location: "Berlin", // not given — confirm/adjust
+    location: "Berlin, Germany", // not given — confirm/adjust
     year: "2025", // not given — confirm/adjust
     role: "Director",
     credits: [
@@ -837,7 +837,7 @@ const PROJECTS = [
     slug: "robotics",
     title: "Robotics",
     client: "", // confidential — no client name to show
-    location: "Berlin",
+    location: "Berlin, Germany",
     year: "2025", // not given — confirm/adjust
     role: "Director",
     credits: [],
