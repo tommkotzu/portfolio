@@ -963,29 +963,32 @@ const SCREENS = [
 const SERVICES = ["Blender", "Cinema 4D", "Motion Design", "CAD Optimization", "Asset Creation", "Shader Development", "Geometry Nodes", "Brand Assets", "Imagery", "Visual Design"];
 
 const CLIENTS_COLLAB = ["Woodblock", "Siemens", "Nike", "Adidas", "Pigalle", "ACG", "RG/A", "LuisaViaRoma", "Vogue", "The Weeknd", "Google", "GNTM", "Psyop", "YouTube", "Artificial Rome", "B-Reel"];
-const CLIENTS_DIRECT = ["OpenAI", "CRO", "Breuninger", "Zalando", "Anyma", "Afterlife", "Balmain", "Flowers For Society", "Pacemaker", "About You", "Barbie", "Vly", "Dior"];
+const CLIENTS_DIRECT = ["OpenAI", "CRO", "Breuninger", "Zalando", "Anyma", "Afterlife", "Balmain", "Flowers For Society", "Pacemaker", "About You", "Barbie", "Vly", "Dior", "Mattel"];
 
 // client name -> logo file in Assets/logos/ (only clients we actually have
 // artwork for show up in the About page's logo wall; everyone else still
 // appears in the plain-text client lists below it)
+// ar = the file's own width/height, so the logo row can give each mark a
+// width proportional to its real aspect ratio at a shared fixed height
+// instead of every tile being forced into the same square box
 const CLIENT_LOGOS = {
-  ACG: "acg.png",
-  Dior: "dior.png",
-  "Flowers For Society": "ffs.png",
-  OpenAI: "opanAI.png",
-  Nike: "nike.png",
-  Pacemaker: "pacemaker.png",
-  Adidas: "adidas.png",
-  YouTube: "youtube.webp",
-  Balmain: "Balmain.png",
-  Vogue: "Vogue.png",
-  Vly: "vly.png",
-  Google: "google.png",
-  LuisaViaRoma: "luisaviaroma.png",
-  "The Weeknd": "weekend.png",
-  Pigalle: "pigalle.png",
-  Barbie: "Logo_08.png",
-  GNTM: "Logo_10.png",
+  ACG: { file: "acg.png", ar: 1.1879 },
+  Anyma: { file: "anyma.png", ar: 1500 / 282 },
+  Dior: { file: "dior.png", ar: 2.3109 },
+  "Flowers For Society": { file: "ffs.png", ar: 1.1071 },
+  OpenAI: { file: "opanAI.png", ar: 0.9884 },
+  Nike: { file: "nike.png", ar: 2.5455 },
+  Pacemaker: { file: "pacemaker.png", ar: 2.1742 },
+  Adidas: { file: "adidas.png", ar: 1.4222 },
+  YouTube: { file: "youtube.png", ar: 1.4302 },
+  Balmain: { file: "Balmain.png", ar: 1.5892 },
+  Vogue: { file: "Vogue.png", ar: 3.3412 },
+  Vly: { file: "vly.png", ar: 0.9503 },
+  Google: { file: "google.png", ar: 2.7838 },
+  "The Weeknd": { file: "weekend.png", ar: 2.4959 },
+  Pigalle: { file: "pigalle.png", ar: 1.641 },
+  Barbie: { file: "Logo_08.png", ar: 1.7566 },
+  GNTM: { file: "Logo_10.png", ar: 2.4576 },
 };
 
 const EXHIBITIONS = [

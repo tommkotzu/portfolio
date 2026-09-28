@@ -888,6 +888,20 @@
   // splits a client list into two side-by-side columns (so Studios + Direct
   // Clients together read as 4 columns) — the group label sits only on the
   // first column, the second just continues the list
+  // splits a flat list into n as-even-as-possible columns, left to right
+  function chunkEven(list, n) {
+    const base = Math.floor(list.length / n);
+    const extra = list.length % n;
+    const cols = [];
+    let start = 0;
+    for (let i = 0; i < n; i++) {
+      const size = base + (i < extra ? 1 : 0);
+      cols.push(list.slice(start, start + size));
+      start += size;
+    }
+    return cols;
+  }
+
   function clientGroupHTML(label, list) {
     const mid = Math.ceil(list.length / 2);
     const cols = [list.slice(0, mid), list.slice(mid)];
@@ -907,11 +921,18 @@
   // pure black/white and flips correctly with the theme toggle
   function clientLogosHTML() {
     return Object.entries(CLIENT_LOGOS)
-      .map(([name, file]) => {
+      .map(([name, { file, ar }]) => {
         const url = `Assets/logos/${file}`;
-        return `<div class="client-logo" style="-webkit-mask-image:url('${url}');mask-image:url('${url}')" title="${name}" aria-label="${name}"></div>`;
+        const width = Math.round(46.5 * ar);
+        return `<div class="client-logo" style="width:${width}px;-webkit-mask-image:url('${url}');mask-image:url('${url}')" title="${name}" aria-label="${name}"></div>`;
       })
       .join("");
+  }
+
+  // duplicated back-to-back so the marquee's translateX(-50% -> 0) loop is seamless
+  function clientLogosMarqueeHTML() {
+    const set = clientLogosHTML();
+    return `<div class="client-logos-wrap"><div class="client-logos">${set}${set}</div></div>`;
   }
 
   function renderAbout() {
@@ -937,10 +958,11 @@
         <div class="about-services">${SERVICES.map((s) => `<span>${s}</span>`).join('<span class="dot">·</span>')}</div>
       </div>
 
+      ${clientLogosMarqueeHTML()}
+
       <div class="about-row">
         <div class="about-row-label">References</div>
         <div class="about-row-content">
-          <div class="client-logos">${clientLogosHTML()}</div>
           <div class="clients-row">
             ${clientGroupHTML("Collaborations", CLIENTS_COLLAB)}
             ${clientGroupHTML("Direct Clients", CLIENTS_DIRECT)}
@@ -950,14 +972,16 @@
 
       <div class="about-row">
         <div class="about-row-label">Exhibitions &amp; Talks</div>
-        <div class="clients-row">
-          ${[EXHIBITIONS.slice(0, Math.ceil(EXHIBITIONS.length / 2)), EXHIBITIONS.slice(Math.ceil(EXHIBITIONS.length / 2))]
-            .map(
-              (col) => `<div class="clients-col">
-            ${col.map((e) => `<div class="exhib-row"><span>${e.event}</span><span class="loc">${e.location}</span></div>`).join("")}
-          </div>`
-            )
-            .join("")}
+        <div class="about-row-content">
+          <div class="clients-row exhib-clients-row">
+            ${chunkEven(EXHIBITIONS, 2)
+              .map(
+                (col) => `<div class="clients-col">
+              ${col.map((e) => `<div class="exhib-row"><span>${e.event}</span><span class="loc">${e.location}</span></div>`).join("")}
+            </div>`
+              )
+              .join("")}
+          </div>
         </div>
       </div>
     </div>`;

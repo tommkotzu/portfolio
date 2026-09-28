@@ -507,29 +507,37 @@ body.mobile-nav-locked { overflow: hidden; }
 /* client-supplied logo files come in whatever colors/formats they came
    in — a CSS mask ignores all of that and uses the PNG purely as a
    shape, filled with the current theme color, so every logo reads as a
-   flat monochrome mark that flips with light/dark like everything else */
-.client-logos { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 28px 32px; align-items: center; }
+   flat monochrome mark that flips with light/dark like everything else.
+   The track is duplicated once in the markup and looped with translateX
+   (-50% -> 0) so it reads as a continuous left-to-right scroll. */
+.client-logos-wrap { overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 80px 0; }
+.client-logos { display: flex; flex-wrap: nowrap; gap: 56px; align-items: center; width: max-content; animation: client-logos-marquee 32s linear infinite; }
 .client-logo {
-  height: 34px; background-color: var(--strong);
+  flex: none; height: 46.5px; background-color: var(--strong);
   -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
   -webkit-mask-position: left center; mask-position: left center;
   -webkit-mask-size: contain; mask-size: contain;
 }
+@keyframes client-logos-marquee {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0%); }
+}
 
-.clients-row { display: flex; gap: 60px; flex-wrap: wrap; }
-.clients-col { flex: 1; min-width: 170px; }
-.clients-col-label { font-size: 14px; font-weight: 500; color: var(--muted2); margin-bottom: 16px; }
+.clients-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 40px; row-gap: 40px; }
+.clients-row.exhib-clients-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.clients-col-label { font-size: 13px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); margin-bottom: 16px; }
 .client-list { display: flex; flex-direction: column; gap: 2px; }
 .client-list div { font-size: 17px; color: var(--strong); padding: 6px 0; }
 
 @media (max-width: 1024px) {
-  .client-logos { grid-template-columns: repeat(2, 1fr); }
-  .clients-col { flex: 0 0 calc(50% - 30px); min-width: 0; }
+  .clients-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .clients-row.exhib-clients-row { grid-template-columns: 1fr; }
 }
 
-.exhib-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 6px 0; }
+.exhib-row { display: flex; justify-content: flex-start; align-items: baseline; gap: 12px; padding: 6px 0; }
 .exhib-row span:first-child { font-size: 17px; color: var(--strong); }
 .exhib-row .loc { font-size: 14px; color: var(--muted); white-space: nowrap; }
+
 
 /* ---------- footer ---------- */
 .site-footer {
