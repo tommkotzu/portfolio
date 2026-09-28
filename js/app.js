@@ -385,7 +385,13 @@
       // hero videos manage their own play/pause (mountWelcome/mountDetailHero); only
       // gallery videos get the scroll-driven observer, so the two never fight
       const observedAttr = opts.hero ? "" : " data-autoplay";
-      return `<div class="media-wrap ${cls}"><video class="${innerCls}" ${poster} preload="metadata" ${controls} muted loop playsinline${observedAttr}><source src="${item.src}"${typeAttr}></video></div>`;
+      // hero videos need to start the instant they mount, so they preload
+      // metadata ahead of time; gallery/grid videos are played on demand by
+      // the scroll observer, so eagerly buffering all of them at once (their
+      // combined weight, especially on pages like Notes with many clips) is
+      // what chokes the browser — defer their fetch entirely until observed
+      const preload = opts.hero ? "metadata" : "none";
+      return `<div class="media-wrap ${cls}"><video class="${innerCls}" ${poster} preload="${preload}" ${controls} muted loop playsinline${observedAttr}><source src="${item.src}"${typeAttr}></video></div>`;
     }
     if (item.type === "mux") {
       // <mux-video> is Mux's custom element — same attributes/API as a native
@@ -395,7 +401,8 @@
       const poster = item.poster ? ` poster="${item.poster}"` : "";
       const controls = opts.controls ? "controls" : "";
       const observedAttr = opts.hero ? "" : " data-autoplay";
-      return `<div class="media-wrap ${cls}"><mux-video class="${innerCls}" playback-id="${item.src}"${poster} preload="metadata" ${controls} muted loop playsinline${observedAttr}></mux-video></div>`;
+      const preload = opts.hero ? "metadata" : "none";
+      return `<div class="media-wrap ${cls}"><mux-video class="${innerCls}" playback-id="${item.src}"${poster} preload="${preload}" ${controls} muted loop playsinline${observedAttr}></mux-video></div>`;
     }
     return `<div class="media-wrap ${cls} stripe"></div>`;
   }
@@ -1096,23 +1103,39 @@
 
   // ---------- main render ----------
   // gallery videos (data-autoplay) only actually play while scrolled into view —
-  // starting every clip on a page at once (e.g. Weekend's 8 clips) chokes the
-  // browser, so playback follows the viewport instead, one/two clips at a time.
+  // starting every clip on a page at once (e.g. Weekend's 8 clips, or the Notes
+  // masonry grid with a couple dozen clips) chokes the browser, so playback
+  // follows the viewport and is hard-capped to a couple clips at a time: a
+  // generous rootMargin plus a wide masonry grid could otherwise mark most of
+  // the page "intersecting" at once, and calling .play() on that many videos
+  // forces them all to fully buffer regardless of their preload hint.
   let galleryVideoObserver = null;
+  const MAX_CONCURRENT_GALLERY_VIDEOS = 2;
+  let playingGalleryVideos = [];
   function observeGalleryVideos() {
     if (!galleryVideoObserver) {
       galleryVideoObserver = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             const v = entry.target;
-            if (entry.isIntersecting) v.play().catch(() => {});
-            else v.pause();
+            if (entry.isIntersecting) {
+              if (playingGalleryVideos.includes(v)) return;
+              while (playingGalleryVideos.length >= MAX_CONCURRENT_GALLERY_VIDEOS) {
+                playingGalleryVideos.shift().pause();
+              }
+              playingGalleryVideos.push(v);
+              v.play().catch(() => {});
+            } else {
+              v.pause();
+              playingGalleryVideos = playingGalleryVideos.filter((p) => p !== v);
+            }
           });
         },
-        { rootMargin: "200px 0px", threshold: 0.15 }
+        { rootMargin: "0px", threshold: 0.4 }
       );
     }
     galleryVideoObserver.disconnect();
+    playingGalleryVideos = [];
     app.querySelectorAll("video[data-autoplay], mux-video[data-autoplay]").forEach((v) => galleryVideoObserver.observe(v));
   }
 
