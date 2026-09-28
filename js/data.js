@@ -56,9 +56,8 @@ const PROJECTS = [
       "Acg/00_acg/preview/10_30_1908.png",
       "Acg/00_acg/preview/11_05_2318.png",
       "Acg/00_acg/preview/11_24_2631.jpg",
-      "Acg/00_acg/preview/Image 3_4.png",
       "Acg/00_acg/preview/image 719.webp",
-      "Acg/00_acg/preview/Pasted image.webp"
+      "Acg/00_acg/preview/Screenshot From 2026-09-28 20-36-50.png"
     ),
     galleryStyle: "editorial",
     gallery: [
@@ -71,18 +70,17 @@ const PROJECTS = [
       media("vimeo", "1165502822", { caption: "Modeling breakdown." }), // 6
       media("image", ASSET_ROOT + "Acg/00_acg/preview/11_24_2631.jpg"), // 7
       media("vimeo", "1165513848", { caption: "Lookdev pass." }), // 8
-      media("image", ASSET_ROOT + "Acg/00_acg/preview/Image 3_4.png"), // 9
+      media("image", ASSET_ROOT + "Acg/00_acg/preview/Screenshot From 2026-09-28 20-36-50.png"), // 9
       media("vimeo", "1166048550", { caption: "Main comp breakdown." }), // 10
       media("image", ASSET_ROOT + "Acg/00_acg/preview/image 719.webp"), // 11
-      media("image", ASSET_ROOT + "Acg/00_acg/preview/Pasted image.webp"), // 12
-      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/090m.webp"), // 13 (M)
-      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/100L+.jpg"), // 14 (L)
-      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/110M.png"), // 15 (M)
-      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/120m.jpg"), // 16 (M)
-      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/130S.webp"), // 17 (S)
-      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/140S.jpg"), // 18 (S)
-      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/150M.webp"), // 19 (M)
-      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/160S.webp"), // 20 (S)
+      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/090m.webp"), // 12 (M)
+      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/100L+.jpg"), // 13 (L)
+      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/110M.png"), // 14 (M)
+      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/120m.jpg"), // 15 (M)
+      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/130S.webp"), // 16 (S)
+      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/140S.jpg"), // 17 (S)
+      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/150M.webp"), // 18 (M)
+      media("image", ASSET_ROOT + "Acg/00_acg/acg_be/160S.webp"), // 19 (S)
     ],
     editorialRows: [
       { cols: [0], align: "left" },
@@ -92,12 +90,12 @@ const PROJECTS = [
       { cols: [6], align: "center" },
       { cols: [7, 8], offsets: [0, 50], align: "left" },
       { cols: [9, 10], offsets: [40, 0], align: "right" },
-      { cols: [11, 12], offsets: [0, 60], align: "center" },
-      { cols: [13], align: "left", size: "M" },
-      { cols: [14], align: "right" },
-      { cols: [15, 16], sizes: ["M", "M"], offsets: [50, 60], align: "center" },
-      { cols: [17, 18], sizes: ["S", "S"], offsets: [0, 50], align: "left" },
-      { cols: [19, 20], sizes: ["M", "S"], offsets: [60, 40], align: "right" },
+      { cols: [11], align: "center" },
+      { cols: [12], align: "left", size: "M" },
+      { cols: [13], align: "right" },
+      { cols: [14, 15], sizes: ["M", "M"], offsets: [50, 60], align: "center" },
+      { cols: [16, 17], sizes: ["S", "S"], offsets: [0, 50], align: "left" },
+      { cols: [18, 19], sizes: ["M", "S"], offsets: [60, 40], align: "right" },
     ],
   },
   {
@@ -888,7 +886,6 @@ const SCREENS = [
   media("image", "Assets/screenshots/24_18.31_5965.jpg"),
   media("image", "Assets/screenshots/28_14.22_1561.jpg"),
   media("image", "Assets/screenshots/29_18.33_5608.webp"),
-  media("image", "Assets/screenshots/31_14.33_4223.jpg"),
   media("image", "Assets/screenshots/aquatic01.webp"),
   media("image", "Assets/screenshots/aquatic02.webp"),
   media("image", "Assets/screenshots/aquatic03.webp"),
@@ -902,6 +899,14 @@ const SCREENS = [
   media("image", "Assets/screenshots/aquatic11.webp"),
   media("image", "Assets/screenshots/aquatic12.webp"),
   media("video", "Assets/screenshots/bHand.mp4"),
+  media("video", "Assets/screenshots/breuninger-fooh-macarons-nuernberg-philipp-ries.webm"),
+  media("video", "Assets/screenshots/breuninger-fooh-macarons.webm"),
+  media("video", "Assets/screenshots/breuninger-fooh-nike-airforce.webm"),
+  media("video", "Assets/screenshots/breuninger-fooh-ss25-bag.webm"),
+  media("video", "Assets/screenshots/breuninger-fooh-ss25-fragrance.webm"),
+  media("video", "Assets/screenshots/breuninger-fooh-stuttgart.webm"),
+  media("video", "Assets/screenshots/breuninger-fooh-valentine.webm"),
+  media("image", "Assets/screenshots/breuninger.png"),
   media("image", "Assets/screenshots/barbie - bts  1.webp"),
   media("image", "Assets/screenshots/barbie - bts  2.jpg"),
   media("image", "Assets/screenshots/barbie - bts  2.webp"),
