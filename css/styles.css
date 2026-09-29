@@ -324,6 +324,9 @@ body.mobile-nav-locked { overflow: hidden; }
 .density-icon.d2 { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 2px; }
 .density-icon.d2 span { background: var(--muted); }
 .density-icon.d2.active span { background: var(--text); }
+.density-icon.dall { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(4, 1fr); gap: 1px; }
+.density-icon.dall span { background: var(--muted); }
+.density-icon.dall.active span { background: var(--text); }
 
 .project-grid { display: grid; gap: 32px; }
 .project-grid.density-1 { grid-template-columns: 1fr; gap: 56px; }
@@ -352,6 +355,17 @@ body.mobile-nav-locked { overflow: hidden; }
   .density-btn[data-set-density="2"] { display: none; }
   .card-full .card-meta .tag-row { margin-left: 0; }
 }
+
+/* "All" density on Work — every project's gallery flattened into one grid,
+   same masonry layout as Notes (.screens-grid/.screens-col, JS round-robin
+   columns — desktop 4 / tablet 3 / mobile 2). Only difference from Notes:
+   each tile fades/lifts into place the first time it scrolls into view
+   instead of all appearing at once. */
+.all-content-item {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.all-content-item.is-visible { opacity: 1; transform: translateY(0); }
 
 .list-rows { display: flex; flex-direction: column; }
 .list-row { cursor: pointer; position: relative; display: flex; align-items: center; gap: 20px; padding: 18px 0; border-bottom: 1px solid var(--lineSoft); }

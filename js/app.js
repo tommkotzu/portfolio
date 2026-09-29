@@ -360,8 +360,9 @@
     const fill = opts.fill !== false;
     const innerCls = fill ? "media-fill" : "media-natural";
     // opts.dataIdx: stamps the wrapper with data-idx so a click-to-enlarge
-    // handler can map it back to its position in whatever array it came from
-    const dataIdx = opts.dataIdx !== undefined ? ` data-idx="${opts.dataIdx}"` : "";
+    // handler can map it back to its position in whatever array it came from.
+    // opts.extraAttrs: any other raw attribute string to stamp on the wrapper.
+    const dataIdx = (opts.dataIdx !== undefined ? ` data-idx="${opts.dataIdx}"` : "") + (opts.extraAttrs ? ` ${opts.extraAttrs}` : "");
     if (!item) return `<div class="media-wrap ${cls} stripe"${dataIdx}></div>`;
     if (item.type === "image") {
       return `<div class="media-wrap ${cls}"${dataIdx}><img class="${innerCls}" src="${item.src}" loading="lazy" alt=""></div>`;
@@ -594,13 +595,15 @@
     { key: "list", label: "List" },
     { key: "1", label: "1" },
     { key: "2", label: "2" },
+    { key: "all", label: "All" },
   ];
 
   function densityIconHTML(key, active) {
     const activeCls = active ? "active" : "";
     if (key === "list") return `<span class="density-icon list-icon"><span></span><span></span><span></span></span>`;
     if (key === "1") return `<span class="density-icon d1 ${activeCls}"></span>`;
-    return `<span class="density-icon d2 ${activeCls}">${"<span></span>".repeat(9)}</span>`;
+    if (key === "2") return `<span class="density-icon d2 ${activeCls}">${"<span></span>".repeat(9)}</span>`;
+    return `<span class="density-icon dall ${activeCls}">${"<span></span>".repeat(16)}</span>`;
   }
 
   function renderWork() {
@@ -643,6 +646,8 @@
         </div>`
         ).join("")}
       </div>`;
+    } else if (density === "all") {
+      body = renderAllContentGrid();
     } else {
       body = `<div class="project-grid density-2">
         ${PROJECTS.map(
@@ -662,6 +667,47 @@
     // same width for every density so switching between them doesn't jump the layout
     const wideCls = " work-page-wide";
     return `<div class="page work-page${wideCls}" data-screen="work">${head}${body}</div>`;
+  }
+
+  // "All" density: every project's gallery flattened into one long grid —
+  // a one-pager to scroll through instead of picking a project first. Same
+  // masonry layout/breakpoints as Notes (renderMasonryGrid's default:
+  // desktop 4 / tablet 3 / mobile 2 columns), just tagging each tile with
+  // its source project (click opens that project, same as every other
+  // density's cards) and a fade-in class — each tile lifts into place the
+  // first time it scrolls into view (see observeAllContentFadeIn) rather
+  // than all appearing at once. Videos auto-play on scroll same as every
+  // other grid/gallery (observeGalleryVideos) — safe now that the gallery
+  // clips are lighter H.264 instead of the old high-res VP9 files.
+  function renderAllContentGrid() {
+    const tiles = [];
+    const slugs = [];
+    PROJECTS.forEach((p) => {
+      p.gallery.forEach((item) => {
+        if (item.type === "vimeo") return; // no standalone "enlarged" form, skip
+        tiles.push(item);
+        slugs.push(p.slug);
+      });
+    });
+    return renderMasonryGrid(tiles, { mobile: 2, tablet: 3, desktop: 4 }, (item, idx) => ({
+      cls: "all-content-item",
+      extraAttrs: `data-open-project="${slugs[idx]}"`,
+    }));
+  }
+  function observeAllContentFadeIn() {
+    const items = document.querySelectorAll(".all-content-item");
+    if (!items.length) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          obs.unobserve(entry.target);
+        });
+      },
+      { rootMargin: "0px 0px -60px 0px", threshold: 0.1 }
+    );
+    items.forEach((el) => obs.observe(el));
   }
 
   // list-view hover trail: as the cursor moves across a row, drop a fading
@@ -707,6 +753,8 @@
     // was showing, those handlers are gone with the old row elements, so
     // sweep up anything orphaned before wiring up a fresh set
     document.querySelectorAll(".list-preview-stamp").forEach((el) => el.remove());
+    observeAllContentFadeIn();
+    if (state.density === "all") workMasonryBucketWidth = masonryColumnCount({ mobile: 2, tablet: 3, desktop: 4 });
     const rows = document.getElementById("list-rows");
     if (!rows) return;
     let lastX = null, lastY = null, lastSpawn = 0;
@@ -789,13 +837,16 @@
     const w = window.innerWidth;
     return w <= 600 ? breakpoints.mobile : w <= 900 ? breakpoints.tablet : breakpoints.desktop;
   }
-  function renderMasonryGrid(items, breakpoints = { mobile: 2, tablet: 3, desktop: 4 }) {
+  // itemOpts(item, idx), if given, merges extra mediaHTML opts (cls/extraAttrs)
+  // per item — used by the Work page's "All" view to tag each tile with its
+  // source project and a fade-in class, without changing any other caller
+  function renderMasonryGrid(items, breakpoints = { mobile: 2, tablet: 3, desktop: 4 }, itemOpts) {
     const count = masonryColumnCount(breakpoints);
     const cols = Array.from({ length: count }, () => []);
     items.forEach((item, i) => cols[i % count].push({ item, idx: i }));
     return `<div class="screens-grid">${cols
       .map((col) => `<div class="screens-col">${col
-        .map(({ item, idx }) => `<div class="screens-item" data-idx="${idx}">${mediaHTML(item, { fill: false })}</div>`)
+        .map(({ item, idx }) => `<div class="screens-item" data-idx="${idx}">${mediaHTML(item, { fill: false, ...(itemOpts ? itemOpts(item, idx) : {}) })}</div>`)
         .join("")}</div>`)
       .join("")}</div>`;
   }
@@ -1339,6 +1390,7 @@
       localStorage.setItem("tm-density", state.density);
       app.innerHTML = renderWork();
       mountWork();
+      observeGalleryVideos();
       return;
     }
 
@@ -1392,6 +1444,7 @@
   // and source arrays.
   let screensMasonryBucketWidth = null;
   let detailMasonryBucketWidth = null;
+  let workMasonryBucketWidth = null;
   window.addEventListener("resize", () => {
     const route = parseHash();
     if (route.page === "screens") {
@@ -1412,6 +1465,15 @@
       const active = idx >= 0 ? PROJECTS[idx] : PROJECTS[0];
       grid.outerHTML = renderProjectGrid(active);
       observeGalleryVideos();
+    } else if (route.page === "work" && state.density === "all") {
+      const count = masonryColumnCount({ mobile: 2, tablet: 3, desktop: 4 });
+      if (count === workMasonryBucketWidth) return;
+      workMasonryBucketWidth = count;
+      const grid = document.querySelector(".screens-grid");
+      if (!grid) return;
+      grid.outerHTML = renderAllContentGrid();
+      observeGalleryVideos();
+      observeAllContentFadeIn();
     }
   });
 

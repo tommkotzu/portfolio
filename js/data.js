@@ -222,11 +222,11 @@ const PROJECTS = [
       media("image", ASSET_ROOT + "luisa via roma/100S.jpg"), // 11 (S)
       media("image", ASSET_ROOT + "luisa via roma/behind the scenes/120M.webp"), // 12 (M)
       media("video", ASSET_ROOT + "luisa via roma/behind the scenes/130M.mp4"), // 13 (M)
-      media("video", ASSET_ROOT + "luisa via roma/behind the scenes/140S.webm"), // 14 (S)
+      media("video", ASSET_ROOT + "luisa via roma/behind the scenes/140S.mp4"), // 14 (S)
       media("video", ASSET_ROOT + "luisa via roma/behind the scenes/150L.mp4"), // 15 (L)
-      media("video", ASSET_ROOT + "luisa via roma/behind the scenes/160M.webm"), // 16 (M)
+      media("video", ASSET_ROOT + "luisa via roma/behind the scenes/160M.mp4"), // 16 (M)
       media("image", ASSET_ROOT + "luisa via roma/behind the scenes/160M.png"), // 17 (M)
-      media("video", ASSET_ROOT + "luisa via roma/behind the scenes/170S.webm"), // 18 (S)
+      media("video", ASSET_ROOT + "luisa via roma/behind the scenes/170S.mp4"), // 18 (S)
     ],
     editorialRows: [
       { cols: [0], align: "left", size: "M" },
@@ -339,12 +339,12 @@ const PROJECTS = [
       media("image", ASSET_ROOT + "openAI/020M.webp"), // 0 (M)
       media("image", ASSET_ROOT + "openAI/020S.png"), // 1 (S)
       media("image", ASSET_ROOT + "openAI/030M.webp"), // 2 (M)
-      media("video", ASSET_ROOT + "openAI/040S.webm"), // 3 (S)
-      media("video", ASSET_ROOT + "openAI/050M.webm"), // 4 (M)
-      media("video", ASSET_ROOT + "openAI/060L.webm"), // 5 (L)
-      media("video", ASSET_ROOT + "openAI/070M.webm"), // 6 (M)
-      media("video", ASSET_ROOT + "openAI/080M.webm"), // 7 (M)
-      media("video", ASSET_ROOT + "openAI/090L.webm"), // 8 (L)
+      media("video", ASSET_ROOT + "openAI/040S.mp4"), // 3 (S)
+      media("video", ASSET_ROOT + "openAI/050M.mp4"), // 4 (M)
+      media("video", ASSET_ROOT + "openAI/060L.mp4"), // 5 (L)
+      media("video", ASSET_ROOT + "openAI/070M.mp4"), // 6 (M)
+      media("video", ASSET_ROOT + "openAI/080M.mp4"), // 7 (M)
+      media("video", ASSET_ROOT + "openAI/090L.mp4"), // 8 (L)
     ],
     editorialRows: [
       { cols: [0, 1], sizes: ["M", "S"], offsets: [0, 50], align: "left" },
@@ -437,7 +437,7 @@ const PROJECTS = [
     // gallery/hero regenerated from Assets/projects/weekend/ via
     // scripts/gen_gallery.py — rerun that script after renaming/adding files
     // there instead of hand-editing this list
-    hero: media("video", ASSET_ROOT + "weekend/010.webm"),
+    hero: media("video", ASSET_ROOT + "weekend/010.mp4"),
     previews: previews(
       "weekend/preview/Screenshot From 2026-09-11 13-56-28.webp",
       "weekend/preview/Screenshot From 2026-09-11 13-57-14.webp",
@@ -447,20 +447,20 @@ const PROJECTS = [
     galleryStyle: "editorial",
     gallery: [
       media("image", ASSET_ROOT + "weekend/020M.png"), // 0 (M)
-      media("video", ASSET_ROOT + "weekend/030M.webm"), // 1 (M)
+      media("video", ASSET_ROOT + "weekend/030M.mp4"), // 1 (M)
       media("image", ASSET_ROOT + "weekend/040S.jpg"), // 2 (S)
       media("image", ASSET_ROOT + "weekend/050M.jpg"), // 3 (M)
-      media("video", ASSET_ROOT + "weekend/060L.webm"), // 4 (L)
-      media("video", ASSET_ROOT + "weekend/070M.webm"), // 5 (M)
+      media("video", ASSET_ROOT + "weekend/060L.mp4"), // 4 (L)
+      media("video", ASSET_ROOT + "weekend/070M.mp4"), // 5 (M)
       media("image", ASSET_ROOT + "weekend/080S.jpg"), // 6 (S)
       media("image", ASSET_ROOT + "weekend/090L.webp"), // 7 (L)
       media("image", ASSET_ROOT + "weekend/100M.webp"), // 8 (M)
       media("image", ASSET_ROOT + "weekend/110S.png"), // 9 (S)
       media("image", ASSET_ROOT + "weekend/120L.webp"), // 10 (L)
-      media("video", ASSET_ROOT + "weekend/130S.webm"), // 11 (S)
-      media("video", ASSET_ROOT + "weekend/140M.webm"), // 12 (M)
-      media("video", ASSET_ROOT + "weekend/150S.webm"), // 13 (S)
-      media("video", ASSET_ROOT + "weekend/160S.webm"), // 14 (S)
+      media("video", ASSET_ROOT + "weekend/130S.mp4"), // 11 (S)
+      media("video", ASSET_ROOT + "weekend/140M.mp4"), // 12 (M)
+      media("video", ASSET_ROOT + "weekend/150S.mp4"), // 13 (S)
+      media("video", ASSET_ROOT + "weekend/160S.mp4"), // 14 (S)
       media("image", ASSET_ROOT + "weekend/170L.png"), // 15 (L)
       media("image", ASSET_ROOT + "weekend/180m.webp"), // 16 (M)
       media("image", ASSET_ROOT + "weekend/190M.jpg"), // 17 (M)
@@ -504,13 +504,13 @@ const PROJECTS = [
     ),
     galleryStyle: "editorial",
     gallery: [
-      media("video", ASSET_ROOT + "zalando/010S.webm"), // 0 (S)
-      media("video", ASSET_ROOT + "zalando/020L.webm"), // 1 (L)
+      media("video", ASSET_ROOT + "zalando/010S.mp4"), // 0 (S)
+      media("video", ASSET_ROOT + "zalando/020L.mp4"), // 1 (L)
       media("video", ASSET_ROOT + "zalando/030M.mp4"), // 2 (M)
-      media("video", ASSET_ROOT + "zalando/040S.webm"), // 3 (S)
+      media("video", ASSET_ROOT + "zalando/040S.mp4"), // 3 (S)
       media("image", ASSET_ROOT + "zalando/045M.jpg"), // 4 (M)
       media("image", ASSET_ROOT + "zalando/048S.jpg"), // 5 (S)
-      media("video", ASSET_ROOT + "zalando/050L.webm"), // 6 (L)
+      media("video", ASSET_ROOT + "zalando/050L.mp4"), // 6 (L)
       media("image", ASSET_ROOT + "zalando/055S.jpg"), // 7 (S)
       media("image", ASSET_ROOT + "zalando/060L.jpg"), // 8 (L)
       media("image", ASSET_ROOT + "zalando/060M.jpg"), // 9 (M)
@@ -754,7 +754,7 @@ const PROJECTS = [
       media("image", ASSET_ROOT + "High Snobiety - not in london/100m.jpg"), // 10 (M)
       media("image", ASSET_ROOT + "High Snobiety - not in london/110m.jpg"), // 11 (M)
       media("image", ASSET_ROOT + "High Snobiety - not in london/120m.jpg"), // 12 (M)
-      media("video", ASSET_ROOT + "High Snobiety - not in london/130m.webm"), // 13 (M)
+      media("video", ASSET_ROOT + "High Snobiety - not in london/130m.mp4"), // 13 (M)
       media("image", ASSET_ROOT + "High Snobiety - not in london/135S.webp"), // 14 (S)
       media("image", ASSET_ROOT + "High Snobiety - not in london/140l.webp"), // 15 (L)
       media("image", ASSET_ROOT + "High Snobiety - not in london/150S.jpg"), // 16 (S)
@@ -817,7 +817,7 @@ const PROJECTS = [
       media("image", ASSET_ROOT + "FFS - Identity/075m.png"), // 13 (M)
       media("image", ASSET_ROOT + "FFS - Identity/080M.jpg"), // 14 (M)
       media("image", ASSET_ROOT + "FFS - Identity/090S.jpg"), // 15 (S)
-      media("video", ASSET_ROOT + "FFS - Identity/090m.webm"), // 16 (M)
+      media("video", ASSET_ROOT + "FFS - Identity/090m.mp4"), // 16 (M)
       media("video", ASSET_ROOT + "FFS - Identity/100S.mp4"), // 17 (S)
     ],
     editorialRows: [
