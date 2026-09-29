@@ -279,8 +279,13 @@ body.mobile-nav-locked { overflow: hidden; }
    inline styles that FEATURED_ROWS sets in JS for desktop */
 @media (max-width: 1024px) {
   .featured-grid { gap: 48px; }
-  .featured-row { flex-direction: column; gap: 24px; }
-  .featured-card { flex-basis: 100% !important; margin-top: 0 !important; }
+  /* flex-basis governs the MAIN axis, which becomes height once the row
+     flips to column — align-items:stretch (overriding the desktop row's
+     flex-start) plus an explicit width is what actually makes each card
+     span full width here; flex-basis:100% alone was sizing height, not
+     width, collapsing every card to 0x0 */
+  .featured-row { flex-direction: column; gap: 24px; align-items: stretch; }
+  .featured-card { width: 100% !important; flex-basis: auto !important; margin-top: 0 !important; }
 }
 .card-overlay {
   position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 28px;
@@ -401,11 +406,11 @@ body.mobile-nav-locked { overflow: hidden; }
 
 .gallery-spacious { display: flex; flex-direction: column; align-items: center; gap: 160px; padding: 60px 0 80px; }
 .gallery-spacious-item { display: flex; flex-direction: column; gap: 24px; width: 100%; max-width: 1000px; }
-.gallery-spacious-item .media-wrap { width: 100%; aspect-ratio: 16/10; }
+.gallery-spacious-item .media-wrap { width: 100%; aspect-ratio: 16/10; cursor: pointer; }
 .gallery-spacious-item .caption { max-width: 640px; font-size: 15px; line-height: 1.8; color: var(--muted2); }
 
 .gallery-grid { column-count: 3; column-gap: 28px; padding: 20px 0 40px; }
-.gallery-grid .media-wrap { margin-bottom: 28px; break-inside: avoid; }
+.gallery-grid .media-wrap { margin-bottom: 28px; break-inside: avoid; cursor: pointer; }
 .gallery-grid img, .gallery-grid video { width: 100%; height: auto; }
 @media (max-width: 800px) { .gallery-grid { column-count: 2; } }
 
@@ -417,7 +422,7 @@ body.mobile-nav-locked { overflow: hidden; }
 .editorial-row.single.align-left { justify-content: flex-start; }
 .editorial-row.single.align-center { justify-content: center; }
 .editorial-row.single.align-right { justify-content: flex-end; }
-.editorial-item { display: flex; flex-direction: column; gap: 16px; max-width: min(100%, 1140px); }
+.editorial-item { display: flex; flex-direction: column; gap: 16px; max-width: min(100%, 1140px); cursor: pointer; }
 .editorial-item.size-m { max-width: min(100%, 820px); }
 .editorial-item.size-s { max-width: min(100%, 560px); }
 
@@ -426,7 +431,7 @@ body.mobile-nav-locked { overflow: hidden; }
 .editorial-row.pair.align-center { justify-content: center; }
 .editorial-row.pair.align-right { justify-content: flex-end; }
 /* default (no size specified) and the two real sizes a paired column can be */
-.editorial-col { display: flex; flex-direction: column; gap: 16px; max-width: min(100%, 680px); }
+.editorial-col { display: flex; flex-direction: column; gap: 16px; max-width: min(100%, 680px); cursor: pointer; }
 .editorial-col.size-m { max-width: min(100%, 760px); }
 .editorial-col.size-s { max-width: min(100%, 460px); }
 

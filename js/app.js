@@ -25,7 +25,11 @@
     editorialGalleryView: "editorial", // "editorial" | "grid" — preview toggle, superpop only for now
     lightboxOpen: false,
     mobileNavOpen: false,
-    screensLightboxIndex: null,
+    // click-to-enlarge lightbox shared by Notes and project galleries —
+    // lightboxItems is whichever array is currently open (SCREENS or a
+    // project's .gallery), lightboxIndex is null when closed
+    lightboxItems: null,
+    lightboxIndex: null,
   };
 
   // ---------- mobile nav ----------
@@ -355,9 +359,12 @@
     const cls = opts.cls || "";
     const fill = opts.fill !== false;
     const innerCls = fill ? "media-fill" : "media-natural";
-    if (!item) return `<div class="media-wrap ${cls} stripe"></div>`;
+    // opts.dataIdx: stamps the wrapper with data-idx so a click-to-enlarge
+    // handler can map it back to its position in whatever array it came from
+    const dataIdx = opts.dataIdx !== undefined ? ` data-idx="${opts.dataIdx}"` : "";
+    if (!item) return `<div class="media-wrap ${cls} stripe"${dataIdx}></div>`;
     if (item.type === "image") {
-      return `<div class="media-wrap ${cls}"><img class="${innerCls}" src="${item.src}" loading="lazy" alt=""></div>`;
+      return `<div class="media-wrap ${cls}"${dataIdx}><img class="${innerCls}" src="${item.src}" loading="lazy" alt=""></div>`;
     }
     if (item.type === "vimeo") {
       const src = `https://player.vimeo.com/video/${item.src}?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;loop=1&amp;muted=1&amp;background=1`;
@@ -368,7 +375,7 @@
       // "vimeo-embed" marker — renderEditorialGallery gives that item's wrapper
       // a real width to fill, and .vimeo-embed turns that into a 16:9 box
       const vimeoCls = fill ? "" : "vimeo-embed";
-      return `<div class="media-wrap ${vimeoCls} ${cls}"><iframe src="${src}" style="${style}" ${allow}></iframe></div>`;
+      return `<div class="media-wrap ${vimeoCls} ${cls}"${dataIdx}><iframe src="${src}" style="${style}" ${allow}></iframe></div>`;
     }
     if (item.type === "video") {
       const poster = item.poster ? ` poster="${item.poster}"` : "";
@@ -392,7 +399,7 @@
       // combined weight, especially on pages like Notes with many clips) is
       // what chokes the browser — defer their fetch entirely until observed
       const preload = opts.hero ? "metadata" : "none";
-      return `<div class="media-wrap ${cls}"><video class="${innerCls}" ${poster} preload="${preload}" ${controls} muted loop playsinline${observedAttr}><source src="${item.src}"${typeAttr}></video></div>`;
+      return `<div class="media-wrap ${cls}"${dataIdx}><video class="${innerCls}" ${poster} preload="${preload}" ${controls} muted loop playsinline${observedAttr}><source src="${item.src}"${typeAttr}></video></div>`;
     }
     if (item.type === "mux") {
       // <mux-video> is Mux's custom element — same attributes/API as a native
@@ -403,9 +410,9 @@
       const controls = opts.controls ? "controls" : "";
       const observedAttr = opts.hero ? "" : " data-autoplay";
       const preload = opts.hero ? "metadata" : "none";
-      return `<div class="media-wrap ${cls}"><mux-video class="${innerCls}" playback-id="${item.src}"${poster} preload="${preload}" ${controls} muted loop playsinline${observedAttr}></mux-video></div>`;
+      return `<div class="media-wrap ${cls}"${dataIdx}><mux-video class="${innerCls}" playback-id="${item.src}"${poster} preload="${preload}" ${controls} muted loop playsinline${observedAttr}></mux-video></div>`;
     }
-    return `<div class="media-wrap ${cls} stripe"></div>`;
+    return `<div class="media-wrap ${cls} stripe"${dataIdx}></div>`;
   }
 
   // a media card whose image cycles through a project's preview-folder images as the
@@ -747,7 +754,7 @@
         const capPx = row.size === "M" ? 820 : row.size === "S" ? 560 : 1140;
         const forceWidth = item.type === "vimeo" ? ` style="width:${capPx}px"` : "";
         return `<div class="editorial-row single align-${align}">
-          <div class="editorial-item${sizeCls}"${forceWidth}>
+          <div class="editorial-item${sizeCls}"${forceWidth} data-idx="${row.cols[0]}">
             ${mediaHTML(item, { fill: false })}
             ${item.caption ? `<div class="caption">${item.caption}</div>` : ""}
           </div>
@@ -763,7 +770,7 @@
           const sizeCls = size === "M" ? " size-m" : size === "S" ? " size-s" : "";
           const capPx = size === "M" ? 760 : size === "S" ? 460 : 680;
           const forceWidth = item.type === "vimeo" ? `width:${capPx}px;` : "";
-          return `<div class="editorial-col${sizeCls}" style="margin-top:${offset}px;${forceWidth}">
+          return `<div class="editorial-col${sizeCls}" style="margin-top:${offset}px;${forceWidth}" data-idx="${colIdx}">
             ${mediaHTML(item, { fill: false })}
             ${item.caption ? `<div class="caption">${item.caption}</div>` : ""}
           </div>`;
@@ -778,9 +785,12 @@
   // columns 1,2,3,4, then 4,5,6,7 into 1,2,3,4 again, so scanning
   // left-to-right/top-to-bottom follows file order. CSS columns can't do
   // this: they fill one column completely before starting the next
-  function renderMasonryGrid(items, breakpoints = { mobile: 2, tablet: 3, desktop: 4 }) {
+  function masonryColumnCount(breakpoints) {
     const w = window.innerWidth;
-    const count = w <= 600 ? breakpoints.mobile : w <= 900 ? breakpoints.tablet : breakpoints.desktop;
+    return w <= 600 ? breakpoints.mobile : w <= 900 ? breakpoints.tablet : breakpoints.desktop;
+  }
+  function renderMasonryGrid(items, breakpoints = { mobile: 2, tablet: 3, desktop: 4 }) {
+    const count = masonryColumnCount(breakpoints);
     const cols = Array.from({ length: count }, () => []);
     items.forEach((item, i) => cols[i % count].push({ item, idx: i }));
     return `<div class="screens-grid">${cols
@@ -793,7 +803,7 @@
   // grid view for editorial project galleries: same masonry treatment as
   // Screens (natural uncropped proportions, round-robin reading order),
   // just a narrower column count since project galleries are shorter
-  const PROJECT_GRID_BREAKPOINTS = { mobile: 1, tablet: 2, desktop: 3 };
+  const PROJECT_GRID_BREAKPOINTS = { mobile: 2, tablet: 2, desktop: 3 };
   function renderProjectGrid(active) {
     return renderMasonryGrid(active.gallery, PROJECT_GRID_BREAKPOINTS);
   }
@@ -812,12 +822,12 @@
     const galleryBody = isEditorial
       ? useGrid ? renderProjectGrid(active) : renderEditorialGallery(active)
       : state.galleryView === "grid"
-      ? `<div class="gallery-grid">${active.gallery.map((g) => mediaHTML(g, { fill: false })).join("")}</div>`
+      ? `<div class="gallery-grid">${active.gallery.map((g, i) => mediaHTML(g, { fill: false, dataIdx: i })).join("")}</div>`
       : `<div class="gallery-spacious">${active.gallery
           .map(
-            (g) => `
+            (g, i) => `
           <div class="gallery-spacious-item">
-            ${mediaHTML(g, {})}
+            ${mediaHTML(g, { dataIdx: i })}
             ${g.caption ? `<div class="caption">${g.caption}</div>` : ""}
           </div>`
           )
@@ -893,40 +903,60 @@
     </div>`;
   }
 
-  // click-to-enlarge overlay for the Notes grid — kept out of renderScreens()
-  // and patched directly into the DOM (see updateScreensLightbox) so opening/
-  // navigating it never touches the masonry grid itself: no full re-render,
-  // no scroll jump, no restarting whatever clips are already playing there
-  function renderScreensLightbox(idx) {
-    const item = SCREENS[idx];
-    return `<div class="lightbox screens-lightbox" id="screens-lightbox">
+  // click-to-enlarge lightbox shared by Notes and every project gallery view
+  // (grid, spacious, editorial) — kept out of the page's own render() output
+  // and patched directly into the DOM (see updateMediaLightbox) so opening/
+  // navigating it never touches the underlying gallery: no full re-render,
+  // no scroll jump, no restarting whatever clips are already playing there.
+  // state.lightboxItems is whichever array is currently open (SCREENS or a
+  // project's .gallery) and skipIneligible() steps over vimeo embeds, which
+  // already play inline and have no standalone "enlarged" form.
+  function lightboxEligible(item) {
+    return !!item && item.type !== "vimeo";
+  }
+  function openMediaLightbox(items, idx) {
+    if (!lightboxEligible(items[idx])) return;
+    state.lightboxItems = items;
+    state.lightboxIndex = idx;
+    updateMediaLightbox();
+  }
+  function renderMediaLightbox(idx) {
+    const items = state.lightboxItems;
+    const item = items[idx];
+    return `<div class="lightbox media-lightbox" id="media-lightbox">
       <div class="lightbox-media">
         <div class="lightbox-slide">${mediaHTML(item, { controls: true, hero: true, fill: false })}</div>
       </div>
-      <div class="lightbox-close" id="screens-lightbox-close">Close ✕</div>
-      <div class="lightbox-nav lightbox-prev" id="screens-lightbox-prev" aria-label="Previous">←</div>
-      <div class="lightbox-nav lightbox-next" id="screens-lightbox-next" aria-label="Next">→</div>
-      <div class="lightbox-counter">${idx + 1} / ${SCREENS.length}</div>
+      <div class="lightbox-close" id="media-lightbox-close">Close ✕</div>
+      <div class="lightbox-nav lightbox-prev" id="media-lightbox-prev" aria-label="Previous">←</div>
+      <div class="lightbox-nav lightbox-next" id="media-lightbox-next" aria-label="Next">→</div>
+      <div class="lightbox-counter">${idx + 1} / ${items.length}</div>
     </div>`;
   }
 
   // opening/closing rebuilds the whole overlay (its own fade-in); stepping
   // between items reuses that same overlay and only swaps the slide inside
-  // .lightbox-media (see stepScreensLightbox) — recreating the whole modal on
+  // .lightbox-media (see stepMediaLightbox) — recreating the whole modal on
   // every arrow press was what caused the clipping/flicker, since the chrome
   // (backdrop, close, arrows) doesn't need to re-animate in, only the image
-  function updateScreensLightbox() {
-    const existing = document.getElementById("screens-lightbox");
+  // removes any lightbox DOM without going through the close animation —
+  // used on route changes, where the underlying gallery is being replaced
+  // wholesale anyway, so there's nothing to animate back to
+  function closeMediaLightboxDom() {
+    const existing = document.getElementById("media-lightbox");
     if (existing) existing.remove();
-    screensLightboxTopSlide = null;
-    const idx = state.screensLightboxIndex;
+    mediaLightboxTopSlide = null;
+  }
+  function updateMediaLightbox() {
+    closeMediaLightboxDom();
+    const idx = state.lightboxIndex;
     if (idx === null) return;
-    document.body.insertAdjacentHTML("beforeend", renderScreensLightbox(idx));
-    const lb = document.getElementById("screens-lightbox");
-    const close = () => { state.screensLightboxIndex = null; updateScreensLightbox(); };
-    document.getElementById("screens-lightbox-close").addEventListener("click", close);
-    document.getElementById("screens-lightbox-prev").addEventListener("click", () => stepScreensLightbox(-1));
-    document.getElementById("screens-lightbox-next").addEventListener("click", () => stepScreensLightbox(1));
+    document.body.insertAdjacentHTML("beforeend", renderMediaLightbox(idx));
+    const lb = document.getElementById("media-lightbox");
+    const close = () => { state.lightboxItems = null; state.lightboxIndex = null; updateMediaLightbox(); };
+    document.getElementById("media-lightbox-close").addEventListener("click", close);
+    document.getElementById("media-lightbox-prev").addEventListener("click", () => stepMediaLightbox(-1));
+    document.getElementById("media-lightbox-next").addEventListener("click", () => stepMediaLightbox(1));
     lb.addEventListener("click", (e) => { if (e.target === lb) close(); });
     // clicking the media itself also closes — except on a video, where a
     // click is scrubbing/play-pause on its native controls, not "dismiss"
@@ -943,32 +973,38 @@
   // actually reads as "sliding across the screen". no lock gates repeat
   // arrow presses: each press immediately starts a fresh transition using
   // whatever slide is currently on top (even if it's still mid-entrance from
-  // the previous press), tracked via screensLightboxTopSlide rather than
+  // the previous press), tracked via mediaLightboxTopSlide rather than
   // re-querying the DOM — so fast repeats stay responsive instead of being
   // throttled to one per animation. Each outgoing slide cleans itself up on
   // its own timer (matching the CSS duration, not transitionend — that can
   // fail to fire on a backgrounded/interrupted transition) independently of
   // the others, so a pile-up of quick presses can never get stuck.
-  const SCREENS_LIGHTBOX_SLIDE_MS = 280;
-  let screensLightboxTopSlide = null;
-  function stepScreensLightbox(dir) {
-    if (state.screensLightboxIndex === null) return;
-    const viewport = document.querySelector("#screens-lightbox .lightbox-media");
-    const outgoing = screensLightboxTopSlide || (viewport && viewport.querySelector(".lightbox-slide"));
+  const MEDIA_LIGHTBOX_SLIDE_MS = 280;
+  let mediaLightboxTopSlide = null;
+  function stepMediaLightbox(dir) {
+    const items = state.lightboxItems;
+    if (!items || state.lightboxIndex === null) return;
+    const viewport = document.querySelector("#media-lightbox .lightbox-media");
+    const outgoing = mediaLightboxTopSlide || (viewport && viewport.querySelector(".lightbox-slide"));
     if (!viewport || !outgoing) return;
 
-    const newIdx = (state.screensLightboxIndex + dir + SCREENS.length) % SCREENS.length;
-    state.screensLightboxIndex = newIdx;
+    // step past any vimeo embeds in either direction instead of opening them
+    let newIdx = state.lightboxIndex;
+    for (let i = 0; i < items.length; i++) {
+      newIdx = (newIdx + dir + items.length) % items.length;
+      if (lightboxEligible(items[newIdx])) break;
+    }
+    state.lightboxIndex = newIdx;
 
     const incoming = document.createElement("div");
     incoming.className = "lightbox-slide " + (dir > 0 ? "lb-off-right" : "lb-off-left");
-    incoming.innerHTML = mediaHTML(SCREENS[newIdx], { controls: true, hero: true, fill: false });
+    incoming.innerHTML = mediaHTML(items[newIdx], { controls: true, hero: true, fill: false });
     viewport.appendChild(incoming);
     safePlay(incoming.querySelector("video, mux-video"));
-    screensLightboxTopSlide = incoming;
+    mediaLightboxTopSlide = incoming;
 
     const counter = document.querySelector(".lightbox-counter");
-    if (counter) counter.textContent = `${newIdx + 1} / ${SCREENS.length}`;
+    if (counter) counter.textContent = `${newIdx + 1} / ${items.length}`;
 
     // commit the incoming slide's starting (off-screen) position before
     // animating, so the browser doesn't collapse the "appear off-screen then
@@ -982,7 +1018,7 @@
       });
     });
 
-    setTimeout(() => outgoing.remove(), SCREENS_LIGHTBOX_SLIDE_MS + 30);
+    setTimeout(() => outgoing.remove(), MEDIA_LIGHTBOX_SLIDE_MS + 30);
   }
 
   // ---------- about ----------
@@ -1232,11 +1268,18 @@
       mountWork();
     } else if (route.page === "detail") {
       state.lightboxOpen = false;
+      state.lightboxItems = null;
+      state.lightboxIndex = null;
+      closeMediaLightboxDom();
       app.innerHTML = renderDetail(route.slug);
       mountDetailHero();
+      detailMasonryBucketWidth = masonryColumnCount(PROJECT_GRID_BREAKPOINTS);
     } else if (route.page === "screens") {
-      state.screensLightboxIndex = null;
+      state.lightboxItems = null;
+      state.lightboxIndex = null;
+      closeMediaLightboxDom();
       app.innerHTML = renderScreens();
+      screensMasonryBucketWidth = masonryColumnCount({ mobile: 2, tablet: 3, desktop: 4 });
     } else if (route.page === "about") {
       app.innerHTML = renderAbout();
       mountAbout();
@@ -1251,9 +1294,13 @@
 
   // re-render just the detail page in place (gallery toggle / lightbox), no scroll jump
   function rerenderDetail(slug) {
+    state.lightboxItems = null;
+    state.lightboxIndex = null;
+    closeMediaLightboxDom();
     app.innerHTML = renderDetail(slug);
     mountDetailHero();
     observeGalleryVideos();
+    detailMasonryBucketWidth = masonryColumnCount(PROJECT_GRID_BREAKPOINTS);
   }
 
   // ---------- delegated events ----------
@@ -1264,10 +1311,25 @@
     const openEl = e.target.closest("[data-open-project]");
     if (openEl) { goto("detail", openEl.dataset.openProject); return; }
 
+    // Notes grid — items are SCREENS itself
     const screensItemEl = e.target.closest(".screens-page .screens-item");
     if (screensItemEl) {
-      state.screensLightboxIndex = Number(screensItemEl.dataset.idx);
-      updateScreensLightbox();
+      openMediaLightbox(SCREENS, Number(screensItemEl.dataset.idx));
+      return;
+    }
+
+    // any project gallery view (masonry grid, plain grid, spacious, or
+    // editorial) — all four wrappers carry data-idx into that project's
+    // own .gallery array (see mediaHTML's dataIdx opt / renderMasonryGrid /
+    // renderEditorialGallery)
+    const galleryItemEl = e.target.closest(
+      '[data-screen="detail"] .screens-item, .gallery-grid [data-idx], .gallery-spacious-item [data-idx], .editorial-item[data-idx], .editorial-col[data-idx]'
+    );
+    if (galleryItemEl) {
+      const route = parseHash();
+      const idx = PROJECTS.findIndex((p) => p.slug === route.slug);
+      const active = idx >= 0 ? PROJECTS[idx] : PROJECTS[0];
+      openMediaLightbox(active.gallery, Number(galleryItemEl.dataset.idx));
       return;
     }
 
@@ -1306,18 +1368,51 @@
   });
 
   document.addEventListener("keydown", (e) => {
-    if (state.screensLightboxIndex === null) return;
+    if (state.lightboxIndex === null) return;
     if (e.key === "Escape") {
-      state.screensLightboxIndex = null;
-      updateScreensLightbox();
+      state.lightboxItems = null;
+      state.lightboxIndex = null;
+      updateMediaLightbox();
     } else if (e.key === "ArrowLeft") {
-      stepScreensLightbox(-1);
+      stepMediaLightbox(-1);
     } else if (e.key === "ArrowRight") {
-      stepScreensLightbox(1);
+      stepMediaLightbox(1);
     } else {
       return;
     }
     e.preventDefault();
+  });
+
+  // the masonry column count is only computed at render time, so resizing
+  // the window (or rotating a device) without a route change left it stuck
+  // on whatever bucket (mobile/tablet/desktop) was active on load — recheck
+  // on resize and only touch the DOM when the bucket actually changed. Same
+  // fix applies to both Notes and a project's own masonry "Grid view" (they
+  // share renderMasonryGrid/.screens-grid), just with different breakpoints
+  // and source arrays.
+  let screensMasonryBucketWidth = null;
+  let detailMasonryBucketWidth = null;
+  window.addEventListener("resize", () => {
+    const route = parseHash();
+    if (route.page === "screens") {
+      const count = masonryColumnCount({ mobile: 2, tablet: 3, desktop: 4 });
+      if (count === screensMasonryBucketWidth) return;
+      screensMasonryBucketWidth = count;
+      const grid = document.querySelector(".screens-grid");
+      if (!grid) return;
+      grid.outerHTML = renderMasonryGrid(SCREENS);
+      observeGalleryVideos();
+    } else if (route.page === "detail") {
+      const count = masonryColumnCount(PROJECT_GRID_BREAKPOINTS);
+      if (count === detailMasonryBucketWidth) return;
+      detailMasonryBucketWidth = count;
+      const grid = document.querySelector(".screens-grid");
+      if (!grid) return;
+      const idx = PROJECTS.findIndex((p) => p.slug === route.slug);
+      const active = idx >= 0 ? PROJECTS[idx] : PROJECTS[0];
+      grid.outerHTML = renderProjectGrid(active);
+      observeGalleryVideos();
+    }
   });
 
   render();
