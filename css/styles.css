@@ -321,10 +321,10 @@ body.mobile-nav-locked { overflow: hidden; }
 .density-icon.list-icon span { height: 2px; background: var(--muted); display: block; }
 .density-icon.d1 { border: 1px solid var(--muted); }
 .density-icon.d1.active { border-color: var(--text); }
-.density-icon.d2 { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 2px; }
+.density-icon.d2 { display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); gap: 2px; }
 .density-icon.d2 span { background: var(--muted); }
 .density-icon.d2.active span { background: var(--text); }
-.density-icon.dall { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(4, 1fr); gap: 1px; }
+.density-icon.dall { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 1px; }
 .density-icon.dall span { background: var(--muted); }
 .density-icon.dall.active span { background: var(--text); }
 

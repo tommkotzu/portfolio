@@ -602,8 +602,8 @@
     const activeCls = active ? "active" : "";
     if (key === "list") return `<span class="density-icon list-icon"><span></span><span></span><span></span></span>`;
     if (key === "1") return `<span class="density-icon d1 ${activeCls}"></span>`;
-    if (key === "2") return `<span class="density-icon d2 ${activeCls}">${"<span></span>".repeat(9)}</span>`;
-    return `<span class="density-icon dall ${activeCls}">${"<span></span>".repeat(16)}</span>`;
+    if (key === "2") return `<span class="density-icon d2 ${activeCls}">${"<span></span>".repeat(4)}</span>`;
+    return `<span class="density-icon dall ${activeCls}">${"<span></span>".repeat(9)}</span>`;
   }
 
   function renderWork() {
