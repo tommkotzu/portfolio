@@ -27,9 +27,15 @@
     mobileNavOpen: false,
     // click-to-enlarge lightbox shared by Notes and project galleries —
     // lightboxItems is whichever array is currently open (SCREENS or a
-    // project's .gallery), lightboxIndex is null when closed
+    // project's .gallery), lightboxIndex is null when closed. lightboxCaptions
+    // is an optional parallel array (same length/order as lightboxItems) of
+    // {title, tags} to show below the image — only Work's "All" view (which
+    // mixes items from every project) uses it, so viewers can tell which
+    // project a given tile belongs to.
     lightboxItems: null,
     lightboxIndex: null,
+    lightboxCaptions: null,
+    lightboxAllowVimeo: false,
   };
 
   // ---------- mobile nav ----------
@@ -368,14 +374,32 @@
       return `<div class="media-wrap ${cls}"${dataIdx}><img class="${innerCls}" src="${item.src}" loading="lazy" alt=""></div>`;
     }
     if (item.type === "vimeo") {
-      const src = `https://player.vimeo.com/video/${item.src}?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;loop=1&amp;muted=1&amp;background=1`;
+      const vimeoCls = fill ? "" : "vimeo-embed";
+      // opts.noAutoplay (grid context, not enlarged, e.g. Work's "All" view):
+      // don't mount a live iframe at all. Even non-autoplaying, a Vimeo
+      // iframe still loads the entire player bundle once it nears the
+      // viewport (there's no way to opt out of that beyond dropping the
+      // iframe itself) — several of those loading in a burst during a fast
+      // scroll is real main-thread work and was stalling the page. A cheap
+      // static placeholder costs nothing to scroll past; the real embed only
+      // gets created when the person actually opens it (opts.hero, below).
+      if (opts.noAutoplay && !opts.hero) {
+        return `<div class="media-wrap ${vimeoCls} ${cls} vimeo-placeholder"${dataIdx}>
+          <div class="vimeo-placeholder-glyph"></div>
+        </div>`;
+      }
+      // opts.hero: the enlarged lightbox render — show real player chrome
+      // (background=0) and autoplay, since the person just deliberately
+      // opened it. Anywhere else (decorative inline embeds, e.g. a project's
+      // editorial gallery): autoplay/background=1, as before.
+      const playParams = opts.hero ? "autoplay=1&amp;background=0" : "autoplay=1&amp;background=1";
+      const src = `https://player.vimeo.com/video/${item.src}?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;${playParams}&amp;loop=1&amp;muted=1`;
       const allow = `allow="autoplay;fullscreen;picture-in-picture;clipboard-write;encrypted-media;web-share" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" title="video"`;
       const style = "position:absolute;inset:0;width:100%;height:100%;border:0";
       // an iframe has no natural size of its own to shrink-wrap to (unlike a real
       // photo's actual pixel dimensions), so outside of fill mode it needs the
       // "vimeo-embed" marker — renderEditorialGallery gives that item's wrapper
       // a real width to fill, and .vimeo-embed turns that into a 16:9 box
-      const vimeoCls = fill ? "" : "vimeo-embed";
       return `<div class="media-wrap ${vimeoCls} ${cls}"${dataIdx}><iframe src="${src}" style="${style}" ${allow}></iframe></div>`;
     }
     if (item.type === "video") {
@@ -391,14 +415,20 @@
       const ext = item.src.split(".").pop().split("?")[0].toLowerCase();
       const mime = ext === "webm" ? "video/webm" : ext === "mp4" ? "video/mp4" : "";
       const typeAttr = mime ? ` type="${mime}"` : "";
-      // hero videos manage their own play/pause (mountWelcome/mountDetailHero); only
-      // gallery videos get the scroll-driven observer, so the two never fight
-      const observedAttr = opts.hero ? "" : " data-autoplay";
+      // hero videos manage their own play/pause (mountWelcome/mountDetailHero);
+      // opts.noAutoplay opts a clip out of the observer entirely (press play
+      // manually); opts.capAutoplay marks it for the observer's concurrency
+      // cap (data-cap-autoplay) — a handful of these still autoplay on
+      // scroll, but not an unlimited number at once. Plain gallery/grid
+      // videos elsewhere get neither and autoplay on scroll uncapped, as
+      // before.
+      const observedAttr = opts.hero || opts.noAutoplay ? "" : opts.capAutoplay ? " data-autoplay data-cap-autoplay" : " data-autoplay";
       // hero videos need to start the instant they mount, so they preload
       // metadata ahead of time; gallery/grid videos are played on demand by
-      // the scroll observer, so eagerly buffering all of them at once (their
-      // combined weight, especially on pages like Notes with many clips) is
-      // what chokes the browser — defer their fetch entirely until observed
+      // the scroll observer (or a manual press, for opts.noAutoplay), so
+      // eagerly buffering all of them at once (their combined weight,
+      // especially on pages with many clips) is what chokes the browser —
+      // defer their fetch entirely until observed/pressed
       const preload = opts.hero ? "metadata" : "none";
       return `<div class="media-wrap ${cls}"${dataIdx}><video class="${innerCls}" ${poster} preload="${preload}" ${controls} muted loop playsinline${observedAttr}><source src="${item.src}"${typeAttr}></video></div>`;
     }
@@ -409,7 +439,7 @@
       // branch above, just streaming adaptive HLS instead of one fixed file
       const poster = item.poster ? ` poster="${item.poster}"` : "";
       const controls = opts.controls ? "controls" : "";
-      const observedAttr = opts.hero ? "" : " data-autoplay";
+      const observedAttr = opts.hero || opts.noAutoplay ? "" : opts.capAutoplay ? " data-autoplay data-cap-autoplay" : " data-autoplay";
       const preload = opts.hero ? "metadata" : "none";
       return `<div class="media-wrap ${cls}"${dataIdx}><mux-video class="${innerCls}" playback-id="${item.src}"${poster} preload="${preload}" ${controls} muted loop playsinline${observedAttr}></mux-video></div>`;
     }
@@ -672,26 +702,37 @@
   // "All" density: every project's gallery flattened into one long grid —
   // a one-pager to scroll through instead of picking a project first. Same
   // masonry layout/breakpoints as Notes (renderMasonryGrid's default:
-  // desktop 4 / tablet 3 / mobile 2 columns), just tagging each tile with
-  // its source project (click opens that project, same as every other
-  // density's cards) and a fade-in class — each tile lifts into place the
-  // first time it scrolls into view (see observeAllContentFadeIn) rather
-  // than all appearing at once. Videos auto-play on scroll same as every
-  // other grid/gallery (observeGalleryVideos) — safe now that the gallery
-  // clips are lighter H.264 instead of the old high-res VP9 files.
-  function renderAllContentGrid() {
+  // desktop 4 / tablet 3 / mobile 2 columns). A fade-in class lifts each
+  // tile into place the first time it scrolls into view (see
+  // observeAllContentFadeIn) rather than all appearing at once. Videos
+  // auto-play on scroll same as every other grid/gallery
+  // (observeGalleryVideos) — safe now that the gallery clips are lighter
+  // H.264 instead of the old high-res VP9 files. Clicking a tile opens the
+  // same click-to-enlarge lightbox as Notes (see openMediaLightbox), with
+  // the source project's title/tags shown under the image so it's still
+  // clear which project each tile came from, and arrow-navigates across
+  // every project's content rather than opening the project page.
+  function getAllContentTiles() {
     const tiles = [];
-    const slugs = [];
+    const captions = [];
     PROJECTS.forEach((p) => {
       p.gallery.forEach((item) => {
-        if (item.type === "vimeo") return; // no standalone "enlarged" form, skip
         tiles.push(item);
-        slugs.push(p.slug);
+        captions.push({ title: projectTitle(p), tags: p.tags, slug: p.slug });
       });
     });
-    return renderMasonryGrid(tiles, { mobile: 2, tablet: 3, desktop: 4 }, (item, idx) => ({
+    return { tiles, captions };
+  }
+  function renderAllContentGrid() {
+    const { tiles } = getAllContentTiles();
+    return renderMasonryGrid(tiles, { mobile: 2, tablet: 3, desktop: 4 }, (item) => ({
       cls: "all-content-item",
-      extraAttrs: `data-open-project="${slugs[idx]}"`,
+      // plain video files (already lightweight H.264) still autoplay on
+      // scroll, just capped to a few at once (see observeGalleryVideos);
+      // vimeo/mux — heavier per-instance (a full embedded player/adaptive
+      // stream each) and vimeo has no viewport-observer hook at all — don't
+      // autoplay here, press play manually instead
+      ...(item.type === "video" ? { capAutoplay: true } : { noAutoplay: true, controls: true }),
     }));
   }
   function observeAllContentFadeIn() {
@@ -960,23 +1001,38 @@
   // navigating it never touches the underlying gallery: no full re-render,
   // no scroll jump, no restarting whatever clips are already playing there.
   // state.lightboxItems is whichever array is currently open (SCREENS or a
-  // project's .gallery) and skipIneligible() steps over vimeo embeds, which
-  // already play inline and have no standalone "enlarged" form.
-  function lightboxEligible(item) {
-    return !!item && item.type !== "vimeo";
+  // project's .gallery) and skipIneligible() steps over vimeo embeds there,
+  // since in those contexts they already play inline and have no standalone
+  // "enlarged" form. Work's "All" view is the exception: its vimeo tiles are
+  // click-to-play (not auto-playing inline), so enlarging them on click makes
+  // sense — allowVimeo is derived from whether captions were passed, which
+  // only happens for that view (see the .all-content-item click handler).
+  function lightboxEligible(item, allowVimeo) {
+    return !!item && (item.type !== "vimeo" || !!allowVimeo);
   }
-  function openMediaLightbox(items, idx) {
-    if (!lightboxEligible(items[idx])) return;
+  function openMediaLightbox(items, idx, captions) {
+    const allowVimeo = !!captions;
+    if (!lightboxEligible(items[idx], allowVimeo)) return;
     state.lightboxItems = items;
     state.lightboxIndex = idx;
+    state.lightboxCaptions = captions || null;
+    state.lightboxAllowVimeo = allowVimeo;
     updateMediaLightbox();
+  }
+  function lightboxCaptionHTML(idx) {
+    const meta = state.lightboxCaptions && state.lightboxCaptions[idx];
+    if (!meta) return "";
+    return `<div class="lightbox-caption"><div class="t">${meta.title}</div><div class="tag-row">${tagPills(meta.tags)}</div></div>`;
   }
   function renderMediaLightbox(idx) {
     const items = state.lightboxItems;
     const item = items[idx];
     return `<div class="lightbox media-lightbox" id="media-lightbox">
-      <div class="lightbox-media">
-        <div class="lightbox-slide">${mediaHTML(item, { controls: true, hero: true, fill: false })}</div>
+      <div class="lightbox-body">
+        <div class="lightbox-media">
+          <div class="lightbox-slide">${mediaHTML(item, { controls: true, hero: true, fill: false })}</div>
+        </div>
+        ${lightboxCaptionHTML(idx)}
       </div>
       <div class="lightbox-close" id="media-lightbox-close">Close ✕</div>
       <div class="lightbox-nav lightbox-prev" id="media-lightbox-prev" aria-label="Previous">←</div>
@@ -1004,7 +1060,7 @@
     if (idx === null) return;
     document.body.insertAdjacentHTML("beforeend", renderMediaLightbox(idx));
     const lb = document.getElementById("media-lightbox");
-    const close = () => { state.lightboxItems = null; state.lightboxIndex = null; updateMediaLightbox(); };
+    const close = () => { state.lightboxItems = null; state.lightboxIndex = null; state.lightboxCaptions = null; state.lightboxAllowVimeo = false; updateMediaLightbox(); };
     document.getElementById("media-lightbox-close").addEventListener("click", close);
     document.getElementById("media-lightbox-prev").addEventListener("click", () => stepMediaLightbox(-1));
     document.getElementById("media-lightbox-next").addEventListener("click", () => stepMediaLightbox(1));
@@ -1043,7 +1099,7 @@
     let newIdx = state.lightboxIndex;
     for (let i = 0; i < items.length; i++) {
       newIdx = (newIdx + dir + items.length) % items.length;
-      if (lightboxEligible(items[newIdx])) break;
+      if (lightboxEligible(items[newIdx], state.lightboxAllowVimeo)) break;
     }
     state.lightboxIndex = newIdx;
 
@@ -1056,6 +1112,8 @@
 
     const counter = document.querySelector(".lightbox-counter");
     if (counter) counter.textContent = `${newIdx + 1} / ${items.length}`;
+    const captionEl = document.querySelector("#media-lightbox .lightbox-caption");
+    if (captionEl) captionEl.outerHTML = lightboxCaptionHTML(newIdx);
 
     // commit the incoming slide's starting (off-screen) position before
     // animating, so the browser doesn't collapse the "appear off-screen then
@@ -1289,20 +1347,59 @@
   // lighter H.264 at grid-display resolution, all intersecting clips are
   // allowed to play concurrently (no hard cap).
   let galleryVideoObserver = null;
+  // elements marked data-cap-autoplay (see mediaHTML's capAutoplay opt —
+  // currently just Work's "All" view, which aggregates every project's
+  // videos onto one page) share a concurrency cap so a fast scroll can't
+  // start decoding dozens of clips at once; everywhere else autoplays on
+  // scroll uncapped, same as always
+  const MAX_CAPPED_AUTOPLAY = 3;
+  let cappedPlaying = new Set();
+  // a video's decoder pipeline is real work to spin up and tear down — on a
+  // page with many clips (Work's "All" view has 49), a fast scroll crosses
+  // the 0.4 threshold for a lot of them in a row, and calling .play()/.pause()
+  // on every single crossing (even ones the scroll immediately carries back
+  // out of view) was enough decoder churn to stall the main thread and freeze
+  // the page. Debouncing each element's play/pause behind a short settle
+  // timer means a clip only actually starts once it's stayed in view long
+  // enough to be worth it — one that just flashes past during a fast scroll
+  // never touches the decoder at all.
+  const AUTOPLAY_SETTLE_MS = 150;
+  const autoplayTimers = new Map();
   function observeGalleryVideos() {
     if (!galleryVideoObserver) {
       galleryVideoObserver = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             const v = entry.target;
-            if (entry.isIntersecting) v.play().catch(() => {});
-            else v.pause();
+            clearTimeout(autoplayTimers.get(v));
+            const capped = v.hasAttribute("data-cap-autoplay");
+            if (entry.isIntersecting) {
+              autoplayTimers.set(
+                v,
+                setTimeout(() => {
+                  if (capped && !cappedPlaying.has(v) && cappedPlaying.size >= MAX_CAPPED_AUTOPLAY) return;
+                  v.play().catch(() => {});
+                  if (capped) cappedPlaying.add(v);
+                }, AUTOPLAY_SETTLE_MS)
+              );
+            } else {
+              autoplayTimers.set(
+                v,
+                setTimeout(() => {
+                  v.pause();
+                  cappedPlaying.delete(v);
+                }, AUTOPLAY_SETTLE_MS)
+              );
+            }
           });
         },
         { rootMargin: "0px", threshold: 0.4 }
       );
     }
     galleryVideoObserver.disconnect();
+    autoplayTimers.forEach((t) => clearTimeout(t));
+    autoplayTimers.clear();
+    cappedPlaying = new Set();
     app.querySelectorAll("video[data-autoplay], mux-video[data-autoplay]").forEach((v) => galleryVideoObserver.observe(v));
   }
 
@@ -1366,6 +1463,16 @@
     const screensItemEl = e.target.closest(".screens-page .screens-item");
     if (screensItemEl) {
       openMediaLightbox(SCREENS, Number(screensItemEl.dataset.idx));
+      return;
+    }
+
+    // Work's "All" grid — flattened across every project, so each item gets
+    // a caption (that project's title/tags) rather than opening the project
+    const allContentItemEl = e.target.closest(".all-content-item");
+    if (allContentItemEl) {
+      const wrapper = allContentItemEl.closest(".screens-item");
+      const { tiles, captions } = getAllContentTiles();
+      openMediaLightbox(tiles, Number(wrapper.dataset.idx), captions);
       return;
     }
 
