@@ -1022,7 +1022,7 @@
   function lightboxCaptionHTML(idx) {
     const meta = state.lightboxCaptions && state.lightboxCaptions[idx];
     if (!meta) return "";
-    return `<div class="lightbox-caption"><div class="t">${meta.title}</div><div class="tag-row">${tagPills(meta.tags)}</div></div>`;
+    return `<div class="lightbox-caption"><div class="t" data-open-project="${meta.slug}">${meta.title}</div><div class="tag-row">${tagPills(meta.tags)}</div></div>`;
   }
   function renderMediaLightbox(idx) {
     const items = state.lightboxItems;
