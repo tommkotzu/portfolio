@@ -998,25 +998,30 @@ const CLIENTS_DIRECT = ["OpenAI", "CRO", "Breuninger", "Zalando", "Anyma", "Afte
 // ar = the file's own width/height, so the logo row can give each mark a
 // width proportional to its real aspect ratio at a shared fixed height
 // instead of every tile being forced into the same square box
-const CLIENT_LOGOS = {
-  ACG: { file: "acg.png", ar: 1.1879 },
-  Anyma: { file: "anyma.png", ar: 1500 / 282 },
-  Dior: { file: "dior.png", ar: 2.3109 },
-  "Flowers For Society": { file: "ffs.png", ar: 1.1071 },
-  OpenAI: { file: "opanAI.png", ar: 0.9884 },
-  Nike: { file: "nike.png", ar: 2.5455 },
-  Pacemaker: { file: "pacemaker.png", ar: 2.1742 },
-  Adidas: { file: "adidas.png", ar: 1.4222 },
-  YouTube: { file: "youtube.png", ar: 1.4302 },
-  Balmain: { file: "Balmain.png", ar: 1.5892 },
-  Vogue: { file: "Vogue.png", ar: 3.3412 },
-  Vly: { file: "vly.png", ar: 0.9503 },
-  Google: { file: "google.png", ar: 2.7838 },
-  "The Weeknd": { file: "weekend.png", ar: 2.4959 },
-  Pigalle: { file: "pigalle.png", ar: 1.641 },
-  Barbie: { file: "Logo_08.png", ar: 1.7566 },
-  GNTM: { file: "Logo_10.png", ar: 2.4576 },
-};
+// an array (not an object keyed by name) so a client can appear more than
+// once in the row — OpenAI is listed twice, spaced far enough apart that
+// the two never land in the visible window at the same time (see
+// clientLogosHTML/clientLogosMarqueeHTML in app.js)
+const CLIENT_LOGOS = [
+  { name: "ACG", file: "acg.png", ar: 1.1879 },
+  { name: "Anyma", file: "anyma.png", ar: 1500 / 282 },
+  { name: "Dior", file: "dior.png", ar: 2.3109 },
+  { name: "Flowers For Society", file: "ffs.png", ar: 1.1071 },
+  { name: "OpenAI", file: "opanAI.png", ar: 0.9884 },
+  { name: "Nike", file: "nike.png", ar: 2.5455 },
+  { name: "Pacemaker", file: "pacemaker.png", ar: 2.1742 },
+  { name: "Adidas", file: "adidas.png", ar: 1.4222 },
+  { name: "YouTube", file: "youtube.png", ar: 1.4302 },
+  { name: "Balmain", file: "Balmain.png", ar: 1.5892 },
+  { name: "Vogue", file: "Vogue.png", ar: 3.3412 },
+  { name: "Vly", file: "vly.png", ar: 0.9503 },
+  { name: "Google", file: "google.png", ar: 2.7838 },
+  { name: "OpenAI", file: "opanAI.png", ar: 0.9884 },
+  { name: "The Weeknd", file: "weekend.png", ar: 2.4959 },
+  { name: "Pigalle", file: "pigalle.png", ar: 1.641 },
+  { name: "Barbie", file: "Logo_08.png", ar: 1.7566 },
+  { name: "GNTM", file: "Logo_10.png", ar: 2.4576 },
+];
 
 const EXHIBITIONS = [
   { event: "CCC", location: "Hamburg, Germany" },

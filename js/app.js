@@ -1166,13 +1166,11 @@
   // filled with the current theme color, so a colorful PNG still reads as
   // pure black/white and flips correctly with the theme toggle
   function clientLogosHTML() {
-    return Object.entries(CLIENT_LOGOS)
-      .map(([name, { file, ar }]) => {
-        const url = `Assets/logos/${file}`;
-        const width = Math.round(46.5 * ar);
-        return `<div class="client-logo" style="width:${width}px;-webkit-mask-image:url('${url}');mask-image:url('${url}')" title="${name}" aria-label="${name}"></div>`;
-      })
-      .join("");
+    return CLIENT_LOGOS.map(({ name, file, ar }) => {
+      const url = `Assets/logos/${file}`;
+      const width = Math.round(46.5 * ar);
+      return `<div class="client-logo" style="width:${width}px;-webkit-mask-image:url('${url}');mask-image:url('${url}')" title="${name}" aria-label="${name}"></div>`;
+    }).join("");
   }
 
   // duplicated back-to-back so the marquee's translateX(-50% -> 0) loop is seamless
