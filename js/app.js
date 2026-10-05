@@ -557,7 +557,7 @@
     const p = PROJECTS.find((pr) => pr.slug === card.slug);
     if (!p) return "";
     return `
-      <div class="featured-card" style="flex-basis:${card.width}%;margin-top:${card.offset}px;aspect-ratio:${card.ratio}" data-open-project="${p.slug}">
+      <div class="featured-card reveal" style="flex-basis:${card.width}%;margin-top:${card.offset}px;aspect-ratio:${card.ratio}" data-open-project="${p.slug}">
         ${scrubMediaHTML(p.previews, { randomStart: true, ambient: true })}
         <div class="card-overlay">
           <div class="card-overlay-row"><span class="t">${projectTitle(p)}</span></div>
@@ -658,7 +658,7 @@
       body = `<div class="list-rows" id="list-rows">
         ${PROJECTS.map(
           (p, i) => `
-        <div class="list-row" data-open-project="${p.slug}" data-previews="${encodeURIComponent(JSON.stringify(p.previews.map((pv) => pv.src)))}">
+        <div class="list-row reveal" data-open-project="${p.slug}" data-previews="${encodeURIComponent(JSON.stringify(p.previews.map((pv) => pv.src)))}">
           <span class="li-idx">${String(i + 1).padStart(2, "0")}</span>
           <span class="li-title">${projectTitle(p)}</span>
           <div class="li-tags">${tagPills(p.tags)}</div>
@@ -670,7 +670,7 @@
       body = `<div class="project-grid density-1">
         ${PROJECTS.map(
           (p) => `
-        <div class="card-full" data-open-project="${p.slug}">
+        <div class="card-full reveal" data-open-project="${p.slug}">
           ${scrubMediaHTML(p.previews, { cls: "card-thumb-full" })}
           <div class="card-meta">
             <span class="title">${projectTitle(p)}</span>
@@ -686,7 +686,7 @@
       body = `<div class="project-grid density-2">
         ${PROJECTS.map(
           (p, i) => `
-        <div class="card-default" data-open-project="${p.slug}">
+        <div class="card-default reveal" data-open-project="${p.slug}">
           <span class="card-index">${String(i + 1).padStart(2, "0")}</span>
           ${scrubMediaHTML(p.previews, { cls: "card-thumb" })}
           <div class="card-meta">
@@ -815,7 +815,6 @@
     // was showing, those handlers are gone with the old row elements, so
     // sweep up anything orphaned before wiring up a fresh set
     document.querySelectorAll(".list-preview-stamp").forEach((el) => el.remove());
-    observeAllContentFadeIn();
     if (state.density === "all") workMasonryBucketWidth = masonryColumnCount({ mobile: 2, tablet: 3, desktop: 4 });
     const rows = document.getElementById("list-rows");
     if (!rows) return;
@@ -865,7 +864,7 @@
         const forceWidth = item.type === "vimeo" ? ` style="width:${capPx}px"` : "";
         return `<div class="editorial-row single align-${align}">
           <div class="editorial-item${sizeCls}"${forceWidth} data-idx="${row.cols[0]}">
-            ${mediaHTML(item, { fill: false })}
+            ${mediaHTML(item, { fill: false, cls: "reveal" })}
             ${item.caption ? `<div class="caption">${item.caption}</div>` : ""}
           </div>
         </div>`;
@@ -881,7 +880,7 @@
           const capPx = size === "M" ? 760 : size === "S" ? 460 : 680;
           const forceWidth = item.type === "vimeo" ? `width:${capPx}px;` : "";
           return `<div class="editorial-col${sizeCls}" style="margin-top:${offset}px;${forceWidth}" data-idx="${colIdx}">
-            ${mediaHTML(item, { fill: false })}
+            ${mediaHTML(item, { fill: false, cls: "reveal" })}
             ${item.caption ? `<div class="caption">${item.caption}</div>` : ""}
           </div>`;
         })
@@ -918,7 +917,7 @@
   // just a narrower column count since project galleries are shorter
   const PROJECT_GRID_BREAKPOINTS = { mobile: 2, tablet: 2, desktop: 3 };
   function renderProjectGrid(active) {
-    return renderMasonryGrid(active.gallery, PROJECT_GRID_BREAKPOINTS);
+    return renderMasonryGrid(active.gallery, PROJECT_GRID_BREAKPOINTS, () => ({ cls: "reveal" }));
   }
 
   // ---------- project detail ----------
@@ -935,12 +934,12 @@
     const galleryBody = isEditorial
       ? useGrid ? renderProjectGrid(active) : renderEditorialGallery(active)
       : state.galleryView === "grid"
-      ? `<div class="gallery-grid">${active.gallery.map((g, i) => mediaHTML(g, { fill: false, dataIdx: i })).join("")}</div>`
+      ? `<div class="gallery-grid">${active.gallery.map((g, i) => mediaHTML(g, { fill: false, dataIdx: i, cls: "reveal" })).join("")}</div>`
       : `<div class="gallery-spacious">${active.gallery
           .map(
             (g, i) => `
           <div class="gallery-spacious-item">
-            ${mediaHTML(g, { dataIdx: i })}
+            ${mediaHTML(g, { dataIdx: i, cls: "reveal" })}
             ${g.caption ? `<div class="caption">${g.caption}</div>` : ""}
           </div>`
           )
@@ -1420,6 +1419,8 @@
     autoplayTimers.clear();
     cappedPlaying = new Set();
     app.querySelectorAll("video[data-autoplay], mux-video[data-autoplay]").forEach((v) => galleryVideoObserver.observe(v));
+    // every re-render path already ends here, so scroll-reveal piggybacks
+    observeAllContentFadeIn();
   }
 
   function render() {
@@ -1446,7 +1447,6 @@
       state.lightboxIndex = null;
       closeMediaLightboxDom();
       app.innerHTML = renderScreens();
-      observeAllContentFadeIn();
       screensMasonryBucketWidth = masonryColumnCount({ mobile: 2, tablet: 3, desktop: 4 });
     } else if (route.page === "about") {
       app.innerHTML = renderAbout();
@@ -1582,7 +1582,6 @@
       if (!grid) return;
       grid.outerHTML = renderMasonryGrid(SCREENS, undefined, () => ({ cls: "reveal" }));
       observeGalleryVideos();
-      observeAllContentFadeIn();
     } else if (route.page === "detail") {
       const count = masonryColumnCount(PROJECT_GRID_BREAKPOINTS);
       if (count === detailMasonryBucketWidth) return;
@@ -1601,7 +1600,6 @@
       if (!grid) return;
       grid.outerHTML = renderAllContentGrid();
       observeGalleryVideos();
-      observeAllContentFadeIn();
     }
   });
 
