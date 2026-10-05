@@ -837,6 +837,47 @@ const PROJECTS = [
     ],
   },
   {
+    slug: "t-t-t-3000",
+    title: "T-T-T 3000",
+    client: "", // not given — add client name if there is one
+    location: "Berlin, Germany", // not given — confirm/adjust
+    year: "2023", // not given — confirm/adjust
+    role: "Director",
+    credits: [],
+    tags: ["3D Production", "Motion Design"], // placeholder — confirm/adjust
+    blurb: "", // not given — add project description
+    // gen_gallery.py "T-T-T 3000" — no preview/ folder, so the hover-scrub
+    // previews reuse three gallery stills
+    hero: media("video", ASSET_ROOT + "T-T-T 3000/010Hero.mp4"),
+    previews: previews(
+      "T-T-T 3000/020m.jpg",
+      "T-T-T 3000/040L.jpg",
+      "T-T-T 3000/080L.jpg"
+    ),
+    galleryStyle: "editorial",
+    gallery: [
+      media("image", ASSET_ROOT + "T-T-T 3000/020m.jpg"), // 0 (M)
+      media("image", ASSET_ROOT + "T-T-T 3000/030m.jpg"), // 1 (M)
+      media("image", ASSET_ROOT + "T-T-T 3000/040L.jpg"), // 2 (L)
+      media("image", ASSET_ROOT + "T-T-T 3000/045L.jpg"), // 3 (L)
+      media("image", ASSET_ROOT + "T-T-T 3000/050m.jpg"), // 4 (M)
+      media("image", ASSET_ROOT + "T-T-T 3000/060S.jpg"), // 5 (S)
+      media("image", ASSET_ROOT + "T-T-T 3000/070S.jpg"), // 6 (S)
+      media("image", ASSET_ROOT + "T-T-T 3000/080L.jpg"), // 7 (L)
+      media("image", ASSET_ROOT + "T-T-T 3000/080S.jpg"), // 8 (S)
+      media("image", ASSET_ROOT + "T-T-T 3000/090M.jpg"), // 9 (M)
+    ],
+    editorialRows: [
+      { cols: [0, 1], sizes: ["M", "M"], offsets: [0, 50], align: "left" },
+      { cols: [2], align: "right" },
+      { cols: [3], align: "center" },
+      { cols: [4, 5], sizes: ["M", "S"], offsets: [70, 0], align: "left" },
+      { cols: [6], align: "right", size: "S" },
+      { cols: [7], align: "center" },
+      { cols: [8, 9], sizes: ["S", "M"], offsets: [40, 70], align: "left" },
+    ],
+  },
+  {
     slug: "robotics",
     title: "Robotics",
     client: "", // confidential — no client name to show

@@ -375,7 +375,7 @@
     const dims = typeof MEDIA_DIMS !== "undefined" && MEDIA_DIMS[item.src];
     const arStyle = dims && opts.reserve ? ` style="aspect-ratio:${dims[0]}/${dims[1]}"` : "";
     if (item.type === "image") {
-      return `<div class="media-wrap ${cls}"${arStyle}${dataIdx}><img class="${innerCls}" src="${item.src}" loading="lazy" decoding="async" alt=""></div>`;
+      return `<div class="media-wrap ${cls}"${arStyle}${dataIdx}><img class="${innerCls}" src="${item.src}"${dims && !fill ? ` width="${dims[0]}" height="${dims[1]}"` : ""} loading="lazy" decoding="async" alt=""></div>`;
     }
     if (item.type === "vimeo") {
       const vimeoCls = fill ? "" : "vimeo-embed";
