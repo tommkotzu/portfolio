@@ -361,11 +361,11 @@ body.mobile-nav-locked { overflow: hidden; }
    columns — desktop 4 / tablet 3 / mobile 2). Only difference from Notes:
    each tile fades/lifts into place the first time it scrolls into view
    instead of all appearing at once. */
-.all-content-item {
+.all-content-item, .reveal {
   opacity: 0; transform: translateY(28px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
-.all-content-item.is-visible { opacity: 1; transform: translateY(0); }
+.all-content-item.is-visible, .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
 .list-rows { display: flex; flex-direction: column; }
 .list-row { cursor: pointer; position: relative; display: flex; align-items: center; gap: 20px; padding: 18px 0; border-bottom: 1px solid var(--lineSoft); }

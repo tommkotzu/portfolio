@@ -370,8 +370,12 @@
     // opts.extraAttrs: any other raw attribute string to stamp on the wrapper.
     const dataIdx = (opts.dataIdx !== undefined ? ` data-idx="${opts.dataIdx}"` : "") + (opts.extraAttrs ? ` ${opts.extraAttrs}` : "");
     if (!item) return `<div class="media-wrap ${cls} stripe"${dataIdx}></div>`;
+    // known intrinsic size -> reserve the tile's box up front so lazy-loading
+    // media doesn't resize it (and shove the masonry columns around) on arrival
+    const dims = typeof MEDIA_DIMS !== "undefined" && MEDIA_DIMS[item.src];
+    const arStyle = dims && opts.reserve ? ` style="aspect-ratio:${dims[0]}/${dims[1]}"` : "";
     if (item.type === "image") {
-      return `<div class="media-wrap ${cls}"${dataIdx}><img class="${innerCls}" src="${item.src}" loading="lazy" alt=""></div>`;
+      return `<div class="media-wrap ${cls}"${arStyle}${dataIdx}><img class="${innerCls}" src="${item.src}" loading="lazy" decoding="async" alt=""></div>`;
     }
     if (item.type === "vimeo") {
       const vimeoCls = fill ? "" : "vimeo-embed";
@@ -430,7 +434,7 @@
       // especially on pages with many clips) is what chokes the browser —
       // defer their fetch entirely until observed/pressed
       const preload = opts.hero ? "metadata" : "none";
-      return `<div class="media-wrap ${cls}"${dataIdx}><video class="${innerCls}" ${poster} preload="${preload}" ${controls} muted loop playsinline${observedAttr}><source src="${item.src}"${typeAttr}></video></div>`;
+      return `<div class="media-wrap ${cls}"${arStyle}${dataIdx}><video class="${innerCls}" ${poster} preload="${preload}" ${controls} muted loop playsinline${observedAttr}><source src="${item.src}"${typeAttr}></video></div>`;
     }
     if (item.type === "mux") {
       // <mux-video> is Mux's custom element — same attributes/API as a native
@@ -736,17 +740,34 @@
     }));
   }
   function observeAllContentFadeIn() {
-    const items = document.querySelectorAll(".all-content-item");
+    const items = document.querySelectorAll(".all-content-item, .reveal");
     if (!items.length) return;
+    // a tile only fades in once its image has actually arrived (otherwise the
+    // fade plays on an empty box and the picture pops in afterwards); tiles
+    // entering together get a small stagger so a row ripples in
     const obs = new IntersectionObserver(
       (entries) => {
+        let n = 0;
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-          entry.target.classList.add("is-visible");
-          obs.unobserve(entry.target);
+          const el = entry.target;
+          obs.unobserve(el);
+          const show = () => {
+            el.style.transitionDelay = `${Math.min(n++, 6) * 70}ms`;
+            requestAnimationFrame(() => el.classList.add("is-visible"));
+          };
+          const img = el.querySelector("img");
+          if (!img || img.complete) show();
+          else {
+            let done = false;
+            const once = () => { if (!done) { done = true; show(); } };
+            img.addEventListener("load", once, { once: true });
+            img.addEventListener("error", once, { once: true });
+            setTimeout(once, 2500);
+          }
         });
       },
-      { rootMargin: "0px 0px -60px 0px", threshold: 0.1 }
+      { rootMargin: "0px 0px -40px 0px", threshold: 0.05 }
     );
     items.forEach((el) => obs.observe(el));
   }
@@ -887,7 +908,7 @@
     items.forEach((item, i) => cols[i % count].push({ item, idx: i }));
     return `<div class="screens-grid">${cols
       .map((col) => `<div class="screens-col">${col
-        .map(({ item, idx }) => `<div class="screens-item" data-idx="${idx}">${mediaHTML(item, { fill: false, ...(itemOpts ? itemOpts(item, idx) : {}) })}</div>`)
+        .map(({ item, idx }) => `<div class="screens-item" data-idx="${idx}">${mediaHTML(item, { fill: false, reserve: true, ...(itemOpts ? itemOpts(item, idx) : {}) })}</div>`)
         .join("")}</div>`)
       .join("")}</div>`;
   }
@@ -991,7 +1012,7 @@
     return `<div class="page screens-page" data-screen="screens">
       <div class="screens-title">Notes</div>
       <div class="screens-sub">A running collection of frames, stills and process shots.</div>
-      ${renderMasonryGrid(SCREENS)}
+      ${renderMasonryGrid(SCREENS, undefined, () => ({ cls: "reveal" }))}
     </div>`;
   }
 
@@ -1425,6 +1446,7 @@
       state.lightboxIndex = null;
       closeMediaLightboxDom();
       app.innerHTML = renderScreens();
+      observeAllContentFadeIn();
       screensMasonryBucketWidth = masonryColumnCount({ mobile: 2, tablet: 3, desktop: 4 });
     } else if (route.page === "about") {
       app.innerHTML = renderAbout();
@@ -1558,8 +1580,9 @@
       screensMasonryBucketWidth = count;
       const grid = document.querySelector(".screens-grid");
       if (!grid) return;
-      grid.outerHTML = renderMasonryGrid(SCREENS);
+      grid.outerHTML = renderMasonryGrid(SCREENS, undefined, () => ({ cls: "reveal" }));
       observeGalleryVideos();
+      observeAllContentFadeIn();
     } else if (route.page === "detail") {
       const count = masonryColumnCount(PROJECT_GRID_BREAKPOINTS);
       if (count === detailMasonryBucketWidth) return;
