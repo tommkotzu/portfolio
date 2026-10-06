@@ -861,26 +861,30 @@ const PROJECTS = [
       media("image", ASSET_ROOT + "T-T-T 3000/040L.jpg"), // 2 (L)
       media("image", ASSET_ROOT + "T-T-T 3000/045L.jpg"), // 3 (L)
       media("image", ASSET_ROOT + "T-T-T 3000/050m.jpg"), // 4 (M)
-      media("vimeo", "157616579"), // 5 (055, L)
-      media("image", ASSET_ROOT + "T-T-T 3000/060S.jpg"), // 6 (S)
-      media("image", ASSET_ROOT + "T-T-T 3000/070S.jpg"), // 7 (S)
-      media("image", ASSET_ROOT + "T-T-T 3000/075S.jpg"), // 8 (S)
-      media("image", ASSET_ROOT + "T-T-T 3000/080M.jpg"), // 9 (M)
-      media("image", ASSET_ROOT + "T-T-T 3000/090M.jpg"), // 10 (M)
-      media("image", ASSET_ROOT + "T-T-T 3000/095L.jpg"), // 11 (L)
-      media("image", ASSET_ROOT + "T-T-T 3000/100S.jpg"), // 12 (S)
+      media("video", ASSET_ROOT + "T-T-T 3000/051S.mp4"), // 5 (S, looping clip)
+      media("video", ASSET_ROOT + "T-T-T 3000/052S.mp4"), // 6 (S, looping clip)
+      media("video", ASSET_ROOT + "T-T-T 3000/053M.mp4"), // 7 (M, looping clip)
+      media("vimeo", "157616579"), // 8 (055, L)
+      media("image", ASSET_ROOT + "T-T-T 3000/060S.jpg"), // 9 (S)
+      media("image", ASSET_ROOT + "T-T-T 3000/070S.jpg"), // 10 (S)
+      media("image", ASSET_ROOT + "T-T-T 3000/075S.jpg"), // 11 (S)
+      media("image", ASSET_ROOT + "T-T-T 3000/080M.jpg"), // 12 (M)
+      media("image", ASSET_ROOT + "T-T-T 3000/090M.jpg"), // 13 (M)
+      media("image", ASSET_ROOT + "T-T-T 3000/095L.jpg"), // 14 (L)
+      media("image", ASSET_ROOT + "T-T-T 3000/100S.jpg"), // 15 (S)
     ],
     editorialRows: [
       { cols: [0, 1], sizes: ["M", "M"], offsets: [0, 50], align: "left" },
       { cols: [2], align: "right" },
       { cols: [3], align: "center" },
-      { cols: [4], align: "left", size: "M" },
-      { cols: [5], align: "center" },
-      { cols: [6, 7], sizes: ["S", "S"], offsets: [0, 60], align: "right" },
-      { cols: [8, 9], sizes: ["S", "M"], offsets: [40, 70], align: "center" },
-      { cols: [10], align: "left", size: "M" },
-      { cols: [11], align: "right" },
-      { cols: [12], align: "center", size: "S" },
+      { cols: [4, 5], sizes: ["M", "S"], offsets: [70, 0], align: "left" },
+      { cols: [6, 7], sizes: ["S", "M"], offsets: [40, 60], align: "right" },
+      { cols: [8], align: "center" },
+      { cols: [9, 10], sizes: ["S", "S"], offsets: [0, 60], align: "right" },
+      { cols: [11, 12], sizes: ["S", "M"], offsets: [40, 70], align: "center" },
+      { cols: [13], align: "left", size: "M" },
+      { cols: [14], align: "right" },
+      { cols: [15], align: "center", size: "S" },
     ],
   },
   {

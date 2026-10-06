@@ -444,7 +444,7 @@
       // especially on pages with many clips) is what chokes the browser —
       // defer their fetch entirely until observed/pressed
       const preload = opts.hero ? "metadata" : "none";
-      return `<div class="media-wrap ${cls}"${arStyle}${dataIdx}><video class="${innerCls}" ${poster} preload="${preload}" ${controls} muted loop playsinline${observedAttr}><source src="${item.src}"${typeAttr}></video></div>`;
+      return `<div class="media-wrap ${cls}"${arStyle}${dataIdx}><video class="${innerCls}"${dims && !fill ? ` width="${dims[0]}" height="${dims[1]}"` : ""} ${poster} preload="${preload}" ${controls} muted loop playsinline${observedAttr}><source src="${item.src}"${typeAttr}></video></div>`;
     }
     if (item.type === "mux") {
       // <mux-video> is Mux's custom element — same attributes/API as a native
