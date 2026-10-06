@@ -406,6 +406,16 @@
       // a real width to fill, and .vimeo-embed turns that into a 16:9 box
       return `<div class="media-wrap ${vimeoCls} ${cls}"${dataIdx}><iframe src="${src}" style="${style}" ${allow}></iframe></div>`;
     }
+    if (item.type === "youtube") {
+      // hero-only embed. Starts muted (the only autoplay browsers always
+      // allow), then mountYouTubeHero asks the player — via the iframe API —
+      // to unmute and request top quality; if the browser refuses sound
+      // without a click it just stays muted with normal controls. cc_load_policy=0
+      // keeps subtitles off, iv_load_policy=3 hides annotation cards.
+      const src = `https://www.youtube-nocookie.com/embed/${item.src}?autoplay=1&mute=1&loop=1&playlist=${item.src}&controls=1&rel=0&modestbranding=1&playsinline=1&cc_load_policy=0&iv_load_policy=3&vq=hd1080&enablejsapi=1`;
+      const allow = `allow="autoplay;fullscreen;picture-in-picture;encrypted-media" referrerpolicy="strict-origin-when-cross-origin" title="video" data-yt-hero`;
+      return `<div class="media-wrap ${fill ? "" : "vimeo-embed"} ${cls}"${dataIdx}><iframe src="${src}" style="position:absolute;inset:0;width:100%;height:100%;border:0" ${allow}></iframe></div>`;
+    }
     if (item.type === "video") {
       const poster = item.poster ? ` poster="${item.poster}"` : "";
       const controls = opts.controls ? "controls" : "";
@@ -952,7 +962,7 @@
       <div class="hero hero-detail hero-detail-top">
         <div class="hero-inner is-playing" id="hero-video-wrap">
           ${mediaHTML(hero, { hero: true })}
-          ${hero.type !== "vimeo" ? `<div class="hero-play" id="hero-play-toggle"><div class="hero-play-glyph"></div></div>` : ""}
+          ${hero.type !== "vimeo" && hero.type !== "youtube" ? `<div class="hero-play" id="hero-play-toggle"><div class="hero-play-glyph"></div></div>` : ""}
         </div>
       </div>` : ""}
 
@@ -1313,7 +1323,7 @@
       </div>
       <div class="legal-section">
         <h2>Eingebettete Videos (Vimeo, Mux)</h2>
-        <p>Auf dieser Seite werden Videos über die Dienste Vimeo (Vimeo.com Inc., New York, USA) und Mux (Mux, Inc., San Francisco, USA) eingebunden. Beim Abspielen eines Videos wird eine Verbindung zu den Servern des jeweiligen Anbieters hergestellt, wobei technische Daten (u. a. IP-Adresse) übertragen werden können. Weitere Informationen: <a href="https://vimeo.com/privacy" target="_blank" rel="noopener">Vimeo Datenschutz</a>, <a href="https://www.mux.com/privacy" target="_blank" rel="noopener">Mux Datenschutz</a>.</p>
+        <p>Auf dieser Seite werden Videos über die Dienste Vimeo (Vimeo.com Inc., New York, USA), YouTube (Google Ireland Limited, Dublin, Irland) und Mux (Mux, Inc., San Francisco, USA) eingebunden. Beim Abspielen eines Videos wird eine Verbindung zu den Servern des jeweiligen Anbieters hergestellt, wobei technische Daten (u. a. IP-Adresse) übertragen werden können. Weitere Informationen: <a href="https://vimeo.com/privacy" target="_blank" rel="noopener">Vimeo Datenschutz</a>, <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">YouTube Datenschutz</a>, <a href="https://www.mux.com/privacy" target="_blank" rel="noopener">Mux Datenschutz</a>.</p>
       </div>
       <div class="legal-section">
         <h2>Cookies</h2>
@@ -1330,6 +1340,23 @@
   function mountDetailHero() {
     const wrap = document.getElementById("hero-video-wrap");
     if (!wrap) return;
+    const yt = wrap.querySelector("iframe[data-yt-hero]");
+    if (yt) {
+      // YouTube iframe API over postMessage: wait for the player, then unmute,
+      // set volume and ask for the best quality (a hint — YouTube may still
+      // adapt to bandwidth/player size)
+      const send = (func, args = []) => yt.contentWindow && yt.contentWindow.postMessage(JSON.stringify({ event: "command", func, args }), "*");
+      const kick = () => {
+        send("unMute");
+        send("setVolume", [100]);
+        send("setPlaybackQuality", ["hd1080"]);
+        send("playVideo");
+      };
+      yt.addEventListener("load", () => {
+        yt.contentWindow.postMessage(JSON.stringify({ event: "listening" }), "*");
+        [400, 1200, 2500].forEach((ms) => setTimeout(kick, ms));
+      });
+    }
     const video = wrap.querySelector("video, mux-video");
     const overlay = document.getElementById("hero-play-toggle");
     if (video && overlay) {

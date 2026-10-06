@@ -848,11 +848,11 @@ const PROJECTS = [
     blurb: "", // not given — add project description
     // gen_gallery.py "T-T-T 3000" — no preview/ folder, so the hover-scrub
     // previews reuse three gallery stills
-    hero: media("video", ASSET_ROOT + "T-T-T 3000/010Hero.mp4"),
+    hero: media("youtube", "IMvm7t2Hyjc"),
     previews: previews(
       "T-T-T 3000/020m.jpg",
       "T-T-T 3000/040L.jpg",
-      "T-T-T 3000/080L.jpg"
+      "T-T-T 3000/080M.jpg"
     ),
     galleryStyle: "editorial",
     gallery: [
@@ -861,20 +861,26 @@ const PROJECTS = [
       media("image", ASSET_ROOT + "T-T-T 3000/040L.jpg"), // 2 (L)
       media("image", ASSET_ROOT + "T-T-T 3000/045L.jpg"), // 3 (L)
       media("image", ASSET_ROOT + "T-T-T 3000/050m.jpg"), // 4 (M)
-      media("image", ASSET_ROOT + "T-T-T 3000/060S.jpg"), // 5 (S)
-      media("image", ASSET_ROOT + "T-T-T 3000/070S.jpg"), // 6 (S)
-      media("image", ASSET_ROOT + "T-T-T 3000/080L.jpg"), // 7 (L)
-      media("image", ASSET_ROOT + "T-T-T 3000/080S.jpg"), // 8 (S)
-      media("image", ASSET_ROOT + "T-T-T 3000/090M.jpg"), // 9 (M)
+      media("vimeo", "157616579"), // 5 (055, L)
+      media("image", ASSET_ROOT + "T-T-T 3000/060S.jpg"), // 6 (S)
+      media("image", ASSET_ROOT + "T-T-T 3000/070S.jpg"), // 7 (S)
+      media("image", ASSET_ROOT + "T-T-T 3000/075S.jpg"), // 8 (S)
+      media("image", ASSET_ROOT + "T-T-T 3000/080M.jpg"), // 9 (M)
+      media("image", ASSET_ROOT + "T-T-T 3000/090M.jpg"), // 10 (M)
+      media("image", ASSET_ROOT + "T-T-T 3000/095L.jpg"), // 11 (L)
+      media("image", ASSET_ROOT + "T-T-T 3000/100S.jpg"), // 12 (S)
     ],
     editorialRows: [
       { cols: [0, 1], sizes: ["M", "M"], offsets: [0, 50], align: "left" },
       { cols: [2], align: "right" },
       { cols: [3], align: "center" },
-      { cols: [4, 5], sizes: ["M", "S"], offsets: [70, 0], align: "left" },
-      { cols: [6], align: "right", size: "S" },
-      { cols: [7], align: "center" },
-      { cols: [8, 9], sizes: ["S", "M"], offsets: [40, 70], align: "left" },
+      { cols: [4], align: "left", size: "M" },
+      { cols: [5], align: "center" },
+      { cols: [6, 7], sizes: ["S", "S"], offsets: [0, 60], align: "right" },
+      { cols: [8, 9], sizes: ["S", "M"], offsets: [40, 70], align: "center" },
+      { cols: [10], align: "left", size: "M" },
+      { cols: [11], align: "right" },
+      { cols: [12], align: "center", size: "S" },
     ],
   },
   {
