@@ -1036,6 +1036,19 @@ const SCREENS = [
   media("image", "Assets/screenshots/generative5.jpg"),
   media("image", "Assets/screenshots/mBag.webp"),
   media("image", "Assets/screenshots/mbag2.webp"),
+  media("image", "Assets/screenshots/IMG_0457.jpg"),
+  media("image", "Assets/screenshots/IMG_0472-2.jpg"),
+  media("image", "Assets/screenshots/IMG_0702.jpg"),
+  media("image", "Assets/screenshots/IMG_5230.jpg"),
+  media("image", "Assets/screenshots/IMG_5583.jpg"),
+  media("image", "Assets/screenshots/IMG_5640.jpg"),
+  media("image", "Assets/screenshots/Screenshot-2017-05-03-15.47.44.jpg"),
+  media("image", "Assets/screenshots/SiemensDokuSite_07.webp"),
+  media("image", "Assets/screenshots/SiemensDokuSite_28.webp"),
+  media("image", "Assets/screenshots/SiemensDokuSite_38.webp"),
+  media("image", "Assets/screenshots/SiemensDokuSite_41.webp"),
+  media("image", "Assets/screenshots/SiemensDokuSite_51.webp"),
+  media("vimeo", "129561880", { hash: "0b96244d8e" }),
 ];
 
 const SERVICES = ["Blender", "Cinema 4D", "Motion Design", "CAD Optimization", "Asset Creation", "Shader Development", "Geometry Nodes", "Brand Assets", "Imagery", "Visual Design"];

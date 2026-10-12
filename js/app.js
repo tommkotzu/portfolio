@@ -397,7 +397,8 @@
       // opened it. Anywhere else (decorative inline embeds, e.g. a project's
       // editorial gallery): autoplay/background=1, as before.
       const playParams = opts.hero ? "autoplay=1&amp;background=0" : "autoplay=1&amp;background=1";
-      const src = `https://player.vimeo.com/video/${item.src}?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;${playParams}&amp;loop=1&amp;muted=1`;
+      const hashParam = item.hash ? `&amp;h=${item.hash}` : "";
+      const src = `https://player.vimeo.com/video/${item.src}?badge=0${hashParam}&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;${playParams}&amp;loop=1&amp;muted=1`;
       const allow = `allow="autoplay;fullscreen;picture-in-picture;clipboard-write;encrypted-media;web-share" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" title="video"`;
       const style = "position:absolute;inset:0;width:100%;height:100%;border:0";
       // an iframe has no natural size of its own to shrink-wrap to (unlike a real
@@ -1017,11 +1018,12 @@
   }
 
   // ---------- screens ----------
+  const notesItemOpts = (item) => (item.type === "vimeo" ? { cls: "reveal", noAutoplay: true } : { cls: "reveal" });
   function renderScreens() {
     return `<div class="page screens-page" data-screen="screens">
       <div class="screens-title">Notes</div>
       <div class="screens-sub">A running collection of frames, stills and process shots.</div>
-      ${renderMasonryGrid(SCREENS, undefined, () => ({ cls: "reveal" }))}
+      ${renderMasonryGrid(SCREENS, undefined, notesItemOpts)}
     </div>`;
   }
 
@@ -1040,8 +1042,8 @@
   function lightboxEligible(item, allowVimeo) {
     return !!item && (item.type !== "vimeo" || !!allowVimeo);
   }
-  function openMediaLightbox(items, idx, captions) {
-    const allowVimeo = !!captions;
+  function openMediaLightbox(items, idx, captions, allowVimeoOverride) {
+    const allowVimeo = !!captions || !!allowVimeoOverride;
     if (!lightboxEligible(items[idx], allowVimeo)) return;
     state.lightboxItems = items;
     state.lightboxIndex = idx;
@@ -1509,7 +1511,7 @@
     // Notes grid — items are SCREENS itself
     const screensItemEl = e.target.closest(".screens-page .screens-item");
     if (screensItemEl) {
-      openMediaLightbox(SCREENS, Number(screensItemEl.dataset.idx));
+      openMediaLightbox(SCREENS, Number(screensItemEl.dataset.idx), null, true);
       return;
     }
 
@@ -1607,7 +1609,7 @@
       screensMasonryBucketWidth = count;
       const grid = document.querySelector(".screens-grid");
       if (!grid) return;
-      grid.outerHTML = renderMasonryGrid(SCREENS, undefined, () => ({ cls: "reveal" }));
+      grid.outerHTML = renderMasonryGrid(SCREENS, undefined, notesItemOpts);
       observeGalleryVideos();
     } else if (route.page === "detail") {
       const count = masonryColumnCount(PROJECT_GRID_BREAKPOINTS);
