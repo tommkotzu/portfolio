@@ -888,6 +888,44 @@ const PROJECTS = [
     ],
   },
   {
+    slug: "ai-case-study",
+    title: "AI Case Study",
+    client: "", // not given — add client name if there is one
+    location: "Berlin, Germany", // not given — confirm/adjust
+    year: "2026", // not given — confirm/adjust
+    role: "Director",
+    credits: [],
+    tags: ["Generative AI", "Art Direction"], // placeholder — confirm/adjust
+    blurb: "", // not given — add project description
+    // gen_gallery.py "AI case studie" — no preview/ folder, so the hover-scrub
+    // previews reuse three gallery stills
+    hero: media("image", ASSET_ROOT + "AI case studie/010Hero.jpg"),
+    previews: previews(
+      "AI case studie/020M.jpg",
+      "AI case studie/050M.jpg",
+      "AI case studie/070L.jpg"
+    ),
+    galleryStyle: "editorial",
+    gallery: [
+      media("video", ASSET_ROOT + "AI case studie/015L.mp4"), // 0 (L)
+      media("image", ASSET_ROOT + "AI case studie/020M.jpg"), // 1 (M)
+      media("image", ASSET_ROOT + "AI case studie/030S.jpg"), // 2 (S)
+      media("image", ASSET_ROOT + "AI case studie/040S.jpg"), // 3 (S)
+      media("image", ASSET_ROOT + "AI case studie/050M.jpg"), // 4 (M)
+      media("image", ASSET_ROOT + "AI case studie/070L.jpg"), // 5 (L)
+      media("image", ASSET_ROOT + "AI case studie/080L.jpg"), // 6 (L)
+      media("video", ASSET_ROOT + "AI case studie/080L.mp4"), // 7 (portrait clip)
+    ],
+    editorialRows: [
+      { cols: [0], align: "left" },
+      { cols: [1, 2], sizes: ["M", "S"], offsets: [50, 60], align: "right" },
+      { cols: [3, 4], sizes: ["S", "M"], offsets: [40, 70], align: "center" },
+      { cols: [5], align: "left" },
+      { cols: [6], align: "right" },
+      { cols: [7], align: "center", size: "M" },
+    ],
+  },
+  {
     slug: "robotics",
     title: "Robotics",
     client: "", // confidential — no client name to show
