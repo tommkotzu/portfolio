@@ -121,11 +121,30 @@
     });
   }
 
+  // one frame of a letter scramble as HTML: letters already locked in stay in
+  // the normal text colour, the ones still shuffling get a random hue each
+  // frame; lightness comes from --scrambleL so the same hue reads equally on
+  // the light and dark theme (see styles.css, including the nav-logo fix for
+  // the nav bar's difference blend mode)
+  const SCRAMBLE_POOL = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  function scrambleFrameHTML(target, lockedCount) {
+    let out = "";
+    for (let i = 0; i < target.length; i++) {
+      const ch = target[i];
+      if (i < lockedCount || ch === " ") {
+        out += ch === " " ? " " : ch.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+      } else {
+        const rnd = SCRAMBLE_POOL[Math.floor(Math.random() * SCRAMBLE_POOL.length)];
+        out += `<span style="color:hsl(${Math.floor(Math.random() * 360)} 85% var(--scrambleL))">${rnd}</span>`;
+      }
+    }
+    return out;
+  }
+
   // easter egg: hovering the logo scrambles through a roulette of alternate
   // names, letter by letter, until the cursor leaves — where it lands is
   // random too, not always back to the real name
   const NAME_ROULETTE = ["Thomas Mayer", "Thomas Ludwig", "Atomic Tomfritz", "Tommbommboo", "Pommfred"];
-  const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const navLogo = document.querySelector(".nav-logo");
   if (navLogo) {
     const original = navLogo.textContent;
@@ -157,11 +176,7 @@
         if (token !== animToken) return; // a newer scramble started — stop writing
         const progress = Math.min(1, (now - start) / duration);
         const lockedCount = Math.floor(progress * target.length);
-        let out = "";
-        for (let i = 0; i < target.length; i++) {
-          out += i < lockedCount || target[i] === " " ? target[i] : SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
-        }
-        navLogo.textContent = out;
+        navLogo.innerHTML = scrambleFrameHTML(target, lockedCount);
         if (progress < 1) requestAnimationFrame(frame);
         else { navLogo.textContent = target; if (onDone) onDone(); }
       })(start);
@@ -230,11 +245,7 @@
         if (token !== animToken) return;
         const progress = Math.min(1, (now - start) / duration);
         const lockedCount = Math.floor(progress * target.length);
-        let out = "";
-        for (let i = 0; i < target.length; i++) {
-          out += i < lockedCount || target[i] === " " ? target[i] : SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
-        }
-        el.textContent = out;
+        el.innerHTML = scrambleFrameHTML(target, lockedCount);
         if (progress < 1) requestAnimationFrame(frame);
         else el.textContent = target;
       })(start);
@@ -597,7 +608,7 @@
       <div class="intro">
         <div class="intro-headline">Hey there, I'm Thomas, <span id="role-article">a</span> <span class="role-roulette-wrap" id="role-roulette-wrap"><span class="role-roulette" id="role-roulette">creative</span></span>.</div>
         <div class="intro-bio">
-          <p>I <svg class="heart-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 20.6c-.3 0-.6-.1-.83-.33C7.4 16.86 4 13.3 4 9.6 4 6.6 6.24 4.4 9.1 4.4c1.63 0 3.2.76 4.4 1.98 1.2-1.22 2.77-1.98 4.4-1.98 2.86 0 5.1 2.2 5.1 5.2 0 3.7-3.4 7.26-7.17 10.67-.23.23-.53.33-.83.33z"/></svg> working in 3D. Let's get complex things done exactly the way you want on time!</p>
+          <p>I'm a curious creative who takes projects from first spark to final frame. Shaping the concept, building the strategy and getting hands-on with the execution, so the idea stays sharp to the end.</p>
           <p>Need a hand, <a href="mailto:thomasludwigwork@pm.me" class="intro-mail-link">let's chat!</a></p>
         </div>
       </div>

@@ -18,10 +18,12 @@
   --pad: clamp(24px, 7vw, 100px);
   --lightboxBg: oklch(97% 0.003 260 / 0.94);
   --lightboxFg: oklch(20% 0.005 260);
+  --scrambleL: 46%;
   color-scheme: light;
 }
 
 :root[data-theme="dark"] {
+  --scrambleL: 64%;
   --bg: oklch(14% 0.004 260);
   --bgAlpha: oklch(14% 0.004 260 / 0.85);
   --text: oklch(96% 0.003 260);
@@ -107,6 +109,10 @@ button { font: inherit; color: inherit; background: none; border: 0; }
   flex-wrap: wrap;
 }
 .nav-logo { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; cursor: pointer; white-space: nowrap; overflow: hidden; flex: none; }
+/* the nav bar is blended with mix-blend-mode: difference, which flips every
+   colour over a light page — pre-invert the shuffling letters there so they
+   come out as the same true hue as in dark mode */
+:root:not([data-theme="dark"]) .nav-logo span { filter: invert(1); }
 .nav-links { display: flex; gap: 28px; font-size: 14px; font-weight: 600; }
 .nav-link { cursor: pointer; padding-bottom: 4px; border-bottom: 1px solid transparent; opacity: 0.6; transition: opacity 0.2s ease; }
 .nav-link:hover { opacity: 1; }
