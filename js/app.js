@@ -377,6 +377,11 @@
     if (item.type === "image") {
       return `<div class="media-wrap ${cls}"${arStyle}${dataIdx}><img class="${innerCls}" src="${item.src}"${dims && !fill ? ` width="${dims[0]}" height="${dims[1]}"` : ""} loading="lazy" decoding="async" alt=""></div>`;
     }
+    if (item.type === "prompt") {
+      const COPY_ICON = `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>`;
+      const esc = item.text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      return `<div class="media-wrap prompt-card ${cls}"${dataIdx}><div class="prompt-head"><span>Prompt</span><button class="prompt-copy" type="button" data-copy-prompt aria-label="Copy prompt" title="Copy prompt">${COPY_ICON}</button></div><pre><code>${esc}</code></pre></div>`;
+    }
     if (item.type === "vimeo") {
       const vimeoCls = fill ? "" : "vimeo-embed";
       // opts.noAutoplay (grid context, not enlarged, e.g. Work's "All" view):
@@ -732,6 +737,7 @@
     const captions = [];
     PROJECTS.forEach((p) => {
       p.gallery.forEach((item) => {
+        if (item.type === "prompt") return;
         tiles.push(item);
         captions.push({ title: projectTitle(p), tags: p.tags, slug: p.slug });
       });
@@ -1040,7 +1046,7 @@
   // sense — allowVimeo is derived from whether captions were passed, which
   // only happens for that view (see the .all-content-item click handler).
   function lightboxEligible(item, allowVimeo) {
-    return !!item && (item.type !== "vimeo" || !!allowVimeo);
+    return !!item && item.type !== "prompt" && (item.type !== "vimeo" || !!allowVimeo);
   }
   function openMediaLightbox(items, idx, captions, allowVimeoOverride) {
     const allowVimeo = !!captions || !!allowVimeoOverride;
@@ -1481,6 +1487,18 @@
 
   // ---------- delegated events ----------
   document.body.addEventListener("click", (e) => {
+    const copyBtn = e.target.closest("[data-copy-prompt]");
+    if (copyBtn) {
+      const text = copyBtn.closest(".prompt-card").querySelector("code").textContent;
+      const icon = copyBtn.innerHTML;
+      const done = () => {
+        copyBtn.innerHTML = `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>`;
+        setTimeout(() => (copyBtn.innerHTML = icon), 1500);
+      };
+      if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, () => {});
+      return;
+    }
+
     const navEl = e.target.closest("[data-nav]");
     if (navEl) { setMobileNavOpen(false); goto(navEl.dataset.nav); return; }
 
