@@ -1223,9 +1223,8 @@
             <a class="btn-ghost" href="Assets/cv/CV_Thomas_Mayer.pdf" download target="_blank" rel="noopener">Download CV ↓</a>
           </div>
         </div>
-        <div class="about-portrait media-wrap" id="about-portrait" data-idx="0">
-          <img class="media-fill active" src="${PROFILE_PICS[0]}" alt="Thomas Mayer">
-          <img class="media-fill" alt="Thomas Mayer">
+        <div class="about-portrait media-wrap" id="about-portrait">
+          <video class="media-fill" src="Assets/about/profilePic/profile.mp4" poster="Assets/about/profilePic/profile-poster.jpg" autoplay muted loop playsinline preload="auto" aria-label="Thomas Mayer"></video>
         </div>
       </div>
 
@@ -1261,25 +1260,6 @@
         </div>
       </div>
     </div>`;
-  }
-
-  // clicking the About portrait cycles through PROFILE_PICS, crossfading —
-  // same two-layer swap technique as the scrub cards, just click- not
-  // hover-driven
-  function mountAbout() {
-    const portrait = document.getElementById("about-portrait");
-    if (!portrait) return;
-    portrait.addEventListener("click", () => {
-      const next = (Number(portrait.dataset.idx) + 1) % PROFILE_PICS.length;
-      portrait.dataset.idx = String(next);
-      const front = portrait.querySelector("img.active");
-      const back = portrait.querySelector("img:not(.active)");
-      back.onload = () => {
-        back.classList.add("active");
-        front.classList.remove("active");
-      };
-      back.src = PROFILE_PICS[next];
-    });
   }
 
   // ---------- legal ----------
@@ -1479,7 +1459,6 @@
       screensMasonryBucketWidth = masonryColumnCount({ mobile: 2, tablet: 3, desktop: 4 });
     } else if (route.page === "about") {
       app.innerHTML = renderAbout();
-      mountAbout();
     } else if (route.page === "impressum") {
       app.innerHTML = renderImpressum();
     } else if (route.page === "datenschutz") {

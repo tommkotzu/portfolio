@@ -559,9 +559,7 @@ body.mobile-nav-locked { overflow: hidden; }
 .about-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 10px; }
 .btn-primary { font-size: 14px; font-weight: 500; padding: 12px 20px; border: 1px solid var(--text); border-radius: 2px; white-space: nowrap; cursor: pointer; }
 .btn-ghost { font-size: 14px; font-weight: 500; padding: 12px 20px; color: var(--muted2); cursor: pointer; }
-.about-portrait { flex: none; width: 280px; aspect-ratio: 4/5; cursor: pointer; }
-.about-portrait img { position: absolute; inset: 0; opacity: 0; transition: opacity 0.35s ease; }
-.about-portrait img.active { opacity: 1; }
+.about-portrait { flex: none; width: 280px; aspect-ratio: 4/5; border-radius: 16px; }
 
 /* left-label / right-content row, reused for What I Do, Clients, Exhibitions */
 .about-row { display: flex; gap: 80px; flex-wrap: wrap; padding: 50px 0 90px; border-top: 1px solid var(--line); }
