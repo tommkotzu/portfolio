@@ -18,12 +18,12 @@
   --pad: clamp(24px, 7vw, 100px);
   --lightboxBg: oklch(97% 0.003 260 / 0.94);
   --lightboxFg: oklch(20% 0.005 260);
-  --scrambleL: 46%;
+  --scrambleL: 50%;
   color-scheme: light;
 }
 
 :root[data-theme="dark"] {
-  --scrambleL: 64%;
+  --scrambleL: 58%;
   --bg: oklch(14% 0.004 260);
   --bgAlpha: oklch(14% 0.004 260 / 0.85);
   --text: oklch(96% 0.003 260);

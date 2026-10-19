@@ -122,11 +122,14 @@
   }
 
   // one frame of a letter scramble as HTML: letters already locked in stay in
-  // the normal text colour, the ones still shuffling get a random hue each
+  // the normal text colour, the ones still shuffling get a random neon hue each
   // frame; lightness comes from --scrambleL so the same hue reads equally on
   // the light and dark theme (see styles.css, including the nav-logo fix for
   // the nav bar's difference blend mode)
   const SCRAMBLE_POOL = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  // neon picks only (hot pink, orange, lime, cyan, electric blue, violet,
+  // yellow) — fully saturated; random hues land on muddy olives/teals
+  const SCRAMBLE_HUES = [330, 18, 52, 95, 150, 178, 205, 225, 272, 300];
   function scrambleFrameHTML(target, lockedCount) {
     let out = "";
     for (let i = 0; i < target.length; i++) {
@@ -135,7 +138,7 @@
         out += ch === " " ? " " : ch.replace(/&/g, "&amp;").replace(/</g, "&lt;");
       } else {
         const rnd = SCRAMBLE_POOL[Math.floor(Math.random() * SCRAMBLE_POOL.length)];
-        out += `<span style="color:hsl(${Math.floor(Math.random() * 360)} 85% var(--scrambleL))">${rnd}</span>`;
+        out += `<span style="color:hsl(${SCRAMBLE_HUES[Math.floor(Math.random() * SCRAMBLE_HUES.length)]} 100% var(--scrambleL))">${rnd}</span>`;
       }
     }
     return out;
