@@ -521,6 +521,10 @@
     if (!el) return;
     const urls = JSON.parse(decodeURIComponent(el.dataset.scrub));
     if (urls.length < 2) return;
+    // first hover: pull every frame into the cache right away, so scrubbing
+    // down the card doesn't wait on a network fetch per frame (noticeable
+    // on the live site)
+    if (!el._scrubPreloaded) { el._scrubPreloaded = true; urls.forEach((u) => { new Image().src = u; }); }
     const rect = el.getBoundingClientRect();
     const pct = (e.clientY - rect.top) / rect.height;
     const idx = Math.min(urls.length - 1, Math.max(0, Math.floor(pct * urls.length)));

@@ -51,13 +51,14 @@ const PROJECTS = [
     credits: [],
     tags: ["Generative AI", "Art Direction"], // placeholder — confirm/adjust
     blurb: "A one-evening case study made with Higgsfield AI around a fictional running brand. The goal was to see how far a consistent campaign look could be pushed with just a handful of stills and video assets — same character, same colour world, same attitude across every frame.",
-    // gen_gallery.py "AI case studie" — no preview/ folder, so the hover-scrub
-    // previews reuse three gallery stills
+    // gen_gallery.py "AI case studie" — preview/ holds small (1200px) copies of
+    // three gallery stills for the hover-scrub, so hovering doesn't wait on
+    // the full-size images
     hero: media("video", ASSET_ROOT + "AI case studie/010Hero.mp4"),
     previews: previews(
-      "AI case studie/022L.jpg",
-      "AI case studie/028M.jpg",
-      "AI case studie/050M.jpg"
+      "AI case studie/preview/01.jpg",
+      "AI case studie/preview/02.jpg",
+      "AI case studie/preview/03.jpg"
     ),
     galleryStyle: "editorial",
     gallery: [
