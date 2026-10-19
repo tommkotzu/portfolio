@@ -55,9 +55,9 @@ const PROJECTS = [
     // previews reuse three gallery stills
     hero: media("video", ASSET_ROOT + "AI case studie/010Hero.mp4"),
     previews: previews(
-      "AI case studie/020M.jpg",
-      "AI case studie/050M.jpg",
-      "AI case studie/070L.jpg"
+      "AI case studie/022L.jpg",
+      "AI case studie/028M.jpg",
+      "AI case studie/050M.jpg"
     ),
     galleryStyle: "editorial",
     gallery: [
