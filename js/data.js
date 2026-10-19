@@ -42,6 +42,53 @@ const PROFILE_PICS = [
 
 const PROJECTS = [
   {
+    slug: "ai-case-study",
+    title: "AI Case Study",
+    client: "", // not given — add client name if there is one
+    location: "Berlin, Germany", // not given — confirm/adjust
+    year: "2026", // not given — confirm/adjust
+    role: "Director",
+    credits: [],
+    tags: ["Generative AI", "Art Direction"], // placeholder — confirm/adjust
+    blurb: "A one-evening case study made with Higgsfield AI around a fictional running brand. The goal was to see how far a consistent campaign look could be pushed with just a handful of stills and video assets — same character, same colour world, same attitude across every frame.",
+    // gen_gallery.py "AI case studie" — no preview/ folder, so the hover-scrub
+    // previews reuse three gallery stills
+    hero: media("video", ASSET_ROOT + "AI case studie/010Hero.mp4"),
+    previews: previews(
+      "AI case studie/020M.jpg",
+      "AI case studie/050M.jpg",
+      "AI case studie/070L.jpg"
+    ),
+    galleryStyle: "editorial",
+    gallery: [
+      media("video", ASSET_ROOT + "AI case studie/015L.mp4"), // 0 (L)
+      media("image", ASSET_ROOT + "AI case studie/022L.jpg"), // 1 (L)
+      media("image", ASSET_ROOT + "AI case studie/025M.jpg"), // 2 (M)
+      media("image", ASSET_ROOT + "AI case studie/028M.jpg"), // 3 (M)
+      media("image", ASSET_ROOT + "AI case studie/030S.jpg"), // 4 (S)
+      media("image", ASSET_ROOT + "AI case studie/035L.jpg"), // 5 (L)
+      media("image", ASSET_ROOT + "AI case studie/040S.jpg"), // 6 (S)
+      media("image", ASSET_ROOT + "AI case studie/050M.jpg"), // 7 (M)
+      media("image", ASSET_ROOT + "AI case studie/080L.jpg"), // 8 (L)
+      media("video", ASSET_ROOT + "AI case studie/080L.mp4"), // 9 (portrait clip)
+      media("image", ASSET_ROOT + "AI case studie/085L.jpg"), // 10 (character sheet)
+      // text card (rendered as a small code field next to the sheet) — not
+      // a real asset, so it skips media()'s path encoding
+      { type: "prompt", text: "Fashion character turnaround sheet on a seamless off-white studio background, soft even lighting, photorealistic. Young woman with a chin-length black bob, olive-green 5-panel cap, amber-tinted oversized sport sunglasses. Outfit: color-blocked lightweight windbreaker in mustard yellow and pale mint with a yellow zip and hood; rust-orange and forest-green trail running vest with chest pockets, sternum straps and yellow drawcords; split running shorts in rust and forest green; cream crew socks with green, rust and mustard stripes; burgundy and mustard trail running shoes with cream midsoles and gum outsoles. Layout: front view standing, back view, three-quarter walking pose, side-profile running pose, plus inset detail shots of the shoes with socks and a close crop of the vest pockets. 70s outdoor palette, earthy and muted, editorial catalog style, 16:9." }, // 11
+    ],
+    editorialRows: [
+      { cols: [0], align: "left" },
+      { cols: [1], align: "center" },
+      { cols: [2, 3], sizes: ["M", "M"], offsets: [50, 60], align: "right" },
+      { cols: [4], align: "left", size: "S" },
+      { cols: [5], align: "right" },
+      { cols: [6, 7], sizes: ["S", "M"], offsets: [0, 50], align: "center" },
+      { cols: [8], align: "left" },
+      { cols: [9], align: "right", size: "M" },
+      { cols: [10, 11], sizes: ["M", "S"], offsets: [0, 40], align: "center" },
+    ],
+  },
+  {
     slug: "acg-x-nike",
     title: "Campaign",
     client: "ACG x Nike",
@@ -885,57 +932,6 @@ const PROJECTS = [
       { cols: [13], align: "left", size: "M" },
       { cols: [14], align: "right" },
       { cols: [15], align: "center", size: "S" },
-    ],
-  },
-  {
-    slug: "ai-case-study",
-    title: "AI Case Study",
-    client: "", // not given — add client name if there is one
-    location: "Berlin, Germany", // not given — confirm/adjust
-    year: "2026", // not given — confirm/adjust
-    role: "Director",
-    credits: [],
-    tags: ["Generative AI", "Art Direction"], // placeholder — confirm/adjust
-    blurb: "A one-evening case study made with Higgsfield AI around a fictional running brand. The goal was to see how far a consistent campaign look could be pushed with just a handful of stills and video assets — same character, same colour world, same attitude across every frame.",
-    // gen_gallery.py "AI case studie" — no preview/ folder, so the hover-scrub
-    // previews reuse three gallery stills
-    hero: media("video", ASSET_ROOT + "AI case studie/010Hero.mp4"),
-    previews: previews(
-      "AI case studie/020M.jpg",
-      "AI case studie/050M.jpg",
-      "AI case studie/070L.jpg"
-    ),
-    galleryStyle: "editorial",
-    gallery: [
-      media("video", ASSET_ROOT + "AI case studie/015L.mp4"), // 0 (L)
-      media("image", ASSET_ROOT + "AI case studie/020M.jpg"), // 1 (M)
-      media("image", ASSET_ROOT + "AI case studie/025M.jpg"), // 2 (M)
-      media("image", ASSET_ROOT + "AI case studie/030S.jpg"), // 3 (S)
-      media("image", ASSET_ROOT + "AI case studie/035L.jpg"), // 4 (L)
-      media("image", ASSET_ROOT + "AI case studie/040S.jpg"), // 5 (S)
-      media("image", ASSET_ROOT + "AI case studie/050M.jpg"), // 6 (M)
-      media("image", ASSET_ROOT + "AI case studie/070L.jpg"), // 7 (L)
-      media("image", ASSET_ROOT + "AI case studie/080L.jpg"), // 8 (L)
-      media("video", ASSET_ROOT + "AI case studie/080L.mp4"), // 9 (portrait clip)
-      media("image", ASSET_ROOT + "AI case studie/085L.jpg"), // 10 (character sheet)
-      // text card (rendered as a small code field next to the sheet) — not
-      // a real asset, so it skips media()'s path encoding
-      { type: "prompt", text: "Fashion character turnaround sheet on a seamless off-white studio background, soft even lighting, photorealistic. Young woman with a chin-length black bob, olive-green 5-panel cap, amber-tinted oversized sport sunglasses. Outfit: color-blocked lightweight windbreaker in mustard yellow and pale mint with a yellow zip and hood; rust-orange and forest-green trail running vest with chest pockets, sternum straps and yellow drawcords; split running shorts in rust and forest green; cream crew socks with green, rust and mustard stripes; burgundy and mustard trail running shoes with cream midsoles and gum outsoles. Layout: front view standing, back view, three-quarter walking pose, side-profile running pose, plus inset detail shots of the shoes with socks and a close crop of the vest pockets. 70s outdoor palette, earthy and muted, editorial catalog style, 16:9." }, // 11
-      media("image", ASSET_ROOT + "AI case studie/090L.jpg"), // 12 (brand logo)
-      media("video", ASSET_ROOT + "AI case studie/095L.mp4"), // 13 (L)
-    ],
-    editorialRows: [
-      { cols: [0], align: "left" },
-      { cols: [1, 2], sizes: ["M", "M"], offsets: [50, 60], align: "right" },
-      { cols: [3], align: "center", size: "S" },
-      { cols: [4], align: "left" },
-      { cols: [5, 6], sizes: ["S", "M"], offsets: [0, 50], align: "right" },
-      { cols: [7], align: "center" },
-      { cols: [8], align: "left" },
-      { cols: [9], align: "right", size: "M" },
-      { cols: [10, 11], sizes: ["M", "S"], offsets: [0, 40], align: "center" },
-      { cols: [12], align: "left", size: "M" },
-      { cols: [13], align: "right" },
     ],
   },
   {
