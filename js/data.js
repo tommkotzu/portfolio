@@ -50,7 +50,7 @@ const PROJECTS = [
     role: "Director",
     credits: [],
     tags: ["Generative AI", "Art Direction"], // placeholder — confirm/adjust
-    blurb: "A one-evening case study made with Higgsfield AI around a fictional running brand. The goal was to see how far a consistent campaign look could be pushed with just a handful of stills and video assets — same character, same colour world, same attitude across every frame.",
+    blurb: "<p>Meet Ramona, an AI-generated pathfinder hiking the mountains with her goat, exploring the wild. Every frame is fully generated.</p><p>Ramona began as a two-hour challenge: how far can an agent-driven workflow go with minimal steering? I worked entirely inside Claude, connected Higgsfield and Seedance, and let the agents lead. They shaped the character, wrote prompts, generated stills and motion, and made creative calls along the way. My role shifted from maker to director: setting the brief, curating results and keeping the story consistent.</p><p>The result is a glimpse of a new production model that is fast, exploratory and agent-led.</p>",
     // gen_gallery.py "AI case studie" — preview/ holds small (1200px) copies of
     // three gallery stills for the hover-scrub, so hovering doesn't wait on
     // the full-size images
