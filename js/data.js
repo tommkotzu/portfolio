@@ -63,30 +63,32 @@ const PROJECTS = [
     galleryStyle: "editorial",
     gallery: [
       media("video", ASSET_ROOT + "AI case studie/015L.mp4"), // 0 (L)
-      media("image", ASSET_ROOT + "AI case studie/022L.jpg"), // 1 (L)
-      media("image", ASSET_ROOT + "AI case studie/025M.jpg"), // 2 (M)
-      media("image", ASSET_ROOT + "AI case studie/028M.jpg"), // 3 (M)
-      media("image", ASSET_ROOT + "AI case studie/030S.jpg"), // 4 (S)
-      media("image", ASSET_ROOT + "AI case studie/035L.jpg"), // 5 (L)
-      media("image", ASSET_ROOT + "AI case studie/040S.jpg"), // 6 (S)
-      media("image", ASSET_ROOT + "AI case studie/050M.jpg"), // 7 (M)
-      media("image", ASSET_ROOT + "AI case studie/080L.jpg"), // 8 (L)
-      media("video", ASSET_ROOT + "AI case studie/080L.mp4"), // 9 (portrait clip)
-      media("image", ASSET_ROOT + "AI case studie/085L.jpg"), // 10 (character sheet)
+      media("video", ASSET_ROOT + "AI case studie/016M.mp4"), // 1 (M)
+      media("image", ASSET_ROOT + "AI case studie/022L.jpg"), // 2 (L)
+      media("image", ASSET_ROOT + "AI case studie/025M.jpg"), // 3 (M)
+      media("image", ASSET_ROOT + "AI case studie/028M.jpg"), // 4 (M)
+      media("image", ASSET_ROOT + "AI case studie/030S.jpg"), // 5 (S)
+      media("image", ASSET_ROOT + "AI case studie/035L.jpg"), // 6 (L)
+      media("image", ASSET_ROOT + "AI case studie/040S.jpg"), // 7 (S)
+      media("image", ASSET_ROOT + "AI case studie/050M.jpg"), // 8 (M)
+      media("image", ASSET_ROOT + "AI case studie/080L.jpg"), // 9 (L)
+      media("video", ASSET_ROOT + "AI case studie/080L.mp4"), // 10 (portrait clip)
+      media("image", ASSET_ROOT + "AI case studie/085L.jpg"), // 11 (character sheet)
       // text card (rendered as a small code field next to the sheet) — not
       // a real asset, so it skips media()'s path encoding
-      { type: "prompt", text: "Fashion character turnaround sheet on a seamless off-white studio background, soft even lighting, photorealistic. Young woman with a chin-length black bob, olive-green 5-panel cap, amber-tinted oversized sport sunglasses. Outfit: color-blocked lightweight windbreaker in mustard yellow and pale mint with a yellow zip and hood; rust-orange and forest-green trail running vest with chest pockets, sternum straps and yellow drawcords; split running shorts in rust and forest green; cream crew socks with green, rust and mustard stripes; burgundy and mustard trail running shoes with cream midsoles and gum outsoles. Layout: front view standing, back view, three-quarter walking pose, side-profile running pose, plus inset detail shots of the shoes with socks and a close crop of the vest pockets. 70s outdoor palette, earthy and muted, editorial catalog style, 16:9." }, // 11
+      { type: "prompt", text: "Fashion character turnaround sheet on a seamless off-white studio background, soft even lighting, photorealistic. Young woman with a chin-length black bob, olive-green 5-panel cap, amber-tinted oversized sport sunglasses. Outfit: color-blocked lightweight windbreaker in mustard yellow and pale mint with a yellow zip and hood; rust-orange and forest-green trail running vest with chest pockets, sternum straps and yellow drawcords; split running shorts in rust and forest green; cream crew socks with green, rust and mustard stripes; burgundy and mustard trail running shoes with cream midsoles and gum outsoles. Layout: front view standing, back view, three-quarter walking pose, side-profile running pose, plus inset detail shots of the shoes with socks and a close crop of the vest pockets. 70s outdoor palette, earthy and muted, editorial catalog style, 16:9." }, // 12
     ],
     editorialRows: [
       { cols: [0], align: "left" },
-      { cols: [1], align: "center" },
-      { cols: [2, 3], sizes: ["M", "M"], offsets: [50, 60], align: "right" },
-      { cols: [4], align: "left", size: "S" },
-      { cols: [5], align: "right" },
-      { cols: [6, 7], sizes: ["S", "M"], offsets: [0, 50], align: "center" },
-      { cols: [8], align: "left" },
-      { cols: [9], align: "right", size: "M" },
-      { cols: [10, 11], sizes: ["M", "S"], offsets: [0, 40], align: "center" },
+      { cols: [1], align: "right", size: "M" },
+      { cols: [2], align: "center" },
+      { cols: [3, 4], sizes: ["M", "M"], offsets: [50, 60], align: "right" },
+      { cols: [5], align: "left", size: "S" },
+      { cols: [6], align: "right" },
+      { cols: [7, 8], sizes: ["S", "M"], offsets: [0, 50], align: "center" },
+      { cols: [9], align: "left" },
+      { cols: [10], align: "right", size: "M" },
+      { cols: [11, 12], sizes: ["M", "S"], offsets: [0, 40], align: "center" },
     ],
   },
   {
