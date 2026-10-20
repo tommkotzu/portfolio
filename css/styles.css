@@ -573,7 +573,15 @@ body.mobile-nav-locked { overflow: hidden; }
 .about-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 10px; }
 .btn-primary { font-size: 14px; font-weight: 500; padding: 12px 20px; border: 1px solid var(--text); border-radius: 2px; white-space: nowrap; cursor: pointer; }
 .btn-ghost { font-size: 14px; font-weight: 500; padding: 12px 20px; color: var(--muted2); cursor: pointer; }
-.about-portrait { flex: none; width: 280px; aspect-ratio: 4/5; border-radius: 16px; }
+.about-portrait { display: block; flex: none; width: 280px; aspect-ratio: 4/5; border-radius: 16px; }
+.about-portrait-label {
+  position: absolute; left: 12px; bottom: 12px; z-index: 1;
+  padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight: 500; letter-spacing: 0.01em;
+  color: #fff; background: rgba(0, 0, 0, 0.62); backdrop-filter: blur(6px);
+  opacity: 0; transform: translateY(4px); transition: opacity 0.2s ease, transform 0.2s ease; pointer-events: none;
+}
+.about-portrait:hover .about-portrait-label, .about-portrait:focus-visible .about-portrait-label { opacity: 1; transform: translateY(0); }
+@media (hover: none) { .about-portrait-label { opacity: 1; transform: none; } }
 
 /* left-label / right-content row, reused for What I Do, Clients, Exhibitions */
 .about-row { display: flex; gap: 80px; flex-wrap: wrap; padding: 50px 0 90px; border-top: 1px solid var(--line); }

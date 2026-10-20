@@ -1247,9 +1247,10 @@
             <a class="btn-ghost" href="Assets/cv/CV_Thomas_Mayer.pdf" download target="_blank" rel="noopener">Download CV ↓</a>
           </div>
         </div>
-        <div class="about-portrait media-wrap" id="about-portrait">
+        <a class="about-portrait media-wrap" id="about-portrait" href="https://www.instagram.com/ingi.ai/" target="_blank" rel="noopener" aria-label="ingi.ai remix — Instagram">
           <video class="media-fill" src="Assets/about/profilePic/profile.mp4" poster="Assets/about/profilePic/profile-poster.jpg" autoplay muted loop playsinline preload="auto" aria-label="Thomas Mayer"></video>
-        </div>
+          <span class="about-portrait-label">ingi.ai remix</span>
+        </a>
       </div>
 
       <div class="about-row">
