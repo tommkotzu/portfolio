@@ -602,13 +602,22 @@
       }
     });
   }
+  // the highlight lingers a moment after the cursor leaves (cancelled if it
+  // lands on another pill), then fades out via the pill's colour transition
+  let tagHighlightTimer = null;
+  const TAG_HIGHLIGHT_LINGER_MS = 450;
   document.body.addEventListener("mouseover", (e) => {
     const pill = e.target.closest(".tag-pill");
-    if (pill) setTagHighlight(pill.textContent.trim());
+    if (!pill) return;
+    clearTimeout(tagHighlightTimer);
+    setTagHighlight(pill.textContent.trim());
   });
   document.body.addEventListener("mouseout", (e) => {
     const pill = e.target.closest(".tag-pill");
-    if (pill && !(e.relatedTarget && pill.contains(e.relatedTarget))) setTagHighlight(null);
+    if (pill && !(e.relatedTarget && pill.contains(e.relatedTarget))) {
+      clearTimeout(tagHighlightTimer);
+      tagHighlightTimer = setTimeout(() => setTagHighlight(null), TAG_HIGHLIGHT_LINGER_MS);
+    }
   });
 
   function tagPills(tags) {
