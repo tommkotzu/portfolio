@@ -5,9 +5,9 @@
   const navClock = document.getElementById("nav-clock");
   const themeToggles = document.querySelectorAll(".theme-toggle");
 
-  // "Client — Title", or just the title for client-less/self-initiated projects
+  // "Client // Title", or just the title for client-less/self-initiated projects
   function projectTitle(p) {
-    return p.client ? `${p.client} — ${p.title}` : p.title;
+    return p.client ? `${p.client} // ${p.title}` : p.title;
   }
 
   function linkDomain(url) {
@@ -585,6 +585,33 @@
     }, delay);
   }
 
+  // hovering a tag highlights every identical tag on the page (e.g. all the
+  // "Generative AI" pills across the list), each in its own neon hue, so you
+  // can spot related projects
+  function setTagHighlight(label) {
+    document.querySelectorAll(".tag-pill.tag-hl").forEach((el) => el.classList.remove("tag-hl"));
+    if (!label) return;
+    // every matching pill gets its own hue from the shuffle effect's neon
+    // palette: the palette is shuffled and dealt out in order, so neighbours
+    // differ and no hue repeats until the palette runs out
+    const deck = [...SCRAMBLE_HUES].sort(() => Math.random() - 0.5);
+    let n = 0;
+    document.querySelectorAll(".tag-pill").forEach((el) => {
+      if (el.textContent.trim() === label) {
+        el.style.setProperty("--tag-hue", deck[n++ % deck.length]);
+        el.classList.add("tag-hl");
+      }
+    });
+  }
+  document.body.addEventListener("mouseover", (e) => {
+    const pill = e.target.closest(".tag-pill");
+    if (pill) setTagHighlight(pill.textContent.trim());
+  });
+  document.body.addEventListener("mouseout", (e) => {
+    const pill = e.target.closest(".tag-pill");
+    if (pill && !(e.relatedTarget && pill.contains(e.relatedTarget))) setTagHighlight(null);
+  });
+
   function tagPills(tags) {
     return tags.map((t) => `<span class="tag-pill">${t}</span>`).join("");
   }
@@ -858,8 +885,10 @@
     el.innerHTML = `<img alt="">`;
     const img = el.querySelector("img");
     img.onload = () => {
-      // vertically center on the drop point once we know the real height
-      el.style.top = `${y - el.getBoundingClientRect().height / 2}px`;
+      // vertically center on the drop point once we know the real height,
+      // kept inside the window so a tall image near the top/bottom isn't cut
+      const h = el.getBoundingClientRect().height;
+      el.style.top = `${Math.max(8, Math.min(window.innerHeight - h - 8, y - h / 2))}px`;
       // two rAFs: the first commits the initial (opacity:0) style to a frame,
       // the second then adds "in" so the browser actually animates the change
       // instead of coalescing both into one paint and skipping the transition
@@ -885,6 +914,14 @@
     rows.addEventListener("mousemove", (e) => {
       const row = e.target.closest(".list-row");
       if (!row) return;
+      // previews only follow the cursor over the left half of the table — the
+      // right half (tags/location) stays clean; moving across lets the
+      // current stamp fade out instead of lingering
+      const rowRect = row.getBoundingClientRect();
+      if (e.clientX > rowRect.left + rowRect.width / 2) {
+        if (currentStamp) { fadePreviewStamp(currentStamp); currentStamp = null; }
+        return;
+      }
       const now = performance.now();
       const dist = lastX === null ? Infinity : Math.hypot(e.clientX - lastX, e.clientY - lastY);
       if (dist < MIN_DIST && now - lastSpawn < MIN_GAP) return;

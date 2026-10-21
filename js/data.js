@@ -367,7 +367,7 @@ const PROJECTS = [
   },
   {
     slug: "openai-munich-hq",
-    title: "De Headquarter Opening Munich",
+    title: "Headquarter Opening",
     client: "OpenAI",
     location: "Munich, Germany",
     year: "2025",
@@ -546,7 +546,7 @@ const PROJECTS = [
       { role: "Direction", name: "Thomas Mayer" },
       { role: "Studio", name: "Looping Lovers" },
     ],
-    tags: ["3D Production", "VFX Supervisor", "AI"],
+    tags: ["3D Production", "VFX Supervisor", "Generative AI"],
     blurb: "“Beyond Romance” became the core of Zalando's Valentine's campaign, translating the brand's message of inclusive love into a cinematic moving-image format.",
     // gallery/hero regenerated from Assets/projects/zalando/ via
     // scripts/gen_gallery.py — rerun that script after renaming/adding files
@@ -595,7 +595,7 @@ const PROJECTS = [
       { role: "Studio", name: "Looping Lovers" },
       { role: "Compositing", name: "Henning Herrholz" },
     ],
-    tags: ["Artist", "Art Direction", "Lookdev", "AI", "Full Production"],
+    tags: ["Artist", "Art Direction", "Lookdev", "Generative AI", "Full Production"],
     blurb: "SuperPop Festival invited us to contribute a visual artist performance to their show. Alongside a lineup of musicians and artists, we delivered a stage show in collaboration with DJ Raiden — built around a falling star, and a moment of freedom and power, as experienced through music. We brought together our full 3D pipeline, motion capture, environment building, and the latest AI methods to make it happen.",
     hero: media("mux", "5kPcLdjeceiNMoey3Z8aRW2htQeVrxQOQSiSqF1yN7M"),
     previews: previews(
@@ -701,7 +701,7 @@ const PROJECTS = [
       { role: "Partner", name: "Philipp Ries" },
       { role: "Studio", name: "Looping Lovers" },
     ],
-    tags: ["3D Production", "Art Direction", "Lookdev", "AI"],
+    tags: ["3D Production", "Art Direction", "Lookdev", "Generative AI"],
     blurb: "Afterlife became a long-term collaboration partner. Over the years we contributed visuals to numerous stage shows across locations and songs — always high-end, always on tight timelines, keeping pace with the relentless demand of this visual, music-driven storytelling machine. The work came with a lot of creative freedom, backed by sharp art direction from the team, and took us to the US and London to see the massive screen installations first hand.",
     hero: media("mux", "IqfxlAhHn00HMetv9Mso53NhrClGQa6B00s4oqbfU4vBI"),
     // gen_gallery.py picked up 7abd3d218995693.68a83fa7e5f88.jpeg as a
@@ -750,7 +750,7 @@ const PROJECTS = [
       { role: "Narrative, Animation", name: "Philipp Ries" },
     ],
     links: ["https://www.instagram.com/p/C0PC0eCqp-K/?hl=de"],
-    tags: ["3D Production", "ComfyUI", "AI"],
+    tags: ["3D Production", "ComfyUI", "Generative AI"],
     blurb: "For the 2024 South America Tour of Afterlife.OFC, we created a full visual trailer using some of the most advanced generative AI image workflows available at the time. Our pipeline combined ComfyUI with a custom-developed Stable Diffusion img2img workflow, allowing us to merge traditional 3D asset creation with generative AI. Base assets were modeled and animated in Cinema 4D, AI layers were generated and refined through our tailored workflows, and everything was brought together in compositing to achieve the final look.",
     // gen_gallery.py "Afterlife announement" — no Mux video for this one,
     // hero is the local 010.jpg
@@ -845,7 +845,7 @@ const PROJECTS = [
       { role: "Studio", name: "Looping Lovers" },
     ],
     links: ["https://flowersforsociety.com/"],
-    tags: ["Branding", "3D Production", "Art Direction", "AI", "NFT"],
+    tags: ["Branding", "3D Production", "Art Direction", "Generative AI", "NFT"],
     blurb: "We developed the full core identity for Flowers for Society's exclusive NFT membership club, building a narrative rooted in the essence of their young, bold brand and their long-lasting journey in the sneaker world. Each digital flower became a symbol of growth, individuality, and belonging — generated through a custom AI-driven process, training models on curated datasets and crossbreeding imagery with tools like Artbreeder and RunwayML. Every flower was analyzed and categorized into metadata, forming a collection of 5,000 unique NFTs that act as membership keys to the Flowers for Society world. The visuals extended beyond the digital space, carried into the physical world through apparel prints and brand touchpoints — bridging sneakers, technology and art into one cohesive universe.",
     // gen_gallery.py "FFS - Identity" — 010.mp4 is the only bare-numbered
     // file (no L/M/S letter), so it's the hero by convention
