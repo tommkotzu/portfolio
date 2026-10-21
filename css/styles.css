@@ -480,8 +480,7 @@ html .tag-pill.tag-hl {
 .link-card-arrow { display: inline-flex; color: var(--muted2); }
 .link-card:hover .link-card-arrow { color: var(--text); }
 .link-card-body { padding: 14px; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 12px; line-height: 1.7; color: var(--muted2); }
-.link-card-body p { margin: 0 0 12px; }
-.link-card-url { color: var(--text); text-decoration: underline; text-underline-offset: 3px; word-break: break-all; }
+.link-card-body p { margin: 0; }
 .prompt-card.is-collapsed pre { max-height: 118px; overflow: hidden; -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent); mask-image: linear-gradient(to bottom, #000 40%, transparent); }
 .prompt-more { display: block; width: 100%; padding: 9px 14px; font: inherit; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted2); background: none; border: 0; border-top: 1px solid var(--line); cursor: pointer; text-align: right; }
 .prompt-more:hover { color: var(--text); background: var(--stripe1); }

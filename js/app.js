@@ -394,8 +394,7 @@
     if (item.type === "link") {
       // text card with an outbound link, same frame as the prompt card
       const ARROW = `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M8 7h9v9"/></svg>`;
-      const host = item.href.replace(/^https?:\/\//, "");
-      return `<a class="media-wrap prompt-card link-card ${cls}"${dataIdx} href="${item.href}" target="_blank" rel="noopener"><div class="prompt-head"><span>${item.label}</span><span class="link-card-arrow">${ARROW}</span></div><div class="link-card-body"><p>${item.text}</p><span class="link-card-url">${host}</span></div></a>`;
+      return `<a class="media-wrap prompt-card link-card ${cls}"${dataIdx} href="${item.href}" target="_blank" rel="noopener"><div class="prompt-head"><span>${item.label}</span><span class="link-card-arrow">${ARROW}</span></div><div class="link-card-body"><p>${item.text}</p></div></a>`;
     }
     if (item.type === "prompt") {
       const COPY_ICON = `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>`;
@@ -404,7 +403,7 @@
       // More/Less button underneath (used in the project's Resources column)
       const collapsed = !!opts.collapsed;
       const more = collapsed ? `<button class="prompt-more" type="button" data-prompt-more aria-expanded="false">More</button>` : "";
-      return `<div class="media-wrap prompt-card${collapsed ? " is-collapsed" : ""} ${cls}"${dataIdx}><div class="prompt-head"><span>Prompt</span><button class="prompt-copy" type="button" data-copy-prompt aria-label="Copy prompt" title="Copy prompt">${COPY_ICON}</button></div><pre><code>${esc}</code></pre>${more}</div>`;
+      return `<div class="media-wrap prompt-card${collapsed ? " is-collapsed" : ""} ${cls}"${dataIdx}><div class="prompt-head"><span>${item.label || "Prompt"}</span><button class="prompt-copy" type="button" data-copy-prompt aria-label="Copy prompt" title="Copy prompt">${COPY_ICON}</button></div><pre><code>${esc}</code></pre>${more}</div>`;
     }
     if (item.type === "vimeo") {
       const vimeoCls = fill ? "" : "vimeo-embed";
