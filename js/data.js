@@ -49,46 +49,52 @@ const PROJECTS = [
     year: "2026", // not given — confirm/adjust
     role: "Director",
     credits: [],
-    tags: ["Generative AI", "Art Direction"], // placeholder — confirm/adjust
+    tags: ["Generative AI", "Art Direction", "ComfyUI", "Higgsfield"],
     blurb: "<p>Meet Ramona, an AI-generated pathfinder hiking the mountains with her goat, exploring the wild. Every frame is fully generated.</p><p>Ramona began as a two-hour challenge: how far can an agent-driven workflow go with minimal steering? I worked entirely inside Claude, connected Higgsfield and Seedance, and let the agents lead. They shaped the character, wrote prompts, generated stills and motion, and made creative calls along the way. My role shifted from maker to director: setting the brief, curating results and keeping the story consistent.</p><p>The result is a glimpse of a new production model that is fast, exploratory and agent-led.</p>",
     // gen_gallery.py "AI case studie" — preview/ holds small (1200px) copies of
-    // three gallery stills for the hover-scrub, so hovering doesn't wait on
+    // gallery stills + short clips for the hover-scrub (the clips play as you move down the card), so hovering doesn't wait on
     // the full-size images
     hero: media("video", ASSET_ROOT + "AI case studie/010Hero.mp4"),
-    previews: previews(
-      "AI case studie/preview/01.jpg",
-      "AI case studie/preview/02.jpg",
-      "AI case studie/preview/03.jpg"
-    ),
+    previews: [
+      media("image", ASSET_ROOT + "AI case studie/preview/01.jpg"),
+      media("video", ASSET_ROOT + "AI case studie/preview/clip1.mp4"),
+      media("image", ASSET_ROOT + "AI case studie/preview/02.jpg"),
+      media("video", ASSET_ROOT + "AI case studie/preview/03.mp4"),
+    ],
     galleryStyle: "editorial",
+    // text cards shown in the Resources column next to the intro (not real
+    // assets, so they skip media()'s path encoding)
+    resources: [
+      { type: "prompt", text: "Fashion character turnaround sheet on a seamless off-white studio background, soft even lighting, photorealistic. Young woman with a chin-length black bob, olive-green 5-panel cap, amber-tinted oversized sport sunglasses. Outfit: color-blocked lightweight windbreaker in mustard yellow and pale mint with a yellow zip and hood; rust-orange and forest-green trail running vest with chest pockets, sternum straps and yellow drawcords; split running shorts in rust and forest green; cream crew socks with green, rust and mustard stripes; burgundy and mustard trail running shoes with cream midsoles and gum outsoles. Layout: front view standing, back view, three-quarter walking pose, side-profile running pose, plus inset detail shots of the shoes with socks and a close crop of the vest pockets. 70s outdoor palette, earthy and muted, editorial catalog style, 16:9." },
+      { type: "link", label: "ComfyUI Toolkit", href: "https://github.com/tommkotzu/comfyui-toolkit", text: "The workflow and custom nodes for the time slice effect are available here. I use ComfyUI for some of the effects, together with Claude Code." },
+    ],
     gallery: [
       media("video", ASSET_ROOT + "AI case studie/015L.mp4"), // 0 (L)
-      media("video", ASSET_ROOT + "AI case studie/016M.mp4"), // 1 (M)
-      media("image", ASSET_ROOT + "AI case studie/022L.jpg"), // 2 (L)
-      media("image", ASSET_ROOT + "AI case studie/025M.jpg"), // 3 (M)
-      media("image", ASSET_ROOT + "AI case studie/028M.jpg"), // 4 (M)
-      media("image", ASSET_ROOT + "AI case studie/030S.jpg"), // 5 (S)
-      media("image", ASSET_ROOT + "AI case studie/035L.jpg"), // 6 (L)
-      media("image", ASSET_ROOT + "AI case studie/040S.jpg"), // 7 (S)
-      media("image", ASSET_ROOT + "AI case studie/050M.jpg"), // 8 (M)
-      media("image", ASSET_ROOT + "AI case studie/080L.jpg"), // 9 (L)
-      media("video", ASSET_ROOT + "AI case studie/080L.mp4"), // 10 (portrait clip)
-      media("image", ASSET_ROOT + "AI case studie/085L.jpg"), // 11 (character sheet)
-      // text card (rendered as a small code field next to the sheet) — not
-      // a real asset, so it skips media()'s path encoding
-      { type: "prompt", text: "Fashion character turnaround sheet on a seamless off-white studio background, soft even lighting, photorealistic. Young woman with a chin-length black bob, olive-green 5-panel cap, amber-tinted oversized sport sunglasses. Outfit: color-blocked lightweight windbreaker in mustard yellow and pale mint with a yellow zip and hood; rust-orange and forest-green trail running vest with chest pockets, sternum straps and yellow drawcords; split running shorts in rust and forest green; cream crew socks with green, rust and mustard stripes; burgundy and mustard trail running shoes with cream midsoles and gum outsoles. Layout: front view standing, back view, three-quarter walking pose, side-profile running pose, plus inset detail shots of the shoes with socks and a close crop of the vest pockets. 70s outdoor palette, earthy and muted, editorial catalog style, 16:9." }, // 12
+      media("image", ASSET_ROOT + "AI case studie/022L.jpg"), // 1 (L)
+      media("image", ASSET_ROOT + "AI case studie/025M.jpg"), // 2 (M)
+      media("image", ASSET_ROOT + "AI case studie/028M.jpg"), // 3 (M)
+      media("image", ASSET_ROOT + "AI case studie/030S.jpg"), // 4 (S)
+      media("image", ASSET_ROOT + "AI case studie/035L.jpg"), // 5 (L)
+      media("image", ASSET_ROOT + "AI case studie/040S.jpg"), // 6 (S)
+      media("image", ASSET_ROOT + "AI case studie/050M.jpg"), // 7 (M)
+      media("image", ASSET_ROOT + "AI case studie/080M.jpg"), // 8 (M)
+      media("video", ASSET_ROOT + "AI case studie/080M.mp4"), // 9 (portrait clip)
+      media("image", ASSET_ROOT + "AI case studie/085L.jpg"), // 10 (character sheet)
+      media("video", ASSET_ROOT + "AI case studie/086L.mp4"), // 11 (L)
+      media("image", ASSET_ROOT + "AI case studie/090L.jpg"), // 12 (ComfyUI time slice graph)
     ],
     editorialRows: [
       { cols: [0], align: "left" },
-      { cols: [1], align: "right", size: "M" },
-      { cols: [2], align: "center" },
-      { cols: [3, 4], sizes: ["M", "M"], offsets: [50, 60], align: "right" },
-      { cols: [5], align: "left", size: "S" },
-      { cols: [6], align: "right" },
-      { cols: [7, 8], sizes: ["S", "M"], offsets: [0, 50], align: "center" },
-      { cols: [9], align: "left" },
-      { cols: [10], align: "right", size: "M" },
-      { cols: [11, 12], sizes: ["M", "S"], offsets: [0, 40], align: "center" },
+      { cols: [1], align: "center" },
+      { cols: [2, 3], sizes: ["M", "M"], offsets: [50, 60], align: "right" },
+      { cols: [4], align: "left", size: "S" },
+      { cols: [5], align: "right" },
+      { cols: [6, 7], sizes: ["S", "M"], offsets: [0, 50], align: "center" },
+      { cols: [8], align: "left", size: "M" },
+      { cols: [9], align: "right", size: "M" },
+      { cols: [10], align: "center" },
+      { cols: [11], align: "left" },
+      { cols: [12], align: "center" },
     ],
   },
   {

@@ -391,10 +391,20 @@
     if (item.type === "image") {
       return `<div class="media-wrap ${cls}"${arStyle}${dataIdx}><img class="${innerCls}" src="${item.src}"${dims && !fill ? ` width="${dims[0]}" height="${dims[1]}"` : ""} loading="lazy" decoding="async" alt=""></div>`;
     }
+    if (item.type === "link") {
+      // text card with an outbound link, same frame as the prompt card
+      const ARROW = `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M8 7h9v9"/></svg>`;
+      const host = item.href.replace(/^https?:\/\//, "");
+      return `<a class="media-wrap prompt-card link-card ${cls}"${dataIdx} href="${item.href}" target="_blank" rel="noopener"><div class="prompt-head"><span>${item.label}</span><span class="link-card-arrow">${ARROW}</span></div><div class="link-card-body"><p>${item.text}</p><span class="link-card-url">${host}</span></div></a>`;
+    }
     if (item.type === "prompt") {
       const COPY_ICON = `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>`;
       const esc = item.text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-      return `<div class="media-wrap prompt-card ${cls}"${dataIdx}><div class="prompt-head"><span>Prompt</span><button class="prompt-copy" type="button" data-copy-prompt aria-label="Copy prompt" title="Copy prompt">${COPY_ICON}</button></div><pre><code>${esc}</code></pre></div>`;
+      // opts.collapsed: show only the top of a long prompt, fading out, with a
+      // More/Less button underneath (used in the project's Resources column)
+      const collapsed = !!opts.collapsed;
+      const more = collapsed ? `<button class="prompt-more" type="button" data-prompt-more aria-expanded="false">More</button>` : "";
+      return `<div class="media-wrap prompt-card${collapsed ? " is-collapsed" : ""} ${cls}"${dataIdx}><div class="prompt-head"><span>Prompt</span><button class="prompt-copy" type="button" data-copy-prompt aria-label="Copy prompt" title="Copy prompt">${COPY_ICON}</button></div><pre><code>${esc}</code></pre>${more}</div>`;
     }
     if (item.type === "vimeo") {
       const vimeoCls = fill ? "" : "vimeo-embed";
@@ -483,6 +493,7 @@
   // a media card whose image cycles through a project's preview-folder images as the
   // cursor moves vertically over it (mirrors the original design's frame-scrub concept,
   // but driven by real preview photos instead of placeholder frames)
+  const isClipUrl = (u) => /\.(mp4|webm)(\?|$)/i.test(u);
   function scrubMediaHTML(previewItems, opts = {}) {
     const cls = opts.cls || "";
     const fill = opts.fill !== false;
@@ -495,9 +506,15 @@
     // different each visit, without ever mixing in another project's images
     const startIdx = opts.randomStart ? Math.floor(Math.random() * urls.length) : 0;
     const ambientCls = opts.ambient ? " ambient" : "";
+    // frames can be short clips (.mp4/.webm) as well as stills — those play in
+    // a third, video layer that fades in over the image layers (see
+    // swapScrubImage); only added when the project actually has one
+    const hasClip = urls.some(isClipUrl);
+    const clipLayer = hasClip ? `<video class="scrub-video" muted loop playsinline preload="none"></video>` : "";
     return `<div class="media-wrap scrub${ambientCls} ${cls}" data-scrub="${data}" data-idx="${startIdx}">
       <img class="${innerCls} active" src="${urls[startIdx]}" loading="lazy" alt="">
       <img class="${innerCls}" loading="lazy" alt="">
+      ${clipLayer}
     </div>`;
   }
 
@@ -505,6 +522,15 @@
   // src, waits for it to decode, then fades it in over the visible one
   function swapScrubImage(el, idx, url) {
     el.dataset.idx = String(idx);
+    const clip = el.querySelector("video.scrub-video");
+    if (isClipUrl(url)) {
+      if (!clip) return;
+      if (clip.getAttribute("src") !== url) clip.src = url;
+      clip.classList.add("active");
+      clip.play().catch(() => {});
+      return;
+    }
+    if (clip) { clip.classList.remove("active"); clip.pause(); }
     const front = el.querySelector("img.active");
     const back = el.querySelector("img:not(.active)");
     back.onload = () => {
@@ -524,7 +550,7 @@
     // first hover: pull every frame into the cache right away, so scrubbing
     // down the card doesn't wait on a network fetch per frame (noticeable
     // on the live site)
-    if (!el._scrubPreloaded) { el._scrubPreloaded = true; urls.forEach((u) => { new Image().src = u; }); }
+    if (!el._scrubPreloaded) { el._scrubPreloaded = true; urls.filter((u) => !isClipUrl(u)).forEach((u) => { new Image().src = u; }); }
     const rect = el.getBoundingClientRect();
     const pct = (e.clientY - rect.top) / rect.height;
     const idx = Math.min(urls.length - 1, Math.max(0, Math.floor(pct * urls.length)));
@@ -692,7 +718,7 @@
       body = `<div class="list-rows" id="list-rows">
         ${PROJECTS.map(
           (p, i) => `
-        <div class="list-row reveal" data-open-project="${p.slug}" data-previews="${encodeURIComponent(JSON.stringify(p.previews.map((pv) => pv.src)))}">
+        <div class="list-row reveal" data-open-project="${p.slug}" data-previews="${encodeURIComponent(JSON.stringify(p.previews.map((pv) => pv.src).filter((u) => !isClipUrl(u))))}">
           <span class="li-idx">${String(i + 1).padStart(2, "0")}</span>
           <span class="li-title">${projectTitle(p)}</span>
           <div class="li-tags">${tagPills(p.tags)}</div>
@@ -755,7 +781,7 @@
     const captions = [];
     PROJECTS.forEach((p) => {
       p.gallery.forEach((item) => {
-        if (item.type === "prompt") return;
+        if (item.type === "prompt" || item.type === "link") return;
         tiles.push(item);
         captions.push({ title: projectTitle(p), tags: p.tags, slug: p.slug });
       });
@@ -1006,7 +1032,12 @@
               <div class="detail-loc">${active.location}</div>
             </div>
           </div>
-          <div class="detail-blurb">${active.blurb}</div>
+          <div class="detail-body">
+            <div class="detail-blurb">${active.blurb}</div>
+            ${active.resources && active.resources.length ? `<aside class="detail-resources">
+              ${active.resources.map((r) => mediaHTML(r, { collapsed: true })).join("")}
+            </aside>` : ""}
+          </div>
           ${isEditorial || !active.gallery.length ? "" : `
           <div class="gallery-toggle">
             <div class="opt ${state.galleryView === "spacious" ? "active" : ""}" data-set-gallery="spacious">Spacious</div>
@@ -1064,7 +1095,7 @@
   // sense — allowVimeo is derived from whether captions were passed, which
   // only happens for that view (see the .all-content-item click handler).
   function lightboxEligible(item, allowVimeo) {
-    return !!item && item.type !== "prompt" && (item.type !== "vimeo" || !!allowVimeo);
+    return !!item && item.type !== "prompt" && item.type !== "link" && (item.type !== "vimeo" || !!allowVimeo);
   }
   function openMediaLightbox(items, idx, captions, allowVimeoOverride) {
     const allowVimeo = !!captions || !!allowVimeoOverride;
@@ -1506,6 +1537,15 @@
 
   // ---------- delegated events ----------
   document.body.addEventListener("click", (e) => {
+    const moreBtn = e.target.closest("[data-prompt-more]");
+    if (moreBtn) {
+      const card = moreBtn.closest(".prompt-card");
+      const open = card.classList.toggle("is-collapsed") === false;
+      moreBtn.textContent = open ? "Less" : "More";
+      moreBtn.setAttribute("aria-expanded", String(open));
+      return;
+    }
+
     const copyBtn = e.target.closest("[data-copy-prompt]");
     if (copyBtn) {
       const text = copyBtn.closest(".prompt-card").querySelector("code").textContent;
