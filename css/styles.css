@@ -306,10 +306,12 @@ body.mobile-nav-locked { overflow: hidden; }
 .card-overlay-row .t { font-size: 26px; font-weight: 600; letter-spacing: -0.01em; }
 .tag-row { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
 .tag-pill { font-size: 11px; padding: 4px 10px; border: 1px solid var(--lineStrong); border-radius: 999px; color: var(--muted2);  transition: color 0.18s ease, border-color 0.18s ease, background-color 0.18s ease; }
-.tag-pill.tag-hl {
-  color: hsl(var(--tag-hue) 100% var(--scrambleL));
-  border-color: hsl(var(--tag-hue) 100% var(--scrambleL));
-  background-color: hsl(var(--tag-hue) 100% var(--scrambleL) / 0.12);
+html .tag-pill.tag-hl {
+  /* same hues as the shuffle effect, softened to pastel: the fill is light
+     enough that dark text reads on every one of them, in both themes */
+  color: #1a1a1a;
+  border-color: transparent;
+  background-color: hsl(var(--tag-hue) 92% 80%);
 }
 .card-overlay .tag-pill { color: #fff; border-color: rgba(255,255,255,0.5); }
 /* hover doesn't really exist on touch — show the title overlay plainly on
