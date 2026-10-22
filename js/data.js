@@ -57,9 +57,8 @@ const PROJECTS = [
     hero: media("video", ASSET_ROOT + "AI case studie/010Hero.mp4"),
     previews: [
       media("image", ASSET_ROOT + "AI case studie/preview/01.jpg"),
-      media("video", ASSET_ROOT + "AI case studie/preview/clip1.mp4"),
-      media("image", ASSET_ROOT + "AI case studie/preview/02.jpg"),
       media("video", ASSET_ROOT + "AI case studie/preview/03.mp4"),
+      media("image", ASSET_ROOT + "AI case studie/preview/02.jpg"),
     ],
     galleryStyle: "editorial",
     // text cards shown in the Resources column next to the intro (not real
@@ -73,28 +72,35 @@ const PROJECTS = [
       media("image", ASSET_ROOT + "AI case studie/022L.jpg"), // 1 (L)
       media("image", ASSET_ROOT + "AI case studie/025M.jpg"), // 2 (M)
       media("image", ASSET_ROOT + "AI case studie/028M.jpg"), // 3 (M)
-      media("image", ASSET_ROOT + "AI case studie/030S.jpg"), // 4 (S)
-      media("image", ASSET_ROOT + "AI case studie/035L.jpg"), // 5 (L)
-      media("image", ASSET_ROOT + "AI case studie/040S.jpg"), // 6 (S)
-      media("image", ASSET_ROOT + "AI case studie/050M.jpg"), // 7 (M)
-      media("image", ASSET_ROOT + "AI case studie/080M.jpg"), // 8 (M)
-      media("video", ASSET_ROOT + "AI case studie/080M.mp4"), // 9 (portrait clip)
-      media("image", ASSET_ROOT + "AI case studie/085L.jpg"), // 10 (character sheet)
-      media("video", ASSET_ROOT + "AI case studie/086L.mp4"), // 11 (L)
-      media("image", ASSET_ROOT + "AI case studie/090L.jpg"), // 12 (ComfyUI time slice graph)
+      media("image", ASSET_ROOT + "AI case studie/029M+.jpg"), // 4 (M)
+      media("image", ASSET_ROOT + "AI case studie/031m.jpg"), // 5 (M)
+      media("image", ASSET_ROOT + "AI case studie/032M.jpg"), // 6 (M)
+      media("image", ASSET_ROOT + "AI case studie/032S.jpg"), // 7 (S)
+      media("image", ASSET_ROOT + "AI case studie/033S.jpg"), // 8 (S)
+      media("image", ASSET_ROOT + "AI case studie/034S.jpg"), // 9 (S)
+      media("image", ASSET_ROOT + "AI case studie/035L.jpg"), // 10 (L)
+      media("image", ASSET_ROOT + "AI case studie/040S.jpg"), // 11 (S)
+      media("image", ASSET_ROOT + "AI case studie/050M.jpg"), // 12 (M)
+      media("image", ASSET_ROOT + "AI case studie/080M.jpg"), // 13 (M)
+      media("video", ASSET_ROOT + "AI case studie/080M.mp4"), // 14 (portrait clip)
+      media("image", ASSET_ROOT + "AI case studie/085L.jpg"), // 15 (character sheet)
+      media("video", ASSET_ROOT + "AI case studie/086L.mp4"), // 16 (L)
+      media("image", ASSET_ROOT + "AI case studie/090L.jpg"), // 17 (ComfyUI time slice graph)
     ],
     editorialRows: [
       { cols: [0], align: "left" },
       { cols: [1], align: "center" },
       { cols: [2, 3], sizes: ["M", "M"], offsets: [50, 60], align: "right" },
-      { cols: [4], align: "left", size: "S" },
-      { cols: [5], align: "right" },
-      { cols: [6, 7], sizes: ["S", "M"], offsets: [0, 50], align: "center" },
-      { cols: [8], align: "left", size: "M" },
-      { cols: [9], align: "right", size: "M" },
-      { cols: [10], align: "center" },
-      { cols: [11], align: "left" },
-      { cols: [12], align: "center" },
+      { cols: [4, 5], sizes: ["M", "M"], offsets: [0, 50], align: "left" },
+      { cols: [6, 7], sizes: ["M", "S"], offsets: [40, 0], align: "right" },
+      { cols: [8, 9], sizes: ["S", "S"], offsets: [0, 60], align: "center" },
+      { cols: [10], align: "right" },
+      { cols: [11, 12], sizes: ["S", "M"], offsets: [0, 50], align: "center" },
+      { cols: [13], align: "left", size: "M" },
+      { cols: [14], align: "right", size: "M" },
+      { cols: [15], align: "center" },
+      { cols: [16], align: "left" },
+      { cols: [17], align: "center" },
     ],
   },
   {
