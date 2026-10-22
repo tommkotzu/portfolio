@@ -86,6 +86,8 @@ const PROJECTS = [
       media("image", ASSET_ROOT + "AI case studie/085L.jpg"), // 15 (character sheet)
       media("video", ASSET_ROOT + "AI case studie/086L.mp4"), // 16 (L)
       media("image", ASSET_ROOT + "AI case studie/090L.jpg"), // 17 (ComfyUI time slice graph)
+      media("video", ASSET_ROOT + "AI case studie/095M.mp4"), // 18 (M, head on black)
+      media("image", ASSET_ROOT + "AI case studie/095S.jpg"), // 19 (S, head on green screen)
     ],
     editorialRows: [
       { cols: [0], align: "left" },
@@ -101,6 +103,7 @@ const PROJECTS = [
       { cols: [15], align: "center" },
       { cols: [16], align: "left" },
       { cols: [17], align: "center" },
+      { cols: [18, 19], sizes: ["M", "S"], offsets: [0, 60], align: "right" },
     ],
   },
   {
