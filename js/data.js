@@ -761,24 +761,25 @@ const PROJECTS = [
     links: ["https://www.instagram.com/p/C0PC0eCqp-K/?hl=de"],
     tags: ["3D Production", "ComfyUI", "Generative AI"],
     blurb: "For the 2024 South America Tour of Afterlife.OFC, we created a full visual trailer using some of the most advanced generative AI image workflows available at the time. Our pipeline combined ComfyUI with a custom-developed Stable Diffusion img2img workflow, allowing us to merge traditional 3D asset creation with generative AI. Base assets were modeled and animated in Cinema 4D, AI layers were generated and refined through our tailored workflows, and everything was brought together in compositing to achieve the final look.",
-    // gen_gallery.py "Afterlife announement" — no Mux video for this one,
-    // hero is the local 010.jpg
-    hero: media("image", ASSET_ROOT + "Afterlife announement/010.jpg"),
+    // gen_gallery.py "Afterlife announement" — hero is the local 040L.mp4
+    // breakdown; the final trailer (Mux) is the first gallery item, right
+    // below it. 010.jpg stays as the first hover-preview still
+    hero: media("video", ASSET_ROOT + "Afterlife announement/040L.mp4"),
     previews: previews(
       "Afterlife announement/010.jpg",
       "Afterlife announement/060S.png"
     ),
     galleryStyle: "editorial",
     gallery: [
-      media("image", ASSET_ROOT + "Afterlife announement/020M.jpg"), // 0 (M)
-      media("image", ASSET_ROOT + "Afterlife announement/030M.jpg"), // 1 (M)
-      media("video", ASSET_ROOT + "Afterlife announement/040L.mp4"), // 2 (L)
+      media("mux", "JiOZKsgf2Df8vUCQcX6BP19Quie3iH5tC7LWfkw01lwg", { ratio: "9/16", controls: true }), // 0 final trailer (portrait 720x1280)
+      media("image", ASSET_ROOT + "Afterlife announement/020M.jpg"), // 1 (M)
+      media("image", ASSET_ROOT + "Afterlife announement/030M.jpg"), // 2 (M)
       media("image", ASSET_ROOT + "Afterlife announement/050S.jpg"), // 3 (S)
       media("image", ASSET_ROOT + "Afterlife announement/060S.png"), // 4 (S)
     ],
     editorialRows: [
-      { cols: [0, 1], sizes: ["M", "M"], offsets: [0, 50], align: "left" },
-      { cols: [2], align: "right" },
+      { cols: [0], align: "center" },
+      { cols: [1, 2], sizes: ["M", "M"], offsets: [0, 50], align: "left" },
       { cols: [3, 4], sizes: ["S", "S"], offsets: [40, 70], align: "center" },
     ],
   },

@@ -481,10 +481,15 @@
       // so it drops into the exact same hero/gallery wiring as the "video"
       // branch above, just streaming adaptive HLS instead of one fixed file
       const poster = item.poster ? ` poster="${item.poster}"` : "";
-      const controls = opts.controls ? "controls" : "";
+      const controls = opts.controls || item.controls ? "controls" : "";
       const observedAttr = opts.hero || opts.noAutoplay ? "" : opts.capAutoplay ? " data-autoplay data-cap-autoplay" : " data-autoplay";
       const preload = opts.hero ? "metadata" : "none";
-      return `<div class="media-wrap ${cls}"${dataIdx}><mux-video class="${innerCls}" playback-id="${item.src}"${poster} preload="${preload}" ${controls} muted loop playsinline${observedAttr}></mux-video></div>`;
+      // item.ratio (e.g. "16/9"): a streamed clip has no intrinsic size before
+      // it loads, so a gallery placement reserves a box of that shape instead
+      const ratioBox = item.ratio && !fill && !opts.hero;
+      const ratioCls = ratioBox ? " media-ratio" : "";
+      const ratioStyle = ratioBox ? ` style="aspect-ratio:${item.ratio}"` : "";
+      return `<div class="media-wrap${ratioCls} ${cls}"${ratioStyle}${dataIdx}><mux-video class="${innerCls}" playback-id="${item.src}"${poster} preload="${preload}" ${controls} muted loop playsinline${observedAttr}></mux-video></div>`;
     }
     return `<div class="media-wrap ${cls} stripe"${dataIdx}></div>`;
   }
@@ -956,6 +961,18 @@
 
   // editorial gallery: uncropped, original-proportion media, sized well below the
   // full container width/height, drifting left/right/center for a floaty off-grid feel
+  // explicit width for gallery items that can't size themselves (embeds, and
+  // streamed clips with a known ratio). A tall clip is also capped so it never
+  // grows taller than ~85% of the window.
+  function editorialFixedWidth(item, capPx) {
+    if (item.ratio) {
+      const [rw, rh] = String(item.ratio).split("/").map(Number);
+      const r = rw / (rh || 1);
+      return `width:min(${capPx}px, calc(85vh * ${r.toFixed(4)}));`;
+    }
+    return item.type === "vimeo" ? `width:${capPx}px;` : "";
+  }
+
   function renderEditorialGallery(active) {
     const rowHTML = (row) => {
       const align = row.align || "left";
@@ -967,7 +984,8 @@
         // needs an explicit width — matching the size class's own cap makes it
         // land exactly where a same-sized image would
         const capPx = row.size === "M" ? 820 : row.size === "S" ? 560 : 1140;
-        const forceWidth = item.type === "vimeo" ? ` style="width:${capPx}px"` : "";
+        const fw = editorialFixedWidth(item, capPx);
+        const forceWidth = fw ? ` style="${fw}"` : "";
         return `<div class="editorial-row single align-${align}">
           <div class="editorial-item${sizeCls}"${forceWidth} data-idx="${row.cols[0]}">
             ${mediaHTML(item, { fill: false, cls: "reveal" })}
@@ -984,7 +1002,7 @@
           const size = row.sizes && row.sizes[i];
           const sizeCls = size === "M" ? " size-m" : size === "S" ? " size-s" : "";
           const capPx = size === "M" ? 760 : size === "S" ? 460 : 680;
-          const forceWidth = item.type === "vimeo" ? `width:${capPx}px;` : "";
+          const forceWidth = editorialFixedWidth(item, capPx);
           return `<div class="editorial-col${sizeCls}" style="margin-top:${offset}px;${forceWidth}" data-idx="${colIdx}">
             ${mediaHTML(item, { fill: false, cls: "reveal" })}
             ${item.caption ? `<div class="caption">${item.caption}</div>` : ""}
