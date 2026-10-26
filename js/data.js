@@ -1116,7 +1116,7 @@ const SCREENS = [
   media("vimeo", "129561880", { hash: "0b96244d8e" }),
 ];
 
-const SERVICES = ["Blender", "Cinema 4D", "Motion Design", "CAD Optimization", "Asset Creation", "Shader Development", "Geometry Nodes", "Brand Assets", "Imagery", "Visual Design"];
+const SERVICES = ["Blender", "Cinema 4D", "Motion Design", "CAD Optimization", "Asset Creation", "Shader Development", "Geometry Nodes", "Brand Assets", "Imagery", "Visual Design", "ComfyUI Node Noodling", "Agentic Workflows", "GenAI", "Vibecoding Tools"];
 
 const CLIENTS_COLLAB = ["Woodblock", "Siemens", "Nike", "Adidas", "Pigalle", "ACG", "RG/A", "LuisaViaRoma", "Vogue", "The Weeknd", "Google", "GNTM", "Psyop", "YouTube", "Artificial Rome", "B-Reel"];
 const CLIENTS_DIRECT = ["OpenAI", "CRO", "Breuninger", "Zalando", "Anyma", "Afterlife", "Balmain", "Flowers For Society", "Pacemaker", "About You", "Barbie", "Vly", "Dior", "Mattel"];
