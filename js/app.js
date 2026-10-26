@@ -1329,6 +1329,97 @@
     return `<div class="client-logos-wrap"><div class="client-logos">${set}${set}</div></div>`;
   }
 
+  // "What I Do": only three rows of terms show at a time; every 10s the whole
+  // set is swapped for a fresh random pick, all slots scrambling at once
+  // (same neon letter-shuffle as the nav name / headline role word). How many
+  // terms fit in three rows depends on the width, so each pick is fitted by
+  // measuring a hidden copy of the container.
+  const SERVICES_SHUFFLE_MS = 10000;
+  const SERVICES_ROWS = 3;
+  function servicesMarkup(list) {
+    return list.map((t) => `<span class="svc" data-w="${t}">${t}</span>`).join('<span class="dot">·</span>');
+  }
+  function shuffled(list) {
+    return [...list].sort(() => Math.random() - 0.5);
+  }
+  // the random order's terms that land on the first SERVICES_ROWS rows, plus
+  // the height of those rows
+  function fitServices(el) {
+    const probe = el.cloneNode(false);
+    probe.style.cssText = `position:absolute;visibility:hidden;pointer-events:none;height:auto;overflow:visible;min-height:0;width:${el.offsetWidth}px`;
+    probe.innerHTML = servicesMarkup(shuffled(SERVICES));
+    el.parentNode.appendChild(probe);
+    const svcs = [...probe.querySelectorAll(".svc")];
+    const tops = [...new Set(svcs.map((n) => n.offsetTop))].sort((x, y) => x - y).slice(0, SERVICES_ROWS);
+    const keep = svcs.filter((n) => tops.includes(n.offsetTop)).map((n) => n.textContent);
+    probe.innerHTML = servicesMarkup(keep);
+    const height = probe.offsetHeight;
+    probe.remove();
+    return { list: keep, height };
+  }
+  let servicesTimer = null;
+  let servicesResize = null;
+  function mountAbout() {
+    clearTimeout(servicesTimer);
+    if (servicesResize) window.removeEventListener("resize", servicesResize);
+    const el = document.querySelector(".about-services");
+    if (!el) return;
+    el.style.overflow = "hidden";
+
+    const setFirst = () => {
+      const { list, height } = fitServices(el);
+      el.style.height = `${height}px`;
+      el.innerHTML = servicesMarkup(list);
+    };
+    setFirst();
+    // the web font changes how many terms fit a row — refit once it has loaded
+    // (fonts.ready alone can resolve before the font is even requested)
+    if (document.fonts && document.fonts.load) document.fonts.load("500 22px Inter").then(() => { if (document.body.contains(el)) setFirst(); });
+    let resizeTimer = null;
+    servicesResize = () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => { if (document.body.contains(el)) setFirst(); }, 150); };
+    window.addEventListener("resize", servicesResize);
+
+    function shuffleOnce() {
+      const { list: targets, height } = fitServices(el);
+      el.style.height = `${height}px`;
+      el.innerHTML = servicesMarkup(targets);
+      const slots = [...el.querySelectorAll(".svc")];
+      const start = performance.now(), duration = 800;
+      (function frame(now) {
+        if (!document.body.contains(el)) return;
+        const progress = Math.min(1, (now - start) / duration);
+        slots.forEach((slot, i) => {
+          const target = targets[i];
+          slot.innerHTML = progress < 1 ? scrambleFrameHTML(target, Math.floor(progress * target.length)) : target;
+        });
+        if (progress < 1) requestAnimationFrame(frame);
+      })(start);
+    }
+    // hovering a single word re-scrambles just that word, then it settles
+    // back (same effect as the all-at-once shuffle, one slot)
+    el.addEventListener("mouseover", (e) => {
+      const slot = e.target.closest(".svc");
+      if (!slot || !el.contains(slot) || slot.dataset.busy) return;
+      const word = slot.dataset.w;
+      slot.dataset.busy = "1";
+      const start = performance.now(), duration = 550;
+      (function frame(now) {
+        if (!document.body.contains(slot)) return;
+        const progress = Math.min(1, (now - start) / duration);
+        slot.innerHTML = progress < 1 ? scrambleFrameHTML(word, Math.floor(progress * word.length)) : word;
+        if (progress < 1) requestAnimationFrame(frame);
+        else delete slot.dataset.busy;
+      })(start);
+    });
+
+    const tick = () => {
+      if (!document.body.contains(el)) return;
+      shuffleOnce();
+      servicesTimer = setTimeout(tick, SERVICES_SHUFFLE_MS);
+    };
+    servicesTimer = setTimeout(tick, SERVICES_SHUFFLE_MS);
+  }
+
   function renderAbout() {
     return `<div class="page about-page" data-screen="about">
       <div class="about-hero">
@@ -1349,7 +1440,7 @@
 
       <div class="about-row">
         <div class="about-row-label">What I Do</div>
-        <div class="about-services">${SERVICES.map((s) => `<span>${s}</span>`).join('<span class="dot">·</span>')}</div>
+        <div class="about-services">${servicesMarkup(SERVICES)}</div>
       </div>
 
       ${clientLogosMarqueeHTML()}
@@ -1578,6 +1669,7 @@
       screensMasonryBucketWidth = masonryColumnCount({ mobile: 2, tablet: 3, desktop: 4 });
     } else if (route.page === "about") {
       app.innerHTML = renderAbout();
+      mountAbout();
     } else if (route.page === "impressum") {
       app.innerHTML = renderImpressum();
     } else if (route.page === "datenschutz") {
