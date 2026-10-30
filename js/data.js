@@ -679,20 +679,25 @@ const PROJECTS = [
     galleryStyle: "editorial",
     gallery: [
       media("video", ASSET_ROOT + "loopinglovers/010M.mp4"), // 0 (M)
-      media("video", ASSET_ROOT + "loopinglovers/020S.mp4"), // 1 (S)
-      media("image", ASSET_ROOT + "loopinglovers/025m.jpg"), // 2 (M)
-      media("image", ASSET_ROOT + "loopinglovers/026S.webp"), // 3 (S)
-      media("video", ASSET_ROOT + "loopinglovers/030m.mp4"), // 4 (M)
-      media("video", ASSET_ROOT + "loopinglovers/040L.mp4"), // 5 (L)
-      media("video", ASSET_ROOT + "loopinglovers/050S.mp4"), // 6 (S)
-      media("image", ASSET_ROOT + "loopinglovers/060M.jpg"), // 7 (M)
+      media("video", ASSET_ROOT + "loopinglovers/015L.mp4"), // 1 (L, portrait)
+      media("video", ASSET_ROOT + "loopinglovers/020S.mp4"), // 2 (S)
+      media("image", ASSET_ROOT + "loopinglovers/025m.jpg"), // 3 (M)
+      media("image", ASSET_ROOT + "loopinglovers/026S.webp"), // 4 (S)
+      media("video", ASSET_ROOT + "loopinglovers/030m.mp4"), // 5 (M)
+      media("video", ASSET_ROOT + "loopinglovers/040L.mp4"), // 6 (L)
+      media("video", ASSET_ROOT + "loopinglovers/050S.mp4"), // 7 (S)
+      media("image", ASSET_ROOT + "loopinglovers/060M.jpg"), // 8 (M)
+      media("video", ASSET_ROOT + "loopinglovers/065L.mp4"), // 9 (L, portrait)
+      media("image", ASSET_ROOT + "loopinglovers/070L.jpg"), // 10 (L)
     ],
     editorialRows: [
-      { cols: [0, 1], sizes: ["M", "S"], offsets: [0, 50], align: "left" },
-      { cols: [2, 3], sizes: ["M", "S"], offsets: [60, 40], align: "right" },
-      { cols: [4], align: "center", size: "M" },
-      { cols: [5], align: "left" },
-      { cols: [6, 7], sizes: ["S", "M"], offsets: [50, 60], align: "right" },
+      { cols: [0, 1], sizes: ["M", "M"], offsets: [0, 50], align: "left" },
+      { cols: [2, 3], sizes: ["S", "M"], offsets: [60, 40], align: "right" },
+      { cols: [4, 5], sizes: ["S", "M"], offsets: [0, 50], align: "center" },
+      { cols: [6], align: "left" },
+      { cols: [7, 8], sizes: ["S", "M"], offsets: [50, 60], align: "right" },
+      { cols: [9], align: "center", size: "M" },
+      { cols: [10], align: "left" },
     ],
   },
   {
@@ -775,12 +780,15 @@ const PROJECTS = [
       media("image", ASSET_ROOT + "Afterlife announement/020M.jpg"), // 1 (M)
       media("image", ASSET_ROOT + "Afterlife announement/030M.jpg"), // 2 (M)
       media("image", ASSET_ROOT + "Afterlife announement/050S.jpg"), // 3 (S)
-      media("image", ASSET_ROOT + "Afterlife announement/060S.png"), // 4 (S)
+      media("image", ASSET_ROOT + "Afterlife announement/055s.png"), // 4 (S)
+      media("image", ASSET_ROOT + "Afterlife announement/060S.png"), // 5 (S)
+      media("video", ASSET_ROOT + "Afterlife announement/060M.mp4"), // 6 (M, portrait)
     ],
     editorialRows: [
       { cols: [0], align: "center" },
       { cols: [1, 2], sizes: ["M", "M"], offsets: [0, 50], align: "left" },
       { cols: [3, 4], sizes: ["S", "S"], offsets: [40, 70], align: "center" },
+      { cols: [5, 6], sizes: ["S", "M"], offsets: [0, 60], align: "right" },
     ],
   },
   {
@@ -867,39 +875,43 @@ const PROJECTS = [
     ),
     galleryStyle: "editorial",
     gallery: [
-      media("image", ASSET_ROOT + "FFS - Identity/020L.jpg"), // 0 (L)
-      media("image", ASSET_ROOT + "FFS - Identity/020S.jpg"), // 1 (S)
-      media("image", ASSET_ROOT + "FFS - Identity/030M.jpg"), // 2 (M)
-      media("image", ASSET_ROOT + "FFS - Identity/040M.jpg"), // 3 (M)
-      media("video", ASSET_ROOT + "FFS - Identity/045L.mp4"), // 4 (L)
-      media("image", ASSET_ROOT + "FFS - Identity/050L.jpg"), // 5 (L)
-      media("video", ASSET_ROOT + "FFS - Identity/060M.mp4"), // 6 (M)
-      media("image", ASSET_ROOT + "FFS - Identity/061M.jpg"), // 7 (M)
-      media("image", ASSET_ROOT + "FFS - Identity/062L.jpg"), // 8 (L)
-      media("image", ASSET_ROOT + "FFS - Identity/063S.jpg"), // 9 (S)
-      media("image", ASSET_ROOT + "FFS - Identity/064M.jpg"), // 10 (M)
-      media("image", ASSET_ROOT + "FFS - Identity/065L.jpg"), // 11 (L)
-      media("image", ASSET_ROOT + "FFS - Identity/070L.jpg"), // 12 (L)
-      media("image", ASSET_ROOT + "FFS - Identity/075m.png"), // 13 (M)
-      media("image", ASSET_ROOT + "FFS - Identity/080M.jpg"), // 14 (M)
-      media("image", ASSET_ROOT + "FFS - Identity/090S.jpg"), // 15 (S)
-      media("video", ASSET_ROOT + "FFS - Identity/090m.mp4"), // 16 (M)
-      media("video", ASSET_ROOT + "FFS - Identity/100S.mp4"), // 17 (S)
+      media("image", ASSET_ROOT + "FFS - Identity/010L.jpg"), // 0 (L)
+      media("image", ASSET_ROOT + "FFS - Identity/020L.jpg"), // 1 (L)
+      media("image", ASSET_ROOT + "FFS - Identity/020S.jpg"), // 2 (S)
+      media("image", ASSET_ROOT + "FFS - Identity/030M.jpg"), // 3 (M)
+      media("image", ASSET_ROOT + "FFS - Identity/040M.jpg"), // 4 (M)
+      media("video", ASSET_ROOT + "FFS - Identity/045L.mp4"), // 5 (L)
+      media("image", ASSET_ROOT + "FFS - Identity/050L.jpg"), // 6 (L)
+      media("video", ASSET_ROOT + "FFS - Identity/060M.mp4"), // 7 (M)
+      media("image", ASSET_ROOT + "FFS - Identity/061M.jpg"), // 8 (M)
+      media("image", ASSET_ROOT + "FFS - Identity/062L.jpg"), // 9 (L)
+      media("image", ASSET_ROOT + "FFS - Identity/063S.jpg"), // 10 (S)
+      media("image", ASSET_ROOT + "FFS - Identity/064M.jpg"), // 11 (M)
+      media("image", ASSET_ROOT + "FFS - Identity/065L.jpg"), // 12 (L)
+      media("image", ASSET_ROOT + "FFS - Identity/070L.jpg"), // 13 (L)
+      media("image", ASSET_ROOT + "FFS - Identity/075m.png"), // 14 (M)
+      media("image", ASSET_ROOT + "FFS - Identity/080M.jpg"), // 15 (M)
+      media("image", ASSET_ROOT + "FFS - Identity/085L.jpg"), // 16 (L)
+      media("image", ASSET_ROOT + "FFS - Identity/090S.jpg"), // 17 (S)
+      media("video", ASSET_ROOT + "FFS - Identity/090m.mp4"), // 18 (M)
+      media("video", ASSET_ROOT + "FFS - Identity/100S.mp4"), // 19 (S)
     ],
     editorialRows: [
-      { cols: [0], align: "left" },
-      { cols: [1, 2], sizes: ["S", "M"], offsets: [50, 60], align: "right" },
-      { cols: [3], align: "center", size: "M" },
-      { cols: [4], align: "left" },
-      { cols: [5], align: "right" },
-      { cols: [6, 7], sizes: ["M", "M"], offsets: [50, 60], align: "center" },
-      { cols: [8], align: "left" },
-      { cols: [9, 10], sizes: ["S", "M"], offsets: [70, 0], align: "right" },
-      { cols: [11], align: "center" },
-      { cols: [12], align: "left" },
-      { cols: [13, 14], sizes: ["M", "M"], offsets: [40, 70], align: "right" },
-      { cols: [15, 16], sizes: ["S", "M"], offsets: [0, 50], align: "center" },
-      { cols: [17], align: "left", size: "S" },
+      { cols: [0], align: "center" },
+      { cols: [1], align: "left" },
+      { cols: [2, 3], sizes: ["S", "M"], offsets: [50, 60], align: "right" },
+      { cols: [4], align: "center", size: "M" },
+      { cols: [5], align: "left" },
+      { cols: [6], align: "right" },
+      { cols: [7, 8], sizes: ["M", "M"], offsets: [50, 60], align: "center" },
+      { cols: [9], align: "left" },
+      { cols: [10, 11], sizes: ["S", "M"], offsets: [70, 0], align: "right" },
+      { cols: [12], align: "center" },
+      { cols: [13], align: "left" },
+      { cols: [14, 15], sizes: ["M", "M"], offsets: [40, 70], align: "right" },
+      { cols: [16], align: "center" },
+      { cols: [17, 18], sizes: ["S", "M"], offsets: [0, 50], align: "center" },
+      { cols: [19], align: "left", size: "S" },
     ],
   },
   {
@@ -1115,6 +1127,8 @@ const SCREENS = [
   media("image", "Assets/screenshots/SiemensDokuSite_41.webp"),
   media("image", "Assets/screenshots/SiemensDokuSite_51.webp"),
   media("vimeo", "129561880", { hash: "0b96244d8e" }),
+  media("image", "Assets/screenshots/ai1.jpg"),
+  media("image", "Assets/screenshots/ai2.jpg"),
 ];
 
 const SERVICES = ["Blender", "Cinema 4D", "Motion Design", "CAD Optimization", "Asset Creation", "Shader Development", "Geometry Nodes", "Brand Assets", "Imagery", "Visual Design", "ComfyUI Node Noodling", "Agentic Workflows", "GenAI", "Vibecoding Tools", "GitHub", "Brand", "Storytelling", "Content", "Strategy"];
