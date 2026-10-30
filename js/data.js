@@ -863,7 +863,7 @@ const PROJECTS = [
       { role: "Studio", name: "Looping Lovers" },
     ],
     links: ["https://flowersforsociety.com/"],
-    tags: ["Branding", "3D Production", "Art Direction", "Generative AI", "NFT"],
+    tags: ["Branding", "3D Production", "Art Direction", "Generative AI", "NFT", "RunwayML"],
     blurb: "We developed the full core identity for Flowers for Society's exclusive NFT membership club, building a narrative rooted in the essence of their young, bold brand and their long-lasting journey in the sneaker world. Each digital flower became a symbol of growth, individuality, and belonging — generated through a custom AI-driven process, training models on curated datasets and crossbreeding imagery with tools like Artbreeder and RunwayML. Every flower was analyzed and categorized into metadata, forming a collection of 5,000 unique NFTs that act as membership keys to the Flowers for Society world. The visuals extended beyond the digital space, carried into the physical world through apparel prints and brand touchpoints — bridging sneakers, technology and art into one cohesive universe.",
     // gen_gallery.py "FFS - Identity" — 010.mp4 is the only bare-numbered
     // file (no L/M/S letter), so it's the hero by convention
@@ -1131,7 +1131,7 @@ const SCREENS = [
   media("image", "Assets/screenshots/ai2.jpg"),
 ];
 
-const SERVICES = ["Blender", "Cinema 4D", "Motion Design", "CAD Optimization", "Asset Creation", "Shader Development", "Geometry Nodes", "Brand Assets", "Imagery", "Visual Design", "ComfyUI Node Noodling", "Agentic Workflows", "GenAI", "Vibecoding Tools", "GitHub", "Brand", "Storytelling", "Content", "Strategy"];
+const SERVICES = ["Blender", "Cinema 4D", "Motion Design", "CAD Optimization", "Asset Creation", "Shader Development", "Geometry Nodes", "Brand Assets", "Imagery", "Visual Design", "ComfyUI Node Noodling", "Agentic Workflows", "GenAI", "Vibecoding Tools", "GitHub", "Brand", "Storytelling", "Content", "Strategy", "Workflow Development"];
 
 const CLIENTS_COLLAB = ["Woodblock", "Siemens", "Nike", "Adidas", "Pigalle", "ACG", "RG/A", "LuisaViaRoma", "Vogue", "The Weeknd", "Google", "GNTM", "Psyop", "YouTube", "Artificial Rome", "B-Reel"];
 const CLIENTS_DIRECT = ["OpenAI", "CRO", "Breuninger", "Zalando", "Anyma", "Afterlife", "Balmain", "Flowers For Society", "Pacemaker", "About You", "Barbie", "Vly", "Dior", "Mattel"];
