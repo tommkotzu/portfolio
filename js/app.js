@@ -545,25 +545,64 @@
   }
 
   // delegated hover-scrub: works for any .media-wrap.scrub on the page, survives re-renders.
-  // crossfades between two stacked <img> layers instead of hard-cutting the src.
+  // The frame advances with the DISTANCE the pointer travels while inside the
+  // card (direction doesn't matter — any entry side works, and it keeps cycling
+  // if you keep moving). Two things make it feel fluid rather than mechanical:
+  //  - pointer speed scales the distance (slow = fine control, a quick flick
+  //    sweeps through several frames), using a lightly smoothed speed;
+  //  - a short glide: when the pointer stops, the last velocity decays out over
+  //    ~a quarter second instead of halting dead.
+  // One "step" of travel ≈ card width / number of frames at normal speed.
+  // Crossfades between two stacked <img> layers instead of hard-cutting the src.
+  const SCRUB_MIN_STEP = 40, SCRUB_MAX_STEP = 140;
+  const scrubGain = (v) => 0.5 + Math.min(v, 2.5) * 0.7; // v in px/ms
+  function applyScrub(el, st) {
+    const urls = JSON.parse(decodeURIComponent(el.dataset.scrub));
+    const step = Math.min(SCRUB_MAX_STEP, Math.max(SCRUB_MIN_STEP, el.getBoundingClientRect().width / urls.length));
+    const idx = (st.base + Math.floor(st.dist / step)) % urls.length;
+    if (Number(el.dataset.idx) !== idx) swapScrubImage(el, idx, urls[idx]);
+  }
+  function glideScrub(el, st) {
+    if (st.glide) return;
+    st.glide = true;
+    let last = performance.now();
+    (function tick(now) {
+      if (el._scrub !== st) { st.glide = false; return; } // left the card
+      const dt = Math.min(48, now - last); last = now;
+      if (now - st.t > 70) { // pointer idle: let the speed coast down
+        st.vel *= Math.pow(0.84, dt / 16);
+        st.dist += st.vel * dt * scrubGain(st.vel) * 0.6;
+        applyScrub(el, st);
+        if (st.vel < 0.04) { st.glide = false; return; }
+      }
+      requestAnimationFrame(tick);
+    })(last);
+  }
   document.body.addEventListener("mousemove", (e) => {
     const el = e.target.closest(".media-wrap.scrub");
     if (!el) return;
     const urls = JSON.parse(decodeURIComponent(el.dataset.scrub));
     if (urls.length < 2) return;
     // first hover: pull every frame into the cache right away, so scrubbing
-    // down the card doesn't wait on a network fetch per frame (noticeable
-    // on the live site)
+    // doesn't wait on a network fetch per frame (noticeable on the live site)
     if (!el._scrubPreloaded) { el._scrubPreloaded = true; urls.filter((u) => !isClipUrl(u)).forEach((u) => { new Image().src = u; }); }
-    const rect = el.getBoundingClientRect();
-    const pct = (e.clientY - rect.top) / rect.height;
-    const idx = Math.min(urls.length - 1, Math.max(0, Math.floor(pct * urls.length)));
-    if (Number(el.dataset.idx) === idx) return;
-    swapScrubImage(el, idx, urls[idx]);
+    const now = performance.now();
+    // entering: start counting from wherever the card currently is
+    let st = el._scrub;
+    if (!st) st = el._scrub = { x: e.clientX, y: e.clientY, t: now, dist: 0, vel: 0, base: Number(el.dataset.idx) || 0 };
+    const d = Math.hypot(e.clientX - st.x, e.clientY - st.y);
+    const v = d / Math.max(8, now - st.t);
+    st.vel = st.vel * 0.6 + v * 0.4;
+    st.dist += d * scrubGain(st.vel);
+    st.x = e.clientX; st.y = e.clientY; st.t = now;
+    applyScrub(el, st);
+    glideScrub(el, st);
   });
   document.body.addEventListener("mouseout", (e) => {
     const el = e.target.closest(".media-wrap.scrub");
-    if (!el || (e.relatedTarget && el.contains(e.relatedTarget)) || el.classList.contains("ambient")) return;
+    if (!el || (e.relatedTarget && el.contains(e.relatedTarget))) return;
+    el._scrub = null; // next entry starts a fresh distance count (also stops any glide)
+    if (el.classList.contains("ambient")) return;
     const urls = JSON.parse(decodeURIComponent(el.dataset.scrub));
     if (el.dataset.idx !== "0") swapScrubImage(el, 0, urls[0]);
   });
