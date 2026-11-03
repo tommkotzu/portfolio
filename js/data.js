@@ -765,7 +765,7 @@ const PROJECTS = [
     ],
     links: ["https://www.instagram.com/p/C0PC0eCqp-K/?hl=de"],
     tags: ["3D Production", "ComfyUI", "Generative AI"],
-    blurb: "For the 2024 South America Tour of Afterlife.OFC, we created a full visual trailer using some of the most advanced generative AI image workflows available at the time. Our pipeline combined ComfyUI with a custom-developed Stable Diffusion img2img workflow, allowing us to merge traditional 3D asset creation with generative AI. Base assets were modeled and animated in Cinema 4D, AI layers were generated and refined through our tailored workflows, and everything was brought together in compositing to achieve the final look.",
+    blurb: "For the 2024 South America Tour of Afterlife.OFC, we created a full visual trailer using some of the most advanced generative AI image workflows available at the time. Our pipeline combined ComfyUI with a custom-developed Stable Diffusion img2img workflow, allowing us to merge traditional 3D asset creation with generative AI. Base assets were modeled and animated in Cinema 4D, AI layers were generated and refined through our tailored workflows, and everything was brought together in compositing to achieve the final look. <a href=\"https://www.instagram.com/reel/C0PC0eCqp-K/\" target=\"_blank\" rel=\"noopener\">Watch the reel on Instagram ↗</a>",
     // gen_gallery.py "Afterlife announement" — hero is the local 040L.mp4
     // breakdown; the final trailer (Mux) is the first gallery item, right
     // below it. 010.jpg stays as the first hover-preview still

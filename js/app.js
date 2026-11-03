@@ -1468,7 +1468,6 @@
           <p>For over ten years I've worked across commercials, music films and brand work — with an obsessive eye for pacing, texture and sound design.</p>
           <div class="about-actions">
             <a class="btn-primary" href="mailto:thomasludwigwork@pm.me">Get in touch</a>
-            <a class="btn-ghost" href="Assets/cv/CV_Thomas_Mayer.pdf" download target="_blank" rel="noopener">Download CV ↓</a>
           </div>
         </div>
         <a class="about-portrait media-wrap" id="about-portrait" href="https://www.instagram.com/ingi.ai/" target="_blank" rel="noopener" aria-label="ingi.ai remix — Instagram">
