@@ -21,6 +21,7 @@ const SOCIAL = {
   instagram: "https://www.instagram.com/tomm.boo/",
   behance: "https://www.behance.net/thomasmayerberlin",
   linkedin: "https://www.linkedin.com/in/thomas-ludwig-mayer-9b2088138/",
+  github: "https://github.com/tommkotzu",
 };
 
 const HOME = {
