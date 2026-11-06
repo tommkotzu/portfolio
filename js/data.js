@@ -1130,6 +1130,12 @@ const SCREENS = [
   media("vimeo", "129561880", { hash: "0b96244d8e" }),
   media("image", "Assets/screenshots/ai1.jpg"),
   media("image", "Assets/screenshots/ai2.jpg"),
+  media("image", "Assets/screenshots/IMG_0066.jpg"),
+  media("image", "Assets/screenshots/portfoil001.png"),
+  media("image", "Assets/screenshots/workflow - img2img Presentation.jpg"),
+  media("image", "Assets/screenshots/compose_00024_.jpg"),
+  media("image", "Assets/screenshots/compose_00031_.jpg"),
+  media("image", "Assets/screenshots/compose_00032_.jpg"),
 ];
 
 const SERVICES = ["Blender", "Cinema 4D", "Motion Design", "CAD Optimization", "Asset Creation", "Shader Development", "Geometry Nodes", "Brand Assets", "Imagery", "Visual Design", "ComfyUI Node Noodling", "Agentic Workflows", "GenAI", "Vibecoding Tools", "GitHub", "Brand", "Storytelling", "Content", "Strategy", "Workflow Development"];
