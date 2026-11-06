@@ -1022,6 +1022,9 @@ const SCREENS = [
   media("image", "Assets/screenshots/08_27_1331.webp"),
   media("image", "Assets/screenshots/08_27_1332.webp"),
   media("image", "Assets/screenshots/10_13_94.jpg"),
+  media("image", "Assets/screenshots/compose_00024_.jpg"),
+  media("image", "Assets/screenshots/compose_00031_.jpg"),
+  media("image", "Assets/screenshots/compose_00032_.jpg"),
   media("image", "Assets/screenshots/10_18.53_3909.jpg"),
   media("image", "Assets/screenshots/15_17.40_5598.webp"),
   media("image", "Assets/screenshots/17_15.11_69.jpg"),
@@ -1133,9 +1136,6 @@ const SCREENS = [
   media("image", "Assets/screenshots/IMG_0066.jpg"),
   media("image", "Assets/screenshots/portfoil001.png"),
   media("image", "Assets/screenshots/workflow - img2img Presentation.jpg"),
-  media("image", "Assets/screenshots/compose_00024_.jpg"),
-  media("image", "Assets/screenshots/compose_00031_.jpg"),
-  media("image", "Assets/screenshots/compose_00032_.jpg"),
 ];
 
 const SERVICES = ["Blender", "Cinema 4D", "Motion Design", "CAD Optimization", "Asset Creation", "Shader Development", "Geometry Nodes", "Brand Assets", "Imagery", "Visual Design", "ComfyUI Node Noodling", "Agentic Workflows", "GenAI", "Vibecoding Tools", "GitHub", "Brand", "Storytelling", "Content", "Strategy", "Workflow Development"];
