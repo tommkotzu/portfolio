@@ -669,40 +669,63 @@
   }
 
   // ---------- router ----------
-  function parseHash() {
-    const h = location.hash.replace(/^#\/?/, "");
-    const parts = h.split("/").filter(Boolean);
+  // Clean path URLs (work/<slug>/, about/, …) rather than #/ hashes, so every
+  // page is its own URL search engines can index. scripts/gen_seo.mjs writes a
+  // static index.html at each of those paths (each with a <base> pointing back
+  // at the site root), so a direct visit / reload works on GitHub Pages too.
+  const baseEl = document.querySelector("base");
+  if (baseEl) baseEl.href = baseEl.href; // freeze to absolute, so relative assets survive pushState to other depths
+  const ROOT = new URL(document.baseURI).pathname; // "/portfolio/" live, "/" on the dev server
+  const PAGE_PATHS = { welcome: "", work: "work/", screens: "notes/", about: "about/", impressum: "impressum/", datenschutz: "datenschutz/" };
+
+  function pathFor(page, slug) {
+    return page === "detail" ? `work/${slug}/` : PAGE_PATHS[page] || "";
+  }
+
+  function routeFromParts(parts) {
     if (parts.length === 0) return { page: "welcome" };
     if (parts[0] === "work" && parts[1]) return { page: "detail", slug: parts[1] };
     if (parts[0] === "work") return { page: "work" };
-    if (parts[0] === "screens") return { page: "screens" };
+    if (parts[0] === "notes" || parts[0] === "screens") return { page: "screens" };
     if (parts[0] === "about") return { page: "about" };
     if (parts[0] === "impressum") return { page: "impressum" };
     if (parts[0] === "datenschutz") return { page: "datenschutz" };
     return { page: "welcome" };
   }
 
-  function goto(page, slug) {
-    if (page === "welcome") location.hash = "#/";
-    else if (page === "work") location.hash = "#/work";
-    else if (page === "detail") location.hash = `#/work/${slug}`;
-    else location.hash = `#/${page}`;
+  // (name kept from the hash-router days — every caller just wants "where am I")
+  function parseHash() {
+    const rel = location.pathname.startsWith(ROOT) ? location.pathname.slice(ROOT.length) : "";
+    return routeFromParts(rel.replace(/index\.html$/, "").split("/").filter(Boolean));
   }
 
-  window.addEventListener("hashchange", render);
+  // old shared links (…/portfolio/#/work/slug) → their clean URL
+  if (/^#\//.test(location.hash)) {
+    const r = routeFromParts(location.hash.slice(2).split("/").filter(Boolean));
+    history.replaceState(null, "", ROOT + pathFor(r.page, r.slug));
+  }
+
+  function goto(page, slug) {
+    const url = ROOT + pathFor(page, slug);
+    if (url === location.pathname) return; // same page — no-op, like re-setting the same hash used to be
+    history.pushState(null, "", url);
+    render();
+  }
+
+  window.addEventListener("popstate", render);
 
   // ---------- welcome ----------
   function featuredCardHTML(card) {
     const p = PROJECTS.find((pr) => pr.slug === card.slug);
     if (!p) return "";
     return `
-      <div class="featured-card reveal" style="flex-basis:${card.width}%;margin-top:${card.offset}px;aspect-ratio:${card.ratio}" data-open-project="${p.slug}">
+      <a class="featured-card reveal" href="work/${p.slug}/" style="flex-basis:${card.width}%;margin-top:${card.offset}px;aspect-ratio:${card.ratio}" data-open-project="${p.slug}">
         ${scrubMediaHTML(p.previews, { randomStart: true, ambient: true })}
         <div class="card-overlay">
           <div class="card-overlay-row"><span class="t">${projectTitle(p)}</span></div>
           <div class="tag-row">${tagPills(p.tags.slice(0, 2))}</div>
         </div>
-      </div>`;
+      </a>`;
   }
 
   function renderWelcome() {
@@ -718,9 +741,10 @@
       </div>
 
       <div class="intro">
-        <div class="intro-headline">Hey there, I'm Thomas, <span id="role-article">a</span> <span class="role-roulette-wrap" id="role-roulette-wrap"><span class="role-roulette" id="role-roulette">creative</span></span>.</div>
+        <h1 class="intro-headline">Hey there, I'm Thomas, <span id="role-article">a</span> <span class="role-roulette-wrap" id="role-roulette-wrap"><span class="role-roulette" id="role-roulette">creative</span></span>.</h1>
         <div class="intro-bio">
           <p>I'm a curious creative who takes projects from first spark to final frame. Shaping the concept, building the strategy and getting hands-on with the execution, so the idea stays sharp to the end.</p>
+          <p>3D generalist, motion designer and artist — based in Berlin, working worldwide.</p>
           <p>Need a hand, <a href="mailto:thomasludwigwork@pm.me" class="intro-mail-link">let's chat!</a></p>
         </div>
       </div>
@@ -728,7 +752,7 @@
       <div class="selected-work">
         <div class="selected-work-head">
           <h2>Selected Work</h2>
-          <span data-nav="work">View all →</span>
+          <a href="work/" data-nav="work">View all →</a>
         </div>
         <div class="featured-grid">
           ${FEATURED_ROWS.map((row) => `<div class="featured-row">${row.cards.map(featuredCardHTML).join("")}</div>`).join("")}
@@ -797,26 +821,26 @@
       body = `<div class="list-rows" id="list-rows">
         ${PROJECTS.map(
           (p, i) => `
-        <div class="list-row reveal" data-open-project="${p.slug}" data-previews="${encodeURIComponent(JSON.stringify(p.previews.map((pv) => pv.src).filter((u) => !isClipUrl(u))))}">
+        <a class="list-row reveal" href="work/${p.slug}/" data-open-project="${p.slug}" data-previews="${encodeURIComponent(JSON.stringify(p.previews.map((pv) => pv.src).filter((u) => !isClipUrl(u))))}">
           <span class="li-idx">${String(i + 1).padStart(2, "0")}</span>
           <span class="li-title">${projectTitle(p)}</span>
           <div class="li-tags">${tagPills(p.tags)}</div>
           <span class="li-loc">${p.location}</span>
-        </div>`
+        </a>`
         ).join("")}
       </div>`;
     } else if (density === "1") {
       body = `<div class="project-grid density-1">
         ${PROJECTS.map(
           (p) => `
-        <div class="card-full reveal" data-open-project="${p.slug}">
+        <a class="card-full reveal" href="work/${p.slug}/" data-open-project="${p.slug}">
           ${scrubMediaHTML(p.previews, { cls: "card-thumb-full" })}
           <div class="card-meta">
             <span class="title">${projectTitle(p)}</span>
             <div class="tag-row">${tagPills(p.tags)}</div>
             <span class="loc">${p.location}</span>
           </div>
-        </div>`
+        </a>`
         ).join("")}
       </div>`;
     } else if (density === "all") {
@@ -825,14 +849,14 @@
       body = `<div class="project-grid density-2">
         ${PROJECTS.map(
           (p, i) => `
-        <div class="card-default reveal" data-open-project="${p.slug}">
+        <a class="card-default reveal" href="work/${p.slug}/" data-open-project="${p.slug}">
           <span class="card-index">${String(i + 1).padStart(2, "0")}</span>
           ${scrubMediaHTML(p.previews, { cls: "card-thumb" })}
           <div class="card-meta">
             <span class="title">${projectTitle(p)}</span>
             <span class="loc">${p.location}</span>
           </div>
-        </div>`
+        </a>`
         ).join("")}
       </div>`;
     }
@@ -1121,15 +1145,15 @@
 
       <div class="detail-scroll-area">
         <div class="project-nav">
-          <a data-open-project="${PROJECTS[prevIdx].slug}"><span class="arrow">←</span><span class="proj-title">${PROJECTS[prevIdx].title}</span></a>
-          <a data-open-project="${PROJECTS[nextIdx].slug}"><span class="proj-title">${PROJECTS[nextIdx].title}</span><span class="arrow">→</span></a>
+          <a href="work/${PROJECTS[prevIdx].slug}/" data-open-project="${PROJECTS[prevIdx].slug}"><span class="arrow">←</span><span class="proj-title">${PROJECTS[prevIdx].title}</span></a>
+          <a href="work/${PROJECTS[nextIdx].slug}/" data-open-project="${PROJECTS[nextIdx].slug}"><span class="proj-title">${PROJECTS[nextIdx].title}</span><span class="arrow">→</span></a>
         </div>
 
         <div class="detail-narrow" id="detail-text-block">
           <div class="detail-meta">
             <div class="detail-title-group">
               <span class="detail-idx">${String(realIdx + 1).padStart(2, "0")}</span>
-              <div class="detail-title">${projectTitle(active)}</div>
+              <h1 class="detail-title">${projectTitle(active)}</h1>
               <div class="tag-row">${tagPills(active.tags)}</div>
               <div class="detail-loc">${active.location}</div>
             </div>
@@ -1465,7 +1489,7 @@
         <div class="about-hero-text">
           <div class="about-eyebrow">About</div>
           <h1>Motion Design and 3D generalist for Artists and Marketing clients.</h1>
-          <p>For over ten years I've worked across commercials, music films and brand work — with an obsessive eye for pacing, texture and sound design.</p>
+          <p>For over ten years I've worked across commercials, music films and brand work — with an obsessive eye for pacing, texture and sound design. Based in Berlin, Germany, working with studios, artists and brands worldwide.</p>
           <div class="about-actions">
             <a class="btn-primary" href="mailto:thomasludwigwork@pm.me">Get in touch</a>
           </div>
@@ -1684,6 +1708,7 @@
     document.querySelectorAll(".list-preview-stamp").forEach((el) => el.remove());
     const route = parseHash();
     updateNavActive(route.page);
+    if (typeof applySeo === "function") applySeo(route);
 
     if (route.page === "welcome") {
       app.innerHTML = renderWelcome();
@@ -1751,11 +1776,22 @@
       return;
     }
 
+    // nav items / project cards are real <a href> links (crawlable, and
+    // cmd/ctrl/shift-click still opens a new tab) — plain clicks stay in-app
+    const newTab = e.metaKey || e.ctrlKey || e.shiftKey || e.altKey;
     const navEl = e.target.closest("[data-nav]");
-    if (navEl) { setMobileNavOpen(false); goto(navEl.dataset.nav); return; }
+    if (navEl) {
+      if (newTab && navEl.hasAttribute("href")) return;
+      e.preventDefault();
+      setMobileNavOpen(false); goto(navEl.dataset.nav); return;
+    }
 
     const openEl = e.target.closest("[data-open-project]");
-    if (openEl) { goto("detail", openEl.dataset.openProject); return; }
+    if (openEl) {
+      if (newTab && openEl.hasAttribute("href")) return;
+      e.preventDefault();
+      goto("detail", openEl.dataset.openProject); return;
+    }
 
     // Notes grid — items are SCREENS itself
     const screensItemEl = e.target.closest(".screens-page .screens-item");
